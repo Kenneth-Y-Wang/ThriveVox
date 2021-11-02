@@ -64,7 +64,7 @@
 }
 
 .tab-anc {
-  font-family: "Jura", sans-serif;
+  font-family: Jura, sans-serif;
   display: block;
   color: #ced4da;
   margin-top: 0.5rem;
@@ -177,7 +177,7 @@ input {
   background-color: transparent;
   border-radius: 5px;
   transition-duration: 0.5s;
-  font-family: "Orbitron", sans-serif;
+  font-family: Orbitron, sans-serif;
 }
 
 .button-main:hover {
@@ -228,9 +228,7 @@ input {
   margin: 0.5rem auto;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   0% { opacity: 0%; }
   100% { opacity: 100%; }
 }
-
-/* layout */

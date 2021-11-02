@@ -8,7 +8,7 @@ body {
   max-width: 575px;
   min-height: 100vh;
   margin: 0 auto;
-  font-family: "Orbitron", sans-serif;
+  font-family: Orbitron, sans-serif;
   background-color: #f5f6f8;
   overflow-y: auto;
 }
@@ -18,14 +18,14 @@ body {
   max-width: 575px;
   min-height: 100vh;
   margin: 0 auto;
-  font-family: "Orbitron", sans-serif;
+  font-family: Orbitron, sans-serif;
   z-index: 0;
 }
 
 .nav-bar {
   max-width: 575px;
   margin: 0 auto;
-  font-family: "Orbitron", sans-serif;
+  font-family: Orbitron, sans-serif;
   position: relative;
 }
 

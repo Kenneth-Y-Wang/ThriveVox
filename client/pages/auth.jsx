@@ -18,7 +18,6 @@ export default class AuthPage extends React.Component {
         <div className="col-four-fifth">
           <header className="form-header">
             <h2 className="">
-
               Welcome, Music Lovers!
             </h2>
             <p className="return-message">{weclomeMessage}</p>

@@ -1,11 +1,3 @@
-// import React from 'react';
-// import Home from './pages/home';
-
-// export default class App extends React.Component {
-//   render() {
-//     return <Home />;
-//   }
-// }
 
 import React from 'react';
 import AppContext from './lib/app-context';

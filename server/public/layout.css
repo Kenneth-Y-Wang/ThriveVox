@@ -6,20 +6,17 @@ body {
 
 .container {
   max-width: 575px;
-  min-height: "calc(100vh - 3.5rem)";
+  min-height: 100vh;
   margin: 0 auto;
   font-family: "Orbitron", sans-serif;
   background-color: #f5f6f8;
-
-  /* border-left: 1px solid black;
-  border-right: 1px solid black; */
   overflow-y: auto;
 }
 
 .container-sign-in {
   background-color: rgb(0 0 0 / 60%);
   max-width: 575px;
-  min-height: "calc(100vh - 3.5rem)";
+  min-height: 100vh;
   margin: 0 auto;
   font-family: "Orbitron", sans-serif;
   z-index: 0;
@@ -40,17 +37,11 @@ body {
   display: none;
 }
 
-.col-half {
-  width: 50%;
-  padding: 0 0.75rem;
-}
-
+.col-half,
+.col-three-fifth,
 .col-four-fifth {
-  width: 80%;
-}
-
-.col-three-fifth {
-  width: 60%;
+  width: 100%;
+  padding: 0 0.75rem;
 }
 
 .mg-b-1 {
@@ -67,6 +58,24 @@ body {
   .nav-bar {
     max-width: 900px;
   }
+
+  .col-half,
+  .col-three-fifth,
+  .col-four-fifth {
+    padding: 0 0.75rem;
+  }
+
+  .col-half {
+    width: 50%;
+  }
+
+  .col-four-fifth {
+    width: 80%;
+  }
+
+  .col-three-fifth {
+    width: 60%;
+  }
 }
 
 @media screen and (min-width: 1280px) {
@@ -74,5 +83,23 @@ body {
   .container-sign-in,
   .nav-bar {
     max-width: 1200px;
+  }
+
+  .col-half,
+  .col-three-fifth,
+  .col-four-fifth {
+    padding: 0 0.75rem;
+  }
+
+  .col-half {
+    width: 50%;
+  }
+
+  .col-four-fifth {
+    width: 80%;
+  }
+
+  .col-three-fifth {
+    width: 60%;
   }
 }

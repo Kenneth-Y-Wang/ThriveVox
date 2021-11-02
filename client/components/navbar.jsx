@@ -1,23 +1,8 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
 
-// export default class CustomDropdown extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     // this.state = { isOpen: false };
-//     // this.switch = this.switch.bind(this);
-//   }
-
-//   // switch() {
-//   //   if (event.target.matches('a') === true || event.target.matches('.container') === true || event.target.matches('.fas') === true) {
-//   //     this.setState(state => ({
-//   //       isOpen: !state.isOpen
-//   //     }));
-//   //   }
-//   // }
 export default class CustomDropdown extends React.Component {
   render() {
-    // const isOpen = this.state.isOpen;
     const { user, isOpen, handleSignOut } = this.context;
     const userButton = user !== null
       ? <a className="chat" onClick={handleSignOut}><i className="fas fa-sign-out-alt"></i></a>
@@ -33,9 +18,6 @@ export default class CustomDropdown extends React.Component {
         <div className={!isOpen ? 'menu' : ' menu menu-on'} onClick={!isOpen ? null : () => this.props.switch()}>
           <h1 className="menu-text">Menu</h1>
           <a className="tab-anc">About Me</a>
-          <a className="tab-anc">What I like</a>
-          <a className="tab-anc">Are You There</a>
-          <a className="tab-anc">Let&apos;s Chat</a>
         </div>
       </nav>
     );

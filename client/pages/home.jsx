@@ -22,7 +22,7 @@ export default class Home extends React.Component {
           </div>
           <div className="col-two-fifth info-column">
             <div className="profile-edit-row">
-            <h4>Welcome, <span className="display-name">{displayName}</span></h4>
+              <h4>Welcome, <span className="display-name">{displayName}</span></h4>
               <button className="profile-edit-button"><i className="fas fa-edit"></i></button>
             </div>
             <h4 className="display-info">Location:</h4>

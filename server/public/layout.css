@@ -34,10 +34,11 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .col-half,
+.col-one-third,
 .col-three-fifth,
 .col-four-fifth,
 .col-two-fifth {
@@ -61,10 +62,15 @@ body {
   }
 
   .col-half,
+  .col-one-third,
   .col-three-fifth,
   .col-four-fifth,
   .col-two-fifth {
     padding: 0 0.75rem;
+  }
+
+  .col-one-third {
+    width: 30%;
   }
 
   .col-half {
@@ -92,10 +98,15 @@ body {
   }
 
   .col-half,
+  .col-one-third,
   .col-three-fifth,
   .col-four-fifth,
   .col-two-fifth {
     padding: 0 0.75rem;
+  }
+
+  .col-one-third {
+    width: 30%;
   }
 
   .col-half {

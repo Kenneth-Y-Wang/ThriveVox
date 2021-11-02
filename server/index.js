@@ -39,19 +39,19 @@ const jsonMiddleware = express.json();
 app.use(jsonMiddleware);
 
 app.post('/api/auth/sign-up', (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    throw new ClientError(400, 'username and password are required fields');
+  const { username, password, email, location } = req.body;
+  if (!username || !password || !email || !location) {
+    throw new ClientError(400, 'username, password, email and location are required fields');
   }
   argon2
     .hash(password)
     .then(hashedPassword => {
       const sql = `
-        insert into "users" ("username", "hashedPassword")
-        values ($1, $2)
+        insert into "users" ("username", "hashedPassword","email","userLocation")
+        values ($1, $2, $3, $4)
         returning "userId", "username", "createdAt"
       `;
-      const params = [username, hashedPassword];
+      const params = [username, hashedPassword, email, location];
       return db.query(sql, params);
     })
     .then(result => {
@@ -68,7 +68,9 @@ app.post('/api/auth/sign-in', (req, res, next) => {
   }
   const sql = `
     select "userId",
-           "hashedPassword"
+           "hashedPassword",
+           "email",
+           "userLocation"
       from "users"
      where "username" = $1
   `;
@@ -79,14 +81,14 @@ app.post('/api/auth/sign-in', (req, res, next) => {
       if (!user) {
         throw new ClientError(401, 'invalid login');
       }
-      const { userId, hashedPassword } = user;
+      const { userId, hashedPassword, email, userLocation } = user;
       return argon2
         .verify(hashedPassword, password)
         .then(isMatching => {
           if (!isMatching) {
             throw new ClientError(401, 'invalid login');
           }
-          const payload = { userId, username };
+          const payload = { userId, username, email, userLocation };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
         });

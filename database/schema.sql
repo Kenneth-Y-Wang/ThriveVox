@@ -13,14 +13,14 @@ CREATE TABLE "public"."users" (
 	"hashedPassword" TEXT NOT NULL,
 	"email" TEXT NOT NULL,
 	"userLocation" TEXT NOT NULL,
-	"createdAt" time with time zone NOT NULL,
-	"updatedAt" time with time zone NOT NULL,
+	"createdAt" timestamptz(6) not null default now(),
+	"updatedAt" timestamptz(6) not null default now(),
 	"avaterUrl" TEXT,
 	"avaterCaption" TEXT,
 	"userStyle" TEXT,
 	"userSkills" TEXT,
 	"userInstruments" TEXT,
-	"userPrimaryInterest" TEXT NOT NULL,
+	"userPrimaryInterest" TEXT,
 	"userInterest" TEXT,
 	"userBand" TEXT,
 	"userBio" TEXT,
@@ -33,9 +33,9 @@ CREATE TABLE "public"."users" (
 
 CREATE TABLE "public"."comments" (
 	"userId" integer NOT NULL,
-	"createdAt" timestamp with time zone NOT NULL,
+	"createdAt" timestamptz(6) not null default now(),
 	"content" TIME NOT NULL,
-	"updatedAt" timestamp with time zone NOT NULL,
+	"updatedAt" timestamptz(6) not null default now(),
 	"postId" integer NOT NULL,
 	"favoriteId" integer NOT NULL
 ) WITH (
@@ -57,7 +57,7 @@ CREATE TABLE "public"."posts" (
 	"postId" serial NOT NULL,
 	"imageUrl" TEXT NOT NULL,
 	"captain" TEXT,
-	"createdAt" timestamp with time zone NOT NULL,
+	"createdAt" timestamptz(6) not null default now(),
 	"location" TEXT NOT NULL,
 	"userId" integer NOT NULL,
 	"audioUrl" TEXT NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE "public"."savedFavorite" (
 	"favoriteId" serial NOT NULL,
 	"favoriteType" TEXT NOT NULL,
 	"favoriteDetails" json NOT NULL,
-	"createdAt" timestamp with time zone NOT NULL,
+	"createdAt" timestamptz(6) not null default now(),
 	CONSTRAINT "savedFavorite_pk" PRIMARY KEY ("favoriteId")
 ) WITH (
   OIDS=FALSE

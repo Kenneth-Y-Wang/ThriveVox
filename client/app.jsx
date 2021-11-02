@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
@@ -21,7 +20,7 @@ export default class App extends React.Component {
     };
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
-
+    this.switch = this.switch.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +32,18 @@ export default class App extends React.Component {
     const token = window.localStorage.getItem('react-context-jwt');
     const user = token ? decodeToken(token) : null;
     this.setState({ user, isAuthorizing: false });
+  }
+
+  switch() {
+    if (!this.state.user) {
+      alert('Please log-in first');
+      return;
+    }
+    if (event.target.matches('a') === true || event.target.matches('.overlay') === true || event.target.matches('.fas') === true) {
+      this.setState(state => ({
+        isOpen: !state.isOpen
+      }));
+    }
   }
 
   handleSignIn(result) {
@@ -65,7 +76,7 @@ export default class App extends React.Component {
     return (
       <AppContext.Provider value={contextValue}>
         <>
-          <CustomDropdown />
+          <CustomDropdown switch={this.switch} />
           {!user ? <PageContainer>{this.renderPage()}</PageContainer> : <MainPageContainer>{this.renderPage()}</MainPageContainer>}
         </>
       </AppContext.Provider>

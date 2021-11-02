@@ -6,10 +6,10 @@ body {
 
 .container {
   max-width: 575px;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0 auto;
   font-family: Orbitron, sans-serif;
-  background-color: #f5f6f8;
+  background-color: #f1f3f5;
   overflow-y: auto;
 }
 
@@ -39,7 +39,8 @@ body {
 
 .col-half,
 .col-three-fifth,
-.col-four-fifth {
+.col-four-fifth,
+.col-two-fifth {
   width: 100%;
   padding: 0 0.75rem;
 }
@@ -61,7 +62,8 @@ body {
 
   .col-half,
   .col-three-fifth,
-  .col-four-fifth {
+  .col-four-fifth,
+  .col-two-fifth {
     padding: 0 0.75rem;
   }
 
@@ -75,6 +77,10 @@ body {
 
   .col-three-fifth {
     width: 60%;
+  }
+
+  .col-two-fifth {
+    width: 40%;
   }
 }
 
@@ -87,7 +93,8 @@ body {
 
   .col-half,
   .col-three-fifth,
-  .col-four-fifth {
+  .col-four-fifth,
+  .col-two-fifth {
     padding: 0 0.75rem;
   }
 
@@ -101,5 +108,9 @@ body {
 
   .col-three-fifth {
     width: 60%;
+  }
+
+  .col-two-fifth {
+    width: 40%;
   }
 }

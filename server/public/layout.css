@@ -37,11 +37,16 @@ body {
   display: none !important;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .col-half,
 .col-one-third,
 .col-three-fifth,
 .col-four-fifth,
-.col-two-fifth {
+.col-two-fifth,
+.col-full {
   width: 100%;
   padding: 0 0.75rem;
 }
@@ -65,7 +70,8 @@ body {
   .col-one-third,
   .col-three-fifth,
   .col-four-fifth,
-  .col-two-fifth {
+  .col-two-fifth,
+  .col-full {
     padding: 0 0.75rem;
   }
 
@@ -87,6 +93,10 @@ body {
 
   .col-two-fifth {
     width: 40%;
+  }
+
+  .col-full {
+    width: 100%;
   }
 }
 
@@ -101,7 +111,8 @@ body {
   .col-one-third,
   .col-three-fifth,
   .col-four-fifth,
-  .col-two-fifth {
+  .col-two-fifth,
+  .col-full {
     padding: 0 0.75rem;
   }
 
@@ -123,5 +134,9 @@ body {
 
   .col-two-fifth {
     width: 40%;
+  }
+
+  .col-full {
+    width: 100%;
   }
 }

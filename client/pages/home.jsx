@@ -4,15 +4,71 @@ import AppContext from '../lib/app-context';
 import CustomAccordion from '../components/accordion';
 
 export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      style: '',
+      skill: '',
+      instrument: '',
+      mainInterest: '',
+      interest: '',
+      band: '',
+      about: ''
+
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(this.state);
+    event.target.reset();
+  }
+
   render() {
 
     if (!this.context.user) return <Redirect to="sign-in" />;
     const displayName = this.context.user.username;
     const displayLocation = this.context.user.userLocation;
     const displayEmail = this.context.user.email;
+    const { handleChange, handleSubmit } = this;
 
     return (
       <div className="home-page">
+        <div className="edit-page-holder">
+          <form onSubmit={handleSubmit} className="col-three-fifth edit-page">
+            <h1>Edit Profile</h1>
+            <label className="edit-label">Profile Picture Upload:</label>
+            <label className="edit-label" htmlFor="style">Your Music Styles: <span>please provide any styles you like</span></label>
+            <input onChange={handleChange} className="edit-input" id="style" type="text" name="style"></input>
+            <label className="edit-label" htmlFor="skill">Your Skills: <span>please provide skill type and skill level</span></label>
+            <input onChange={handleChange} className="edit-input" id="skill" type="text" name="skill"></input>
+            <label className="edit-label" htmlFor="instrument">Your Instruments: <span>please provide instruments type and any additional info</span></label>
+            <input onChange={handleChange} className="edit-input" id="instrument" type="text" name="instrument"></input>
+            <label className="edit-label" htmlFor="mainInterest">Primary interest: <span>please choose one</span></label>
+            <select onChange={handleChange} className="edit-select" id="mainInterest" name="mainInterest">
+              <option>Choose One</option>
+              <option value="Join existing Band">Join existing Band</option>
+              <option value="Hang out with others">Hang out with others</option>
+              <option value="Practice with otehrs">Practice with others</option>
+              <option value="Songwriting">Songwriting</option>
+              <option value="Start new Band">Start new Band</option>
+            </select>
+            <label className="edit-label" htmlFor="interest">Your Interest: <span>please provide any interest you have</span></label>
+            <input onChange={handleChange} className="edit-input" id="interest" type="text" name="interest"></input>
+            <label className="edit-label" htmlFor="band">Your Band: <span>optional</span></label>
+            <input onChange={handleChange} className="edit-input" id="band" type="text" name="band"></input>
+            <label className="edit-label" htmlFor="about">About you: <span>please let others know about you!</span></label>
+            <textarea onChange={handleChange} className="edit-textarea" id="about" type="text" name="about" placeholder="Tell us about you..."></textarea>
+            <div className="row justify-center"><button type="submit" className=" edit-button">SAVE</button></div>
+          </form>
+        </div>
         <div className="personal-info">
           <div className="col-two-fifth pic-column">
             <div className="pic-holder">

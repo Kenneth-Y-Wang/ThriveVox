@@ -2,6 +2,7 @@ import React from 'react';
 import Redirect from '../components/redirect';
 import AppContext from '../lib/app-context';
 import CustomAccordion from '../components/accordion';
+import EditForm from '../components/edit-form';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -139,42 +140,14 @@ export default class Home extends React.Component {
     const displayLocation = this.context.user.userLocation;
     const displayEmail = this.context.user.email;
     const { caption, style, skill, instrument, mainInterest, interest, band, about, profileUrl } = this.state;
-    const { handleChange, handleSubmit } = this;
+    const { handleChange, handleSubmit, clickToEdit } = this;
 
     return (
       <div className="home-page">
         <div className={this.state.isEditing ? 'edit-page-holder' : 'edit-page-holder hidden'}>
-          <form onSubmit={handleSubmit} className="col-three-fifth edit-page">
-            <div className="edit-title"><h1 className="edit-title">Edit Profile</h1></div>
-            <label className="edit-label" htmlFor="caption">Profile picture uploads: <span>picture caption</span></label>
-            <input onChange={handleChange} className="edit-input" value={caption} id="caption" type="text" name="caption"></input>
-            <input className="image-input" id="image" type="file" name="image" ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" />
-            <label className="edit-label" htmlFor="style">Your Music Styles: <span>please provide any styles you like</span></label>
-            <input onChange={handleChange} className="edit-input" value={style} id="style" type="text" name="style"></input>
-            <label className="edit-label" htmlFor="skill">Your Skills: <span>please provide skill type and skill level</span></label>
-            <input onChange={handleChange} className="edit-input" value={skill} id="skill" type="text" name="skill"></input>
-            <label className="edit-label" htmlFor="instrument">Your Instruments: <span>please provide instruments type and any additional info</span></label>
-            <input onChange={handleChange} className="edit-input" value={instrument} id="instrument" type="text" name="instrument"></input>
-            <label className="edit-label" htmlFor="mainInterest">Primary interest: <span>please choose one</span></label>
-            <select onChange={handleChange} className="edit-select" value={mainInterest} id="mainInterest" name="mainInterest">
-              <option>Choose One</option>
-              <option value="Join existing Band">Join existing Band</option>
-              <option value="Hang out with others">Hang out with others</option>
-              <option value="Practice with otehrs">Practice with others</option>
-              <option value="Songwriting">Songwriting</option>
-              <option value="Start new Band">Start new Band</option>
-            </select>
-            <label className="edit-label" htmlFor="interest">Your Interest: <span>please provide any interest you have</span></label>
-            <input onChange={handleChange} className="edit-input" value={interest} id="interest" type="text" name="interest"></input>
-            <label className="edit-label" htmlFor="band">Your Band: <span>optional</span></label>
-            <input onChange={handleChange} className="edit-input" value={band} id="band" type="text" name="band"></input>
-            <label className="edit-label" htmlFor="about">About you: <span>please let others know about you!</span></label>
-            <textarea onChange={handleChange} className="edit-textarea" value={about} id="about" type="text" name="about" placeholder="Tell us about you..."></textarea>
-            <div className="row justify-center">
-              <button type="button" className=" edit-button" onClick={this.clickToEdit}>CANCEL</button>
-              <button type="submit" className=" edit-button">SAVE</button>
-              </div>
-          </form>
+          < EditForm handleSubmit={handleSubmit} handleChange={handleChange} fileInputRef={this.fileInputRef} clickToEdit={clickToEdit}
+            avaterCaption={caption} userStyle={style} userSkills={skill} userInstruments={instrument}
+            userPrimaryInterest={mainInterest} userInterest={interest} userBand={band} userBio={about} />
         </div>
         <div className="personal-info">
           <div className="col-two-fifth pic-column">

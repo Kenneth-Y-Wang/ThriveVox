@@ -78,7 +78,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
           }
           const payload = { userId, username, email, userLocation };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
-          // console.log(payload);
+
           res.json({ token, user: payload });
         });
     })
@@ -110,7 +110,7 @@ app.get('/api/profile/users/:userId', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const [userInfo] = result.rows;
-      // console.log('userinfo:', userInfo);
+
       res.json(userInfo);
     })
     .catch(err => next(err));
@@ -118,7 +118,7 @@ app.get('/api/profile/users/:userId', (req, res, next) => {
 
 app.patch('/api/profile/users/:userId', (req, res, next) => {
   const userId = parseInt(req.params.userId, 10);
-  // console.log(req.body);
+
   if (!userId) {
     return;
   }
@@ -141,7 +141,7 @@ app.patch('/api/profile/users/:userId', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const [userUpdatedInfo] = result.rows;
-      // console.log(userUpdatedInfo);
+
       res.json(userUpdatedInfo);
     })
     .catch(err => next(err));

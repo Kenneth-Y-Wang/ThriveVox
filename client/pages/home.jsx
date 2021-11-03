@@ -38,7 +38,7 @@ export default class Home extends React.Component {
       })
         .then(response => response.json())
         .then(data => {
-          // console.log(data);
+
           const { avaterUrl, avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = data;
           this.setState({
             caption: avaterCaption,
@@ -71,7 +71,7 @@ export default class Home extends React.Component {
   handleSubmit(event) {
     const userId = this.context.user.userId;
     event.preventDefault();
-    // console.log(this.state);
+
     const { caption, style, skill, instrument, mainInterest, interest, band, about } = this.state;
     const userInfo = {
       caption: caption,
@@ -83,7 +83,6 @@ export default class Home extends React.Component {
       band: band,
       about: about
     };
-    // console.log(userInfo);
 
     const form = new FormData();
 
@@ -107,7 +106,7 @@ export default class Home extends React.Component {
           band: userBand,
           about: userBio
         });
-        // console.log('after update:', this.state);
+
       })
       .catch(error => {
         console.error('Error:', error);
@@ -123,7 +122,7 @@ export default class Home extends React.Component {
         .then(response => response.json())
         .then(data => {
           this.setState({ profileUrl: data.avaterUrl });
-          // console.log('image', data);
+
           this.fileInputRef.current.value = null;
         })
         .catch(error => {

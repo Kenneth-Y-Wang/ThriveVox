@@ -84,7 +84,38 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// for image uploads
+// for userinfo and image uploads
+
+app.patch('/api/profile/users/:userId', (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+  console.log(req.body);
+  if (!userId) {
+    return;
+  }
+  const { caption, style, skill, instrument, mainInterest, interest, band, about } = req.body;
+  const sql = `
+  update "users"
+     set "avaterCaption"=$1,
+         "userStyle"=$2,
+         "userSkills"=$3,
+         "userInstruments"=$4,
+         "userPrimaryInterest"=$5,
+         "userInterest"=$6,
+         "userBand"=$7,
+         "userBio"=$8
+  where  "userId"=$9
+  returning "avaterCaption","userStyle","userSkills","userInstruments","userPrimaryInterest","userInterest","userBand","userBio"
+  `;
+
+  const params = [caption, style, skill, instrument, mainInterest, interest, band, about, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [userUpdatedInfo] = result.rows;
+      console.log(userUpdatedInfo);
+      res.json(userUpdatedInfo);
+    })
+    .catch(err => next(err));
+});
 
 app.patch('/api/profile/uploads/:userId', uploadsMiddleware, (req, res, next) => {
   const userId = parseInt(req.params.userId, 10);

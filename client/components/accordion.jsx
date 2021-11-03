@@ -23,7 +23,7 @@ export default class CustomAccordion extends React.Component {
         <div >
           <div className="section-header" onClick={this.click} data-id="about-me">About Me</div>
           <div className={this.state.isOpen === 'about-me' ? 'content-holder open' : 'content-holder close'}>
-            <div className={this.state.isOpen === 'about-me' ? 'section-content' : 'section-content hidden'}>{userBio}</div>
+            <div className={this.state.isOpen === 'about-me' ? 'section-content' : 'section-content hidden'}>{userBio || 'Please tell us about your self!'}</div>
           </div>
         </div>
         <div >
@@ -32,17 +32,17 @@ export default class CustomAccordion extends React.Component {
             <div className={this.state.isOpen === 'skill-style' ? 'skill-content' : 'skill-content hidden'}>
               <div className="col-one-third style-col">
                 <h4 className="display-info">My Band:</h4>
-                <h4>{userBand}</h4>
+                <h4>{userBand || 'I Don\'t Have One..'}</h4>
                 <h4 className="display-info">My Instruments:</h4>
-                <h4>{userInstruments}</h4>
+                <h4>{userInstruments || 'N/A'}</h4>
               </div>
               <div className="col-half skill-col">
                 <h4 className="display-info">My Music Styles:</h4>
-                <h4>{userStyle}</h4>
+                <h4>{userStyle || 'N/A'}</h4>
                 <h4 className="display-info">My Skills:</h4>
-                <h4>{userSkills}</h4>
+                <h4>{userSkills || 'N/A'}</h4>
                 <h4 className="display-info">My Interest:</h4>
-                <h4>{userInterest}</h4>
+                <h4>{userInterest || 'N/A'}</h4>
               </div>
             </div>
           </div>

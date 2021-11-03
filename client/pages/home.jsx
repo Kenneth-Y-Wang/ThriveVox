@@ -122,7 +122,7 @@ export default class Home extends React.Component {
     const displayName = this.context.user.username;
     const displayLocation = this.context.user.userLocation;
     const displayEmail = this.context.user.email;
-    const { caption, style, skill, instrument, mainInterest, interest, band, about } = this.state;
+    const { caption, style, skill, instrument, mainInterest, interest, band, about, profileUrl } = this.state;
     const { handleChange, handleSubmit } = this;
 
     return (
@@ -163,9 +163,9 @@ export default class Home extends React.Component {
         <div className="personal-info">
           <div className="col-two-fifth pic-column">
             <div className="pic-holder">
-              <img src="images/b50797c8a7420ba660b2b310f8698811.jpg" />
+              <img src={profileUrl} />
             </div>
-            <h4 className="profile-caption">N/A</h4>
+            <h4 className="profile-caption">{caption}</h4>
           </div>
           <div className="col-two-fifth info-column">
             <div className="profile-edit-row">
@@ -177,7 +177,7 @@ export default class Home extends React.Component {
             <h4 className="display-info">Email:</h4>
             <h4>{displayEmail}</h4>
             <h4 className="display-info">Primary Interest:</h4>
-            <h4>N/A</h4>
+            <h4>{mainInterest}</h4>
           </div>
         </div>
         <CustomAccordion />

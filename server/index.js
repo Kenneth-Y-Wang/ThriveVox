@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
+const uploadsMiddleware = require('./uploads-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -22,6 +23,8 @@ app.use(staticMiddleware);
 const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
+
+// for sign-in and sign-up
 
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, password, email, location } = req.body;
@@ -77,6 +80,30 @@ app.post('/api/auth/sign-in', (req, res, next) => {
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
         });
+    })
+    .catch(err => next(err));
+});
+
+// for image uploads
+
+app.patch('/api/profile/uploads/:userId', uploadsMiddleware, (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+  if (!userId) {
+    return;
+  }
+  const avaterUrl = `/images/${req.file.filename}`;
+  const sql = `
+      update "users"
+        set  "avaterUrl"=$1
+      where  "userId"=$2
+      returning "avaterUrl"
+  `;
+
+  const params = [avaterUrl, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [newImage] = result.rows;
+      res.status(201).json(newImage);
     })
     .catch(err => next(err));
 });

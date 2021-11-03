@@ -7,6 +7,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      caption: '',
       style: '',
       skill: '',
       instrument: '',
@@ -18,6 +19,7 @@ export default class Home extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.fileInputRef = React.createRef();
   }
 
   handleChange(event) {
@@ -26,8 +28,25 @@ export default class Home extends React.Component {
   }
 
   handleSubmit(event) {
+    const userId = this.context.user.userId;
     event.preventDefault();
     console.log(this.state);
+    const form = new FormData();
+
+    form.append('image', this.fileInputRef.current.files[0]);
+
+    fetch(`/api/profile/uploads/${userId}`, {
+      method: 'PATCH',
+      body: form
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.fileInputRef.current.value = null;
+      })
+      .catch(error => {
+        console.error('error', error);
+      });
     event.target.reset();
   }
 
@@ -43,8 +62,10 @@ export default class Home extends React.Component {
       <div className="home-page">
         <div className="edit-page-holder">
           <form onSubmit={handleSubmit} className="col-three-fifth edit-page">
-            <h1>Edit Profile</h1>
-            <label className="edit-label">Profile Picture Upload:</label>
+            <div className="edit-title"><h1 className="edit-title">Edit Profile</h1></div>
+            <label className="edit-label" htmlFor="caption">Profile picture uploads: <span>picture caption</span></label>
+            <input onChange={handleChange} className="edit-input" id="caption" type="text" name="caption"></input>
+            <input className="image-input" id="image" type="file" name="image" ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" />
             <label className="edit-label" htmlFor="style">Your Music Styles: <span>please provide any styles you like</span></label>
             <input onChange={handleChange} className="edit-input" id="style" type="text" name="style"></input>
             <label className="edit-label" htmlFor="skill">Your Skills: <span>please provide skill type and skill level</span></label>

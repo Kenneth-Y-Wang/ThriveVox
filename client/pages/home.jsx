@@ -129,7 +129,7 @@ export default class Home extends React.Component {
           console.error('error', error);
         });
     }
-
+    this.clickToEdit();
   }
 
   render() {

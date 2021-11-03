@@ -27,18 +27,34 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     if (this.context.user) {
-      const { avaterUrl, avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = this.context.user;
-      this.setState({
-        caption: avaterCaption,
-        style: userStyle,
-        skill: userSkills,
-        instrument: userInstruments,
-        mainInterest: userPrimaryInterest,
-        interest: userInterest,
-        band: userBand,
-        about: userBio,
-        profileUrl: avaterUrl
-      });
+
+      const userId = this.context.user.userId;
+      fetch(`/api/profile/users/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          const { avaterUrl, avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = data;
+          this.setState({
+            caption: avaterCaption,
+            style: userStyle,
+            skill: userSkills,
+            instrument: userInstruments,
+            mainInterest: userPrimaryInterest,
+            interest: userInterest,
+            band: userBand,
+            about: userBio,
+            profileUrl: avaterUrl
+          });
+
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     }
   }
 
@@ -180,7 +196,7 @@ export default class Home extends React.Component {
             <h4>{mainInterest}</h4>
           </div>
         </div>
-        <CustomAccordion />
+        <CustomAccordion userStyle={style} userSkills={skill} userInstruments={instrument} userInterest={interest} userBand={band} userBio={about}/>
       </div>
     );
   }

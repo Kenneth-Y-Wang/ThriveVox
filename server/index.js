@@ -58,16 +58,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     select "userId",
            "hashedPassword",
            "email",
-           "userLocation",
-           "avaterUrl",
-           "avaterCaption",
-           "userStyle",
-           "userSkills",
-           "userInstruments",
-           "userPrimaryInterest",
-           "userInterest",
-           "userBand",
-           "userBio"
+           "userLocation"
       from "users"
      where "username" = $1
   `;
@@ -78,14 +69,14 @@ app.post('/api/auth/sign-in', (req, res, next) => {
       if (!user) {
         throw new ClientError(401, 'invalid login');
       }
-      const { userId, hashedPassword, email, userLocation, avaterUrl, avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = user;
+      const { userId, hashedPassword, email, userLocation } = user;
       return argon2
         .verify(hashedPassword, password)
         .then(isMatching => {
           if (!isMatching) {
             throw new ClientError(401, 'invalid login');
           }
-          const payload = { userId, username, email, userLocation, avaterUrl, avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio };
+          const payload = { userId, username, email, userLocation };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           console.log(payload);
           res.json({ token, user: payload });
@@ -95,6 +86,35 @@ app.post('/api/auth/sign-in', (req, res, next) => {
 });
 
 // for userinfo and image uploads
+
+app.get('/api/profile/users/:userId', (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+  if (!userId) {
+    return;
+  }
+  const sql = `
+    select "avaterUrl",
+           "avaterCaption",
+           "userStyle",
+           "userSkills",
+           "userInstruments",
+           "userPrimaryInterest",
+           "userInterest",
+           "userBand",
+           "userBio"
+      from "users"
+     where "userId" = $1
+  `;
+
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const [userInfo] = result.rows;
+      console.log('userinfo:', userInfo);
+      res.json(userInfo);
+    })
+    .catch(err => next(err));
+});
 
 app.patch('/api/profile/users/:userId', (req, res, next) => {
   const userId = parseInt(req.params.userId, 10);

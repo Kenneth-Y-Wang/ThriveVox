@@ -17,7 +17,7 @@ export default class CustomAccordion extends React.Component {
   }
 
   render() {
-    const { userStyle, userSkills, userInstruments, userInterest, userBand, userBio } = this.context.user;
+    const { userStyle, userSkills, userInstruments, userInterest, userBand, userBio } = this.props;
     return (
       <div className="">
         <div >

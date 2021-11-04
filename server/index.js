@@ -1,4 +1,3 @@
-
 require('dotenv/config');
 const pg = require('pg');
 const argon2 = require('argon2');
@@ -8,6 +7,7 @@ const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
+const authorizationMiddleware = require('./authorization-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -116,13 +116,22 @@ app.get('/api/profile/users/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.patch('/api/profile/users/:userId', (req, res, next) => {
-  const userId = parseInt(req.params.userId, 10);
+// moving forward using token to verify userId
 
+app.use(authorizationMiddleware);
+
+app.patch('/api/profile/users', uploadsMiddleware, (req, res, next) => {
+  const { userId } = req.user;
   if (!userId) {
     return;
   }
-  const { caption, style, skill, instrument, mainInterest, interest, band, about } = req.body;
+
+  const { avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = req.body;
+
+  let avaterUrl;
+  if (req.file) {
+    avaterUrl = `/images/${req.file.filename}`;
+  }
   const sql = `
   update "users"
      set "avaterCaption"=$1,
@@ -132,12 +141,13 @@ app.patch('/api/profile/users/:userId', (req, res, next) => {
          "userPrimaryInterest"=$5,
          "userInterest"=$6,
          "userBand"=$7,
-         "userBio"=$8
-  where  "userId"=$9
-  returning "avaterCaption","userStyle","userSkills","userInstruments","userPrimaryInterest","userInterest","userBand","userBio"
+         "userBio"=$8,
+        "avaterUrl" = coalesce($9,"avaterUrl")
+  where  "userId"=$10
+  returning "avaterUrl","avaterCaption","userStyle","userSkills","userInstruments","userPrimaryInterest","userInterest","userBand","userBio"
   `;
 
-  const params = [caption, style, skill, instrument, mainInterest, interest, band, about, userId];
+  const params = [avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio, avaterUrl, userId];
   db.query(sql, params)
     .then(result => {
       const [userUpdatedInfo] = result.rows;
@@ -147,27 +157,27 @@ app.patch('/api/profile/users/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.patch('/api/profile/uploads/:userId', uploadsMiddleware, (req, res, next) => {
-  const userId = parseInt(req.params.userId, 10);
-  if (!userId) {
-    return;
-  }
-  const avaterUrl = `/images/${req.file.filename}`;
-  const sql = `
-      update "users"
-        set  "avaterUrl"=$1
-      where  "userId"=$2
-      returning "avaterUrl"
-  `;
+// app.patch('/api/profile/uploads/:userId', uploadsMiddleware, (req, res, next) => {
+//   const userId = parseInt(req.params.userId, 10);
+//   if (!userId) {
+//     return;
+//   }
+//   const avaterUrl = `/images/${req.file.filename}`;
+//   const sql = `
+//       update "users"
+//         set  "avaterUrl"=$1
+//       where  "userId"=$2
+//       returning "avaterUrl"
+//   `;
 
-  const params = [avaterUrl, userId];
-  db.query(sql, params)
-    .then(result => {
-      const [newImage] = result.rows;
-      res.status(201).json(newImage);
-    })
-    .catch(err => next(err));
-});
+//   const params = [avaterUrl, userId];
+//   db.query(sql, params)
+//     .then(result => {
+//       const [newImage] = result.rows;
+//       res.status(201).json(newImage);
+//     })
+//     .catch(err => next(err));
+// });
 
 app.use(errorMiddleware);
 

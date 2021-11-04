@@ -8,21 +8,12 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      caption: '',
-      style: '',
-      skill: '',
-      instrument: '',
-      mainInterest: '',
-      interest: '',
-      band: '',
-      about: '',
-      profileUrl: '',
+      userData: null,
       isEditing: false
 
     };
-    this.handleChange = this.handleChange.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.fileInputRef = React.createRef();
     this.clickToEdit = this.clickToEdit.bind(this);
   }
 
@@ -41,17 +32,8 @@ export default class Home extends React.Component {
       .then(response => response.json())
       .then(data => {
 
-        const { avaterUrl, avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = data;
         this.setState({
-          caption: avaterCaption,
-          style: userStyle,
-          skill: userSkills,
-          instrument: userInstruments,
-          mainInterest: userPrimaryInterest,
-          interest: userInterest,
-          band: userBand,
-          about: userBio,
-          profileUrl: avaterUrl
+          userData: data
         });
 
       })
@@ -65,97 +47,34 @@ export default class Home extends React.Component {
     this.setState({ isEditing: !this.state.isEditing });
   }
 
-  handleChange(event) {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  }
+  handleSubmit(data) {
 
-  handleSubmit(event) {
-    const userId = this.context.user.userId;
-    event.preventDefault();
+    // event.preventDefault();
+    this.setState({ userData: data });
 
-    const { caption, style, skill, instrument, mainInterest, interest, band, about } = this.state;
-    const userInfo = {
-      caption: caption,
-      style: style,
-      skill: skill,
-      instrument: instrument,
-      mainInterest: mainInterest,
-      interest: interest,
-      band: band,
-      about: about
-    };
-
-    const form = new FormData();
-
-    fetch(`/api/profile/users/${userId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userInfo)
-    })
-      .then(response => response.json())
-      .then(data => {
-        const { avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = data;
-        this.setState({
-          caption: avaterCaption,
-          style: userStyle,
-          skill: userSkills,
-          instrument: userInstruments,
-          mainInterest: userPrimaryInterest,
-          interest: userInterest,
-          band: userBand,
-          about: userBio
-        });
-
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-    if (this.fileInputRef.current.value) {
-      form.append('image', this.fileInputRef.current.files[0]);
-
-      fetch(`/api/profile/uploads/${userId}`, {
-        method: 'PATCH',
-        body: form
-      })
-        .then(response => response.json())
-        .then(data => {
-          this.setState({ profileUrl: data.avaterUrl });
-
-          this.fileInputRef.current.value = null;
-        })
-        .catch(error => {
-          console.error('error', error);
-        });
-    }
     this.clickToEdit();
   }
 
   render() {
-
+    if (!this.state.userData) return null;
     if (!this.context.user) return <Redirect to="sign-in" />;
     const displayName = this.context.user.username;
     const displayLocation = this.context.user.userLocation;
     const displayEmail = this.context.user.email;
-    const { caption, style, skill, instrument, mainInterest, interest, band, about, profileUrl } = this.state;
-    const { handleChange, handleSubmit, clickToEdit } = this;
+    const { avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio, avaterUrl } = this.state.userData;
+    const { handleSubmit, clickToEdit } = this;
 
     return (
       <div className="home-page">
         <div className={this.state.isEditing ? 'edit-page-holder' : 'edit-page-holder hidden'}>
-          < EditForm handleSubmit={handleSubmit} handleChange={handleChange} fileInputRef={this.fileInputRef} clickToEdit={clickToEdit}
-            avaterCaption={caption} userStyle={style} userSkills={skill} userInstruments={instrument}
-            userPrimaryInterest={mainInterest} userInterest={interest} userBand={band} userBio={about} />
+          < EditForm userInfo={this.state.userData} onSubmit={handleSubmit} clickToEdit={clickToEdit} />
         </div>
         <div className="personal-info">
           <div className="col-two-fifth pic-column">
             <div className="pic-holder">
-              <img src={profileUrl || '/images/b50797c8a7420ba660b2b310f8698811.jpg'} />
+              <img src={avaterUrl || '/images/b50797c8a7420ba660b2b310f8698811.jpg'} />
             </div>
-            <h4 className="profile-caption">{caption || 'Update Your Pic!'}</h4>
+            <h4 className="profile-caption">{avaterCaption || 'Update Your Pic!'}</h4>
           </div>
           <div className="col-two-fifth info-column">
             <div className="profile-edit-row">
@@ -167,10 +86,10 @@ export default class Home extends React.Component {
             <h4 className="display-info">Email:</h4>
             <h4>{displayEmail}</h4>
             <h4 className="display-info">Primary Interest:</h4>
-            <h4>{mainInterest || 'N/A'}</h4>
+            <h4>{userPrimaryInterest || 'N/A'}</h4>
           </div>
         </div>
-        <CustomAccordion userStyle={style} userSkills={skill} userInstruments={instrument} userInterest={interest} userBand={band} userBio={about}/>
+        <CustomAccordion userStyle={userStyle} userSkills={userSkills} userInstruments={userInstruments} userInterest={userInterest} userBand={userBand} userBio={userBio} />
       </div>
     );
   }

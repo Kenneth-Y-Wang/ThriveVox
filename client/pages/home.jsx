@@ -27,36 +27,38 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    if (this.context.user) {
-
-      const userId = this.context.user.userId;
-      fetch(`/api/profile/users/${userId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-
-          const { avaterUrl, avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = data;
-          this.setState({
-            caption: avaterCaption,
-            style: userStyle,
-            skill: userSkills,
-            instrument: userInstruments,
-            mainInterest: userPrimaryInterest,
-            interest: userInterest,
-            band: userBand,
-            about: userBio,
-            profileUrl: avaterUrl
-          });
-
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+    if (!this.context.user) {
+      return;
     }
+
+    const userId = this.context.user.userId;
+    fetch(`/api/profile/users/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+
+        const { avaterUrl, avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = data;
+        this.setState({
+          caption: avaterCaption,
+          style: userStyle,
+          skill: userSkills,
+          instrument: userInstruments,
+          mainInterest: userPrimaryInterest,
+          interest: userInterest,
+          band: userBand,
+          about: userBio,
+          profileUrl: avaterUrl
+        });
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
   }
 
   clickToEdit() {

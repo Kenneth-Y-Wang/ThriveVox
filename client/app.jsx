@@ -7,7 +7,6 @@ import Home from './pages/home';
 import NotFound from './pages/not-found';
 import CustomDropdown from './components/navbar';
 import PageContainer from './components/page-container';
-import MainPageContainer from './components/main-page-container';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -20,7 +19,7 @@ export default class App extends React.Component {
     };
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
-    this.switch = this.switch.bind(this);
+
   }
 
   componentDidMount() {
@@ -32,18 +31,6 @@ export default class App extends React.Component {
     const token = window.localStorage.getItem('react-context-jwt');
     const user = token ? decodeToken(token) : null;
     this.setState({ user, isAuthorizing: false });
-  }
-
-  switch() {
-    if (!this.state.user) {
-      alert('Please log-in first');
-      return;
-    }
-    if (event.target.matches('a') === true || event.target.matches('.overlay') === true || event.target.matches('.fas') === true) {
-      this.setState(state => ({
-        isOpen: !state.isOpen
-      }));
-    }
   }
 
   handleSignIn(result) {
@@ -73,11 +60,17 @@ export default class App extends React.Component {
     const { user, route, isOpen } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, isOpen, handleSignIn, handleSignOut };
+    const containerClass = user
+      ? 'container'
+      : 'container-sign-in';
+
     return (
       <AppContext.Provider value={contextValue}>
         <>
-          <CustomDropdown switch={this.switch} />
-          {!user ? <PageContainer>{this.renderPage()}</PageContainer> : <MainPageContainer>{this.renderPage()}</MainPageContainer>}
+          <CustomDropdown />
+          <PageContainer containerClass={containerClass}>
+            {this.renderPage()}
+            </PageContainer>
         </>
       </AppContext.Provider>
     );

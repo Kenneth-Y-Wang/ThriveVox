@@ -157,28 +157,6 @@ app.patch('/api/profile/users', uploadsMiddleware, (req, res, next) => {
     .catch(err => next(err));
 });
 
-// app.patch('/api/profile/uploads/:userId', uploadsMiddleware, (req, res, next) => {
-//   const userId = parseInt(req.params.userId, 10);
-//   if (!userId) {
-//     return;
-//   }
-//   const avaterUrl = `/images/${req.file.filename}`;
-//   const sql = `
-//       update "users"
-//         set  "avaterUrl"=$1
-//       where  "userId"=$2
-//       returning "avaterUrl"
-//   `;
-
-//   const params = [avaterUrl, userId];
-//   db.query(sql, params)
-//     .then(result => {
-//       const [newImage] = result.rows;
-//       res.status(201).json(newImage);
-//     })
-//     .catch(err => next(err));
-// });
-
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

@@ -45,6 +45,10 @@ body {
   text-align: center;
 }
 
+.align-center {
+  align-items: center;
+}
+
 .col-half,
 .col-one-third,
 .col-three-fifth,
@@ -52,6 +56,16 @@ body {
 .col-two-fifth,
 .col-full {
   width: 100%;
+  padding: 0 0.75rem;
+}
+
+.col-nine-tenth {
+  width: 90%;
+  padding: 0 0.75rem;
+}
+
+.col-one-tenth {
+  width: 20%;
   padding: 0 0.75rem;
 }
 
@@ -72,11 +86,17 @@ body {
 
   .col-half,
   .col-one-third,
+  .col-one-tenth,
   .col-three-fifth,
   .col-four-fifth,
   .col-two-fifth,
+  .col-nine-tenth,
   .col-full {
     padding: 0 0.75rem;
+  }
+
+  .col-one-tenth {
+    width: 10%;
   }
 
   .col-one-third {
@@ -97,6 +117,10 @@ body {
 
   .col-two-fifth {
     width: 40%;
+  }
+
+  .col-nine-tenth {
+    width: 90%;
   }
 
   .col-full {
@@ -113,11 +137,17 @@ body {
 
   .col-half,
   .col-one-third,
+  .col-one-tenth,
   .col-three-fifth,
   .col-four-fifth,
   .col-two-fifth,
+  .col-nine-tenth,
   .col-full {
     padding: 0 0.75rem;
+  }
+
+  .col-one-tenth {
+    width: 10%;
   }
 
   .col-one-third {
@@ -138,6 +168,10 @@ body {
 
   .col-two-fifth {
     width: 40%;
+  }
+
+  .col-nine-tenth {
+    width: 90%;
   }
 
   .col-full {

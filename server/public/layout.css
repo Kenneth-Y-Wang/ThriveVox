@@ -6,10 +6,10 @@ body {
 
 .container {
   max-width: 575px;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0 auto;
   font-family: Orbitron, sans-serif;
-  background-color: #f5f6f8;
+  background-color: #f1f3f5;
   overflow-y: auto;
 }
 
@@ -34,12 +34,23 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .col-half,
+.col-one-third,
 .col-three-fifth,
-.col-four-fifth {
+.col-four-fifth,
+.col-two-fifth,
+.col-full {
   width: 100%;
   padding: 0 0.75rem;
 }
@@ -60,9 +71,16 @@ body {
   }
 
   .col-half,
+  .col-one-third,
   .col-three-fifth,
-  .col-four-fifth {
+  .col-four-fifth,
+  .col-two-fifth,
+  .col-full {
     padding: 0 0.75rem;
+  }
+
+  .col-one-third {
+    width: 30%;
   }
 
   .col-half {
@@ -75,6 +93,14 @@ body {
 
   .col-three-fifth {
     width: 60%;
+  }
+
+  .col-two-fifth {
+    width: 40%;
+  }
+
+  .col-full {
+    width: 100%;
   }
 }
 
@@ -86,9 +112,16 @@ body {
   }
 
   .col-half,
+  .col-one-third,
   .col-three-fifth,
-  .col-four-fifth {
+  .col-four-fifth,
+  .col-two-fifth,
+  .col-full {
     padding: 0 0.75rem;
+  }
+
+  .col-one-third {
+    width: 30%;
   }
 
   .col-half {
@@ -101,5 +134,13 @@ body {
 
   .col-three-fifth {
     width: 60%;
+  }
+
+  .col-two-fifth {
+    width: 40%;
+  }
+
+  .col-full {
+    width: 100%;
   }
 }

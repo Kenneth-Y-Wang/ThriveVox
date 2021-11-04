@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
@@ -8,7 +7,6 @@ import Home from './pages/home';
 import NotFound from './pages/not-found';
 import CustomDropdown from './components/navbar';
 import PageContainer from './components/page-container';
-import MainPageContainer from './components/main-page-container';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -62,11 +60,17 @@ export default class App extends React.Component {
     const { user, route, isOpen } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, isOpen, handleSignIn, handleSignOut };
+    const containerClass = user
+      ? 'container'
+      : 'container-sign-in';
+
     return (
       <AppContext.Provider value={contextValue}>
         <>
           <CustomDropdown />
-          {!user ? <PageContainer>{this.renderPage()}</PageContainer> : <MainPageContainer>{this.renderPage()}</MainPageContainer>}
+          <PageContainer containerClass={containerClass}>
+            {this.renderPage()}
+            </PageContainer>
         </>
       </AppContext.Provider>
     );

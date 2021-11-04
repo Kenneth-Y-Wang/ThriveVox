@@ -1,4 +1,3 @@
-
 require('dotenv/config');
 const pg = require('pg');
 const argon2 = require('argon2');
@@ -7,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
+const uploadsMiddleware = require('./uploads-middleware');
+const authorizationMiddleware = require('./authorization-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -22,6 +23,8 @@ app.use(staticMiddleware);
 const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
+
+// for sign-in and sign-up
 
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, password, email, location } = req.body;
@@ -75,8 +78,81 @@ app.post('/api/auth/sign-in', (req, res, next) => {
           }
           const payload = { userId, username, email, userLocation };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+
           res.json({ token, user: payload });
         });
+    })
+    .catch(err => next(err));
+});
+
+// for userinfo and image uploads
+
+app.get('/api/profile/users/:userId', (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+  if (!userId) {
+    return;
+  }
+  const sql = `
+    select "avaterUrl",
+           "avaterCaption",
+           "userStyle",
+           "userSkills",
+           "userInstruments",
+           "userPrimaryInterest",
+           "userInterest",
+           "userBand",
+           "userBio"
+      from "users"
+     where "userId" = $1
+  `;
+
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const [userInfo] = result.rows;
+
+      res.json(userInfo);
+    })
+    .catch(err => next(err));
+});
+
+// moving forward using token to verify userId
+
+app.use(authorizationMiddleware);
+
+app.patch('/api/profile/users', uploadsMiddleware, (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+
+  const { avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio } = req.body;
+
+  let avaterUrl;
+  if (req.file) {
+    avaterUrl = `/images/${req.file.filename}`;
+  }
+  const sql = `
+  update "users"
+     set "avaterCaption"=$1,
+         "userStyle"=$2,
+         "userSkills"=$3,
+         "userInstruments"=$4,
+         "userPrimaryInterest"=$5,
+         "userInterest"=$6,
+         "userBand"=$7,
+         "userBio"=$8,
+        "avaterUrl" = coalesce($9,"avaterUrl")
+  where  "userId"=$10
+  returning "avaterUrl","avaterCaption","userStyle","userSkills","userInstruments","userPrimaryInterest","userInterest","userBand","userBio"
+  `;
+
+  const params = [avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio, avaterUrl, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [userUpdatedInfo] = result.rows;
+
+      res.json(userUpdatedInfo);
     })
     .catch(err => next(err));
 });

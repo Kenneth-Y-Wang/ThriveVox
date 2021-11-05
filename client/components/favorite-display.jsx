@@ -18,7 +18,14 @@ export default class FavoriteDisplay extends React.Component {
   }
 
   render() {
-    if (this.props.searchResult) {
+    if (!this.props.searchResult) {
+      return (
+        <div className="no-result-message-holder">
+          <h1 className="no-result-message">Sorry, No Result is Showing...</h1>
+        </div>
+      );
+    }
+    if (!this.props.searchResult.idAlbum) {
       const {
         strArtistThumb, strArtist, intBornYear, strGenre,
         strStyle, strCountry, strWebsite, strArtistBanner, strBiographyEN
@@ -34,7 +41,8 @@ export default class FavoriteDisplay extends React.Component {
             </div>
             <div className="col-half search-info-col">
               <div className="result-button-row">
-                  <button onClick={this.detailView} data-id={strArtist} type="button" className="detail-button">Detail</button>
+                  <button onClick={this.detailView} data-id={strArtist} type="button"
+                    className={this.state.isViewing === this.props.searchResult.strArtist ? 'detail-clicked' : 'detail-button'}>Detail</button>
                 <button className="add-button"><i className="fas fa-plus"></i></button>
               </div>
                 <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
@@ -59,11 +67,47 @@ export default class FavoriteDisplay extends React.Component {
         </div>
       </>
       );
-    } else {
+    } else if (this.props.searchResult.idAlbum) {
+      const {
+        strAlbumThumb, strArtist, intYearReleased, strGenre,
+        strStyle, strAlbum, intScore, strAlbum3DFlat, strDescriptionEN
+      } = this.props.searchResult;
       return (
-        <div className="no-result-message-holder">
-         <h1 className="no-result-message">Sorry, No Result is Showing...</h1>
-        </div>
+        <>
+          <div className="single-search col-nine-tenth">
+            <div className="default-row col-full">
+              <div className="col-half">
+                <div className="search-pic-holder">
+                  <img src={strAlbumThumb} />
+                </div>
+              </div>
+              <div className="col-half search-info-col">
+                <div className="result-button-row">
+                  <button onClick={this.detailView} data-id={strArtist} type="button"
+                    className={this.state.isViewing === this.props.searchResult.strArtist ? 'detail-clicked' : 'detail-button'}>Detail</button>
+                  <button className="add-button"><i className="fas fa-plus"></i></button>
+                </div>
+                <h3 className="caro-text">Album: <span>{strAlbum}</span></h3>
+                <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
+                <h3 className="caro-text">Genre: <span>{strGenre}</span></h3>
+                <h3 className="caro-text">Style: <span>{strStyle}</span></h3>
+                <h3 className="caro-text">First Release: <span>{intYearReleased}</span></h3>
+                <h3 className="caro-text">Album Score: <span>{intScore}</span></h3>
+              </div>
+            </div>
+            <div className={this.state.isViewing === this.props.searchResult.strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
+              <div className="banner-holder col-full">
+                <img src={strAlbum3DFlat} />
+              </div>
+              <div className="search-note col-full">
+                <h3 className="caro-text">Album Description:</h3>
+                <p className="detail-note">
+                  {strDescriptionEN}
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
       );
     }
   }

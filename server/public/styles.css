@@ -440,7 +440,7 @@ button {
 
 .search-title {
   color: white;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .search-title > span {
@@ -448,7 +448,8 @@ button {
 }
 
 .favorite-search-button,
-.favorite-search-input {
+.favorite-search-input,
+.artist-input {
   display: inline-block;
 }
 
@@ -456,19 +457,21 @@ button {
   height: 25px;
   font-size: 1rem;
   color: white;
-  background-color: #6c757d;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
+  background-color: transparent;
   border: none;
   line-height: 25px;
+  transition-duration: 0.5s;
 }
 
 .favorite-search-input {
   border: none;
+  border-left: 1px solid white;
+  border-bottom: 2px solid white;
+  background-color: transparent;
   height: 25px;
   width: 90%;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  color: white;
+  font-family: Jura, sans-serif;
 }
 
 .album-search-assist {
@@ -483,7 +486,7 @@ button {
   border: none;
   border-bottom: 2px solid white;
   padding: 0.15rem;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   color: white;
 }
@@ -496,6 +499,7 @@ button {
 ::placeholder {
   color: #e9ecef;
   font-family: Jura, sans-serif;
+  font-style: italic;
 }
 
 .album-comment {
@@ -518,6 +522,11 @@ button {
   font-family: Orbitron, sans-serif;
   background-color: black;
   margin-right: 1rem;
+}
+
+.search-button:hover {
+  color: black;
+  background-color: white;
 }
 
 @media screen and (min-width: 768px) {
@@ -710,6 +719,18 @@ img:hover {
   background-color: white;
   border: none;
   margin-left: 0.75rem;
+}
+
+.detail-clicked {
+  color: white;
+  background-color: black;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid black;
+  border-radius: 2px;
+  transition-duration: 0.5s;
+  font-family: Orbitron, sans-serif;
 }
 
 .hidden-detail-row {

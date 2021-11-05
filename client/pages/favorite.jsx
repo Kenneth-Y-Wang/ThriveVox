@@ -46,14 +46,12 @@ export default class FavoriteSearch extends React.Component {
           console.log(artist);
           this.setState({ searchResult: artist });
         })
-
         .catch(err => {
           console.error(err);
         });
     }
 
     if (this.state.searchType === 'Album') {
-      console.log(this.state.assistInput);
       fetch(`https://theaudiodb.p.rapidapi.com/searchalbum.php?s=${assistInput}&a=${input}`, {
         method: 'GET',
         headers: {
@@ -63,7 +61,9 @@ export default class FavoriteSearch extends React.Component {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          const [album] = data.album;
+          console.log(album);
+          this.setState({ searchResult: album });
         })
         .catch(err => {
           console.error(err);
@@ -81,11 +81,16 @@ export default class FavoriteSearch extends React.Component {
             <h1 className="search-title">My Favorite <span>by {this.state.searchType}</span></h1>
             <form onSubmit={this.handleSubmit}>
               <div className="row align-center">
-                <button type="submit" className="favorite-search-button"><i className="fas fa-headphones-alt"></i></button>
-                <input onChange={this.handleChange} name="searchInput" id="favorite" type="text" className="favorite-search-input" />
+                <button type="submit" className="favorite-search-button"><i className="fas fa-compact-disc"></i></button>
+                <input onChange={this.handleChange} name="searchInput" id="favorite" type="text"
+                       className="favorite-search-input" placeholder="Type in Your Favorite" />
               </div>
-              <input onChange={this.handleChange} name="assistInput" id="artistName" type="text" className={this.state.searchType === 'Album' ? 'artist-input' : 'artist-input hidden'}
-                placeholder="Type In Album Artist" />
+              <div className={this.state.searchType === 'Album' ? 'row align-center' : 'row align-center hidden'}>
+                <button type="button" className="favorite-search-button"><i className="fas fa-headphones-alt"></i></button>
+                <input onChange={this.handleChange} name="assistInput" id="artistName" type="text" className= "artist-input"
+                  placeholder="Type In Album Artist" />
+              </div>
+
               <div className="search-button-holder">
                 <button type="button" onClick={this.searchTypeChoose}className="search-button" data-type="Artist">By Artist</button>
                 <button type="button" onClick={this.searchTypeChoose}className="search-button" data-type="Album">By Album</button>

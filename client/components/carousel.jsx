@@ -5,28 +5,6 @@ export default class Carousel extends React.Component {
     super(props);
     this.state = {
       index: 1,
-      favorites: [
-        {
-          favoriteId: 1,
-          url: 'https://i.pinimg.com/originals/3f/9b/1a/3f9b1ab0095226f5af5f5720e1a49acd.jpg',
-          albumName: 'Revelations',
-          artist: 'Eminem',
-          firstRelease: '2020',
-          genre: 'Hip-Hop',
-          style: 'Urban/R&G',
-          albumScore: '6.8'
-        },
-        {
-          favoriteId: 2,
-          url: 'https://media.pitchfork.com/photos/5acfc114cae28410a11144df/1:1/w_600/Marshall%20Mathers%20LP.jpg',
-          albumName: 'The Marshall Mathers',
-          artist: 'Eminem',
-          firstRelease: '2000',
-          genre: 'Hip-Hop',
-          style: 'Urban/R&G',
-          albumScore: '8.0'
-        }
-      ],
       savedFavorites: []
     };
     this.rightClick = this.rightClick.bind(this);
@@ -35,12 +13,12 @@ export default class Carousel extends React.Component {
   }
 
   autoRun() {
-    this.setState(this.state.index === this.state.favorites.length ? { index: 1 } : { index: this.state.index + 1 });
+    this.setState(this.state.index === (this.state.savedFavorites.length - 1) ? { index: 0 } : { index: this.state.index + 1 });
 
   }
 
   rightClick() {
-    this.setState(this.state.index === this.state.favorites.length ? { index: 1 } : { index: this.state.index + 1 });
+    this.setState(this.state.index === (this.state.savedFavorites.length - 1) ? { index: 0 } : { index: this.state.index + 1 });
 
     clearInterval(this.timeID);
     this.timeID = setInterval(
@@ -52,7 +30,7 @@ export default class Carousel extends React.Component {
 
   leftClick() {
 
-    this.setState(this.state.index === 1 ? { index: this.state.favorites.length } : { index: this.state.index - 1 });
+    this.setState(this.state.index === 0 ? { index: (this.state.savedFavorites.length - 1) } : { index: this.state.index - 1 });
 
     clearInterval(this.timeID);
     this.timeID = setInterval(
@@ -83,48 +61,95 @@ export default class Carousel extends React.Component {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        // let favoriteArray=[]
         this.setState({ savedFavorites: data });
       })
       .catch(error => {
         console.error('Error:', error);
       });
 
-    // this.timeID = setInterval(
-    //   () => this.autoRun(),
-    //   3000
-    // );
+    this.timeID = setInterval(
+      () => this.autoRun(),
+      3000
+    );
 
   }
 
   render() {
-    const favorites = this.state.favorites;
-    const favoriteLists = favorites.map(favorite => {
-      return (
-        <div key={favorite.favoriteId} className={favorite.favoriteId === this.state.index ? '' : 'hidden'}>
-          <div className="caro-content-holder">
-            <div className="col-two-fifth caro-pic-col">
-              <div className="caro-pic-holder">
-                <img src={favorite.url} />
-              </div>
-              <h3>{favorite.albumName}</h3>
+    const favorites = this.state.savedFavorites;
+    const defaultDisplay = (
+      <div >
+        <div className="caro-content-holder">
+          <div className="col-two-fifth caro-pic-col">
+            <div className="caro-pic-holder">
+              <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YmFuZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" />
             </div>
-            <div className="col-two-fifth caro-info-col">
-              <h3 className="caro-text">Artist: <span>{favorite.artist}</span></h3>
-              <h3 className="caro-text">First Release: <span>{favorite.firstRelease}</span></h3>
-              <h3 className="caro-text">Genre: <span>{favorite.genre}</span></h3>
-              <h3 className="caro-text">Style: <span>{favorite.style}</span></h3>
-              <h3 className="caro-text">Album Score: <span>{favorite.albumScore}</span></h3>
-              <button className="detail-button">Detail</button>
-            </div>
+            <h3>Your Recent Save</h3>
+          </div>
+          <div className="col-two-fifth caro-info-col">
+            <h3 className="caro-text">Artist: <span>Can be You!</span></h3>
+            <h3 className="caro-text">First Release: <span>Will be Soon..</span></h3>
+            <h3 className="caro-text">Genre: <span>Your Genre</span></h3>
+            <h3 className="caro-text">Style: <span>We Love Your Style!</span></h3>
+            <h3 className="caro-text">Album Score: <span>10 For Sure!</span></h3>
           </div>
         </div>
+      </div>
+    );
+    const favoriteLists = favorites.map((favorite, index) => {
+      if (favorite.favoriteType === 'album') {
+        return (
+          <div key={favorite.favoriteId} className={index === this.state.index ? '' : 'hidden'}>
+            <div className="caro-content-holder">
+              <div className="col-two-fifth caro-pic-col">
+                <h3 className="mg-t-75">{favorite.favoriteDetails.strAlbum}</h3>
+                <div className="caro-pic-holder">
+                  <img src={favorite.favoriteDetails.strAlbumThumb} />
+                </div>
 
-      );
+              </div>
+              <div className="col-two-fifth caro-info-col">
+                <div className="caro-detail-bt-row"><button className="caro-detail-button">Detail</button></div>
+                <h3 className="caro-text">Artist: <span>{favorite.favoriteDetails.strArtist}</span></h3>
+                <h3 className="caro-text">First Release: <span>{favorite.favoriteDetails.intYearReleased}</span></h3>
+                <h3 className="caro-text">Genre: <span>{favorite.favoriteDetails.strGenre}</span></h3>
+                <h3 className="caro-text">Style: <span>{favorite.favoriteDetails.strStyle}</span></h3>
+                <h3 className="caro-text">Album Score: <span>{favorite.favoriteDetails.intScore}</span></h3>
+
+              </div>
+            </div>
+          </div>
+        );
+      }
+      if (favorite.favoriteType === 'artist') {
+        return (
+          <div key={favorite.favoriteId} className={index === this.state.index ? '' : 'hidden'}>
+            <div className="caro-content-holder">
+              <div className="col-two-fifth caro-pic-col">
+                <h3 className="mg-t-75">{favorite.favoriteDetails.strArtist}</h3>
+                <div className="caro-pic-holder">
+                  <img src={favorite.favoriteDetails.strArtistThumb} />
+                </div>
+
+              </div>
+              <div className="col-two-fifth caro-info-col">
+                <div className="caro-detail-bt-row"><button className="caro-detail-button">Detail</button></div>
+                <h3 className="caro-text ">Alternate Name: <span>{favorite.favoriteDetails.strArtistAlternate}</span></h3>
+                <h3 className="caro-text">Born: <span>{favorite.favoriteDetails.intBornYear}</span></h3>
+                <h3 className="caro-text">Genre: <span>{favorite.favoriteDetails.strGenre}</span></h3>
+                <h3 className="caro-text">Style: <span>{favorite.favoriteDetails.strStyle}</span></h3>
+                <h3 className="caro-text artist-web">Artist Website: <span>{favorite.favoriteDetails.strWebsite}</span></h3>
+
+              </div>
+            </div>
+          </div>
+
+        );
+      }
+      return null;
     });
 
-    const listButtons = favorites.map(favorite =>
-      <button onClick={this.dotClick} className={favorite.favoriteId === this.state.index ? 'dot dot-select' : 'dot'} name={favorite.favoriteId} key={favorite.favoriteId}></button>
+    const listButtons = favorites.map((favorite, index) =>
+      <button onClick={this.dotClick} className={index === this.state.index ? 'dot dot-select' : 'dot'} name={index} key={favorite.favoriteId}></button>
     );
     return (
       <div className="">
@@ -133,7 +158,7 @@ export default class Carousel extends React.Component {
             <i onClick={this.leftClick} className="far fa-caret-square-left font-style caro-transition"></i>
           </div>
           <div className=" col-four-fifth caro-content-column">
-            {favoriteLists}
+            {favorites ? favoriteLists : defaultDisplay}
             <div className="dot-holder">
               {listButtons}
             </div>

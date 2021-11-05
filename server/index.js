@@ -198,6 +198,8 @@ app.get('/api/favorite/savedFavorite', (req, res, next) => {
          "favoriteDetails"
     from "savedFavorite"
     where "userId"=$1
+    order by "favoriteId" desc
+    limit 5
   `;
 
   const params = [userId];

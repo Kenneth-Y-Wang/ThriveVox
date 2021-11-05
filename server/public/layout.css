@@ -74,6 +74,10 @@ body {
   margin-bottom: 1rem;
 }
 
+.mg-t-75 {
+  margin-top: 0.75rem;
+}
+
 .no-dec {
   text-decoration: none;
 }

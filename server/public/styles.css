@@ -575,6 +575,18 @@ button {
   font-size: 1rem;
 }
 
+.caro-detail-bt-row {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.artist-web > span {
+  font-size: 0.8rem;
+}
+
 .caro-text > span {
   color: black;
 }
@@ -603,6 +615,21 @@ button {
   transition-duration: 0.5s;
   font-family: Orbitron, sans-serif;
   background-color: white;
+}
+
+.caro-detail-button {
+  color: black;
+  border: none;
+  border-bottom: 2px black solid;
+  transition-duration: 0.5s;
+  font-family: Orbitron, sans-serif;
+  background-color: white;
+  font-size: 1.1rem;
+}
+
+.caro-detail-button:hover {
+  color: #8d99ae;
+  border-bottom: 2px solid #8d99ae;
 }
 
 .dot-holder {

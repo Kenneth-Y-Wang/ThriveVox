@@ -31,45 +31,34 @@ export default class FavoriteSearch extends React.Component {
     console.log(this.state.searchInput);
     const input = this.state.searchInput;
     const assistInput = this.state.assistInput;
-
-    if (this.state.searchType === 'Artist') {
-      fetch(`https://theaudiodb.p.rapidapi.com/search.php?s=${input}`, {
-        method: 'GET',
-        headers: {
-          'x-rapidapi-host': 'theaudiodb.p.rapidapi.com',
-          'x-rapidapi-key': '3ac221b76dmsh761303974d244fbp12a694jsna1c5bc30b528'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          const [artist] = data.artists;
-          console.log(artist);
-          this.setState({ searchResult: artist });
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    }
-
+    let fetchPath;
+    let fileName;
     if (this.state.searchType === 'Album') {
-      fetch(`https://theaudiodb.p.rapidapi.com/searchalbum.php?s=${assistInput}&a=${input}`, {
-        method: 'GET',
-        headers: {
-          'x-rapidapi-host': 'theaudiodb.p.rapidapi.com',
-          'x-rapidapi-key': '3ac221b76dmsh761303974d244fbp12a694jsna1c5bc30b528'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          const [album] = data.album;
-          console.log(album);
-          this.setState({ searchResult: album });
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      fetchPath = `https://theaudiodb.p.rapidapi.com/searchalbum.php?s=${assistInput}&a=${input}`;
+      fileName = 'album';
 
+    } else {
+      fetchPath = `https://theaudiodb.p.rapidapi.com/search.php?s=${input}`;
+      fileName = 'artists';
     }
+
+    fetch(fetchPath, {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-host': 'theaudiodb.p.rapidapi.com',
+        'x-rapidapi-key': '3ac221b76dmsh761303974d244fbp12a694jsna1c5bc30b528'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const [result] = data[fileName];
+        console.log(result);
+        this.setState({ searchResult: result });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
   }
 
   render() {

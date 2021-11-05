@@ -529,18 +529,6 @@ button {
   background-color: white;
 }
 
-@media screen and (min-width: 768px) {
-  .edit-page {
-    padding: 1.25rem 4.75rem;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .edit-page {
-    padding: 1.25rem 5.75rem;
-  }
-}
-
 /* carosel */
 
 .favorite-caro {
@@ -762,6 +750,7 @@ img:hover {
   line-height: 1.2rem;
   font-weight: 500;
   margin-bottom: 0;
+  font-size: 0.8rem;
 }
 
 .no-result-message-holder {
@@ -769,4 +758,24 @@ img:hover {
   text-align: center;
   margin-top: 3rem;
   font-size: 0.7rem;
+}
+
+@media screen and (min-width: 768px) {
+  .edit-page {
+    padding: 1.25rem 4.75rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .edit-page {
+    padding: 1.25rem 5.75rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .arrow-holder {
+    justify-content: center;
+    align-items: center;
+    display: none;
+  }
 }

@@ -159,7 +159,7 @@ app.patch('/api/profile/users', uploadsMiddleware, (req, res, next) => {
 
 // user save favorite
 
-app.post('/api/favorite/savedFavorite', uploadsMiddleware, (req, res, next) => {
+app.post('/api/favorite/savedFavorite', (req, res, next) => {
   const { userId } = req.user;
   if (!userId) {
     return;
@@ -182,6 +182,30 @@ app.post('/api/favorite/savedFavorite', uploadsMiddleware, (req, res, next) => {
       const [favoriteSaved] = result.rows;
       console.log(favoriteSaved);
       res.json(favoriteSaved);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/favorite/savedFavorite', (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+  const sql = `
+  select "userId",
+         "favoriteId",
+         "favoriteType",
+         "favoriteDetails"
+    from "savedFavorite"
+    where "userId"=$1
+  `;
+
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const savedFavorite = result.rows;
+      console.log(savedFavorite);
+      res.json(savedFavorite);
     })
     .catch(err => next(err));
 });

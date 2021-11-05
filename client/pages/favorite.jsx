@@ -61,29 +61,31 @@ export default class FavoriteSearch extends React.Component {
 
   }
 
-  // handleSave() {
-
-  // }
-
   render() {
-
+    let placeHolder;
+    if (this.state.searchType === 'Album') {
+      placeHolder = 'Please Type in Album Name...';
+    } else {
+      placeHolder = 'Please Type in Artist Name...';
+    }
     return (
        <div>
         <div className="col-nine-tenth search-holder">
           <div className="col-three-fifth search-bar-section">
             <h1 className="search-title">My Favorite <span>by {this.state.searchType}</span></h1>
             <form onSubmit={this.handleSubmit}>
-              <div className="row align-center">
-                <button type="submit" className="favorite-search-button"><i className="fas fa-compact-disc"></i></button>
-                <input onChange={this.handleChange} name="searchInput" id="favorite" type="text"
-                       className="favorite-search-input" placeholder="Type in Your Favorite" />
-              </div>
-              <div className={this.state.searchType === 'Album' ? 'row align-center' : 'row align-center hidden'}>
-                <button type="button" className="favorite-search-button"><i className="fas fa-headphones-alt"></i></button>
-                <input onChange={this.handleChange} name="assistInput" id="artistName" type="text" className= "artist-input"
-                  placeholder="Type In Album Artist" />
-              </div>
-
+              <div className="favorite-search-holder">
+                <div className="row align-center">
+                  <button type="submit" className="favorite-search-button"><i className="fas fa-compact-disc"></i></button>
+                  <input onChange={this.handleChange} name="searchInput" id="favorite" type="text"
+                    className="favorite-search-input" placeholder={placeHolder} />
+                </div>
+                <div className={this.state.searchType === 'Album' ? 'row align-center' : 'row align-center hidden'}>
+                  <button type="button" className="favorite-search-button"><i className="fas fa-headphones-alt"></i></button>
+                  <input onChange={this.handleChange} name="assistInput" id="artistName" type="text" className= "artist-input"
+                    placeholder="Type In Album Artist..." />
+                </div>
+               </div>
               <div className="search-button-holder">
                 <button type="button" onClick={this.searchTypeChoose}className="search-button" data-type="Artist">By Artist</button>
                 <button type="button" onClick={this.searchTypeChoose}className="search-button" data-type="Album">By Album</button>

@@ -26,7 +26,8 @@ export default class Carousel extends React.Component {
           style: 'Urban/R&G',
           albumScore: '8.0'
         }
-      ]
+      ],
+      savedFavorites: []
     };
     this.rightClick = this.rightClick.bind(this);
     this.leftClick = this.leftClick.bind(this);
@@ -70,13 +71,31 @@ export default class Carousel extends React.Component {
 
   }
 
-  // componentDidMount() {
-  //   this.timeID = setInterval(
-  //     () => this.autoRun(),
-  //     3000
-  //   );
+  componentDidMount() {
+    const token = window.localStorage.getItem('react-context-jwt');
+    fetch('/api/favorite/savedFavorite', {
+      method: 'GET',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // let favoriteArray=[]
+        this.setState({ savedFavorites: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
 
-  // }
+    // this.timeID = setInterval(
+    //   () => this.autoRun(),
+    //   3000
+    // );
+
+  }
 
   render() {
     const favorites = this.state.favorites;
@@ -103,10 +122,6 @@ export default class Carousel extends React.Component {
 
       );
     });
-    // const listPics = pics.map(pic =>
-    //   <img src={pic.url} key={pic.id} className={pic.id === this.state.index ? '' : 'hidden'} />
-
-    // );
 
     const listButtons = favorites.map(favorite =>
       <button onClick={this.dotClick} className={favorite.favoriteId === this.state.index ? 'dot dot-select' : 'dot'} name={favorite.favoriteId} key={favorite.favoriteId}></button>

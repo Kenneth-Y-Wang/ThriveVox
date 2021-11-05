@@ -453,6 +453,10 @@ button {
   display: inline-block;
 }
 
+.favorite-search-holder {
+  height: 50px;
+}
+
 .favorite-search-button {
   height: 25px;
   font-size: 1rem;
@@ -472,13 +476,6 @@ button {
   width: 90%;
   color: white;
   font-family: Jura, sans-serif;
-}
-
-.album-search-assist {
-  margin: 0.5rem 0;
-  display: flex;
-  align-items: center;
-  padding-left: 0;
 }
 
 .artist-input {

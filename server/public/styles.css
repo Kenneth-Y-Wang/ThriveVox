@@ -443,6 +443,10 @@ button {
   margin-top: 3rem;
 }
 
+.search-title > span {
+  font-size: 1.2rem;
+}
+
 .favorite-search-button,
 .favorite-search-input {
   display: inline-block;

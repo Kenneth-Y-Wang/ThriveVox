@@ -1,44 +1,74 @@
 import React from 'react';
 import Carousel from '../components/carousel';
 
-const pics = [
-  {
-    id: 1,
-    url: 'https://cdn.mos.cms.futurecdn.net/G8tpf6HYLdXLxLHMKK3G-1200-80.jpg'
-  },
-
-  {
-    id: 2,
-    url: 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2021/08/final-fantasy-16-versus-13.jpg'
-  },
-
-  {
-    id: 3,
-    url: 'https://www.videogameschronicle.com/files/2020/10/Final-Fantasy-XVI-d-scaled.jpg'
-  }
-];
-
 export default class FavoriteSearch extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchResult: null,
+      searchInput: '',
+      searchType: 'Artist'
+
+    };
+    this.searchTypeChoose = this.searchTypeChoose.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  searchTypeChoose(event) {
+    this.setState({ searchType: event.target.getAttribute('data-type') });
+  }
+
+  handleChange(event) {
+    this.setState({ searchInput: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(this.state.searchInput);
+    const input = this.state.searchInput;
+
+    if (this.state.searchType === 'Artist') {
+      fetch(`https://theaudiodb.p.rapidapi.com/search.php?s=${input}`, {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-host': 'theaudiodb.p.rapidapi.com',
+          'x-rapidapi-key': '3ac221b76dmsh761303974d244fbp12a694jsna1c5bc30b528'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          const [artist] = data.artists;
+          console.log(artist);
+          this.setState({ searchResult: artist });
+        })
+
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  }
+
   render() {
     return (
        <div>
         <div className="col-nine-tenth search-holder">
           <div className="col-three-fifth search-bar-section">
-            <h1 className="search-title">My Favorite</h1>
-            <form>
+            <h1 className="search-title">My Favorite <span>by {this.state.searchType}</span></h1>
+            <form onSubmit={this.handleSubmit}>
               <div className="row align-center">
-                <button className="favorite-search-button"><i className="fas fa-headphones-alt"></i></button>
-                <input className="favorite-search-input" />
+                <button type="submit" className="favorite-search-button"><i className="fas fa-headphones-alt"></i></button>
+                <input onChange={this.handleChange} name="favorite" id="favorite" type="text" className="favorite-search-input" />
               </div>
               <div className="search-button-holder">
-                <button className="search-button">By Artist</button>
-                <button className="search-button">By Album</button>
+                <button type="button" onClick={this.searchTypeChoose}className="search-button" data-type="Artist">By Artist</button>
+                <button type="button" onClick={this.searchTypeChoose}className="search-button" data-type="Album">By Album</button>
               </div>
             </form>
           </div>
         </div>
         <div className="col-nine-tenth favorite-caro">
-          <Carousel pics={pics} />
+          <Carousel />
         </div>
         <div className="section-header">Search Result</div>
         <div className="search-result-holder">
@@ -73,9 +103,7 @@ export default class FavoriteSearch extends React.Component {
                 </p>
               </div>
             </div>
-
           </div>
-
         </div>
        </div>
     );

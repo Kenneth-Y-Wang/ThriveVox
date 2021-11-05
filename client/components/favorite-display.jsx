@@ -1,6 +1,22 @@
 import React from 'react';
 
 export default class FavoriteDisplay extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isViewing: ''
+    };
+    this.detailView = this.detailView.bind(this);
+  }
+
+  detailView(event) {
+    if (this.state.isViewing) {
+      this.setState({ isViewing: '' });
+    } else {
+      this.setState({ isViewing: event.target.getAttribute('data-id') });
+    }
+  }
+
   render() {
     if (this.props.searchResult) {
       const {
@@ -18,7 +34,7 @@ export default class FavoriteDisplay extends React.Component {
             </div>
             <div className="col-half search-info-col">
               <div className="result-button-row">
-                <button className="detail-button">Detail</button>
+                  <button onClick={this.detailView} data-id={strArtist} type="button" className="detail-button">Detail</button>
                 <button className="add-button"><i className="fas fa-plus"></i></button>
               </div>
                 <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
@@ -29,7 +45,7 @@ export default class FavoriteDisplay extends React.Component {
                 <h3 className="caro-text">Artist Website: <span>{strWebsite}</span></h3>
             </div>
           </div>
-          <div className="hidden-detail-row col-full">
+            <div className={this.state.isViewing === this.props.searchResult.strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
             <div className="banner-holder col-full">
                 <img src={strArtistBanner} />
             </div>
@@ -44,7 +60,11 @@ export default class FavoriteDisplay extends React.Component {
       </>
       );
     } else {
-      return null;
+      return (
+        <div className="no-result-message-holder">
+         <h1 className="no-result-message">Sorry, No Result is Showing...</h1>
+        </div>
+      );
     }
   }
 }

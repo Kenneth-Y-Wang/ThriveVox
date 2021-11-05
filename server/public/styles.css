@@ -471,6 +471,39 @@ button {
   border-bottom-right-radius: 3px;
 }
 
+.album-search-assist {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+}
+
+.artist-input {
+  background-color: black;
+  border: none;
+  border-bottom: 2px solid white;
+  padding: 0.15rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.artist-input:focus {
+  border: 1px solid white;
+  border-radius: 0;
+}
+
+::placeholder {
+  color: #e9ecef;
+  font-family: Jura, sans-serif;
+}
+
+.album-comment {
+  color: white;
+  font-size: 0.8rem;
+  margin-left: 0.75rem;
+}
+
 .search-button-holder {
   margin-top: 2rem;
 }
@@ -611,7 +644,7 @@ button {
 }
 
 img:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .dot-select {
@@ -656,7 +689,7 @@ img:hover {
   width: 100%;
   height: 250px;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: 3px;
   transition-duration: 0.5s;
 }
 
@@ -682,6 +715,7 @@ img:hover {
 .hidden-detail-row {
   margin-top: 1rem;
   padding: 1rem;
+  animation: fade-in linear 1s;
 }
 
 .banner-holder {
@@ -693,7 +727,7 @@ img:hover {
   width: 100%;
   height: 250px;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: 3px;
   transition-duration: 0.5s;
 }
 
@@ -707,4 +741,11 @@ img:hover {
   line-height: 1.2rem;
   font-weight: 500;
   margin-bottom: 0;
+}
+
+.no-result-message-holder {
+  width: 100%;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.7rem;
 }

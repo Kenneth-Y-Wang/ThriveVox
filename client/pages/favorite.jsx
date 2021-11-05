@@ -8,6 +8,7 @@ export default class FavoriteSearch extends React.Component {
     this.state = {
       searchResult: null,
       searchInput: '',
+      assistInput: '',
       searchType: 'Artist'
 
     };
@@ -21,13 +22,15 @@ export default class FavoriteSearch extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ searchInput: event.target.value });
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     console.log(this.state.searchInput);
     const input = this.state.searchInput;
+    const assistInput = this.state.assistInput;
 
     if (this.state.searchType === 'Artist') {
       fetch(`https://theaudiodb.p.rapidapi.com/search.php?s=${input}`, {
@@ -48,6 +51,25 @@ export default class FavoriteSearch extends React.Component {
           console.error(err);
         });
     }
+
+    if (this.state.searchType === 'Album') {
+      console.log(this.state.assistInput);
+      fetch(`https://theaudiodb.p.rapidapi.com/searchalbum.php?s=${assistInput}&a=${input}`, {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-host': 'theaudiodb.p.rapidapi.com',
+          'x-rapidapi-key': '3ac221b76dmsh761303974d244fbp12a694jsna1c5bc30b528'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
+    }
   }
 
   render() {
@@ -60,8 +82,10 @@ export default class FavoriteSearch extends React.Component {
             <form onSubmit={this.handleSubmit}>
               <div className="row align-center">
                 <button type="submit" className="favorite-search-button"><i className="fas fa-headphones-alt"></i></button>
-                <input onChange={this.handleChange} name="favorite" id="favorite" type="text" className="favorite-search-input" />
+                <input onChange={this.handleChange} name="searchInput" id="favorite" type="text" className="favorite-search-input" />
               </div>
+              <input onChange={this.handleChange} name="assistInput" id="artistName" type="text" className={this.state.searchType === 'Album' ? 'artist-input' : 'artist-input hidden'}
+                placeholder="Type In Album Artist" />
               <div className="search-button-holder">
                 <button type="button" onClick={this.searchTypeChoose}className="search-button" data-type="Artist">By Artist</button>
                 <button type="button" onClick={this.searchTypeChoose}className="search-button" data-type="Album">By Album</button>

@@ -29,7 +29,6 @@ export default class FavoriteDisplay extends React.Component {
       body: JSON.stringify(this.props.searchResult)
     })
       .then(response => response.json())
-      .then(data => console.log(data))
       .catch(error => {
         console.error('error', error);
       });
@@ -64,11 +63,11 @@ export default class FavoriteDisplay extends React.Component {
                 <button onClick={this.handleSave} className="add-button"><i className="fas fa-plus"></i></button>
               </div>
                 <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
-                <h3 className="caro-text">Born: <span>{intBornYear}</span></h3>
-                <h3 className="caro-text">Genre: <span>{strGenre}</span></h3>
-                <h3 className="caro-text">Style: <span>{strStyle}</span></h3>
-                <h3 className="caro-text">Origin: <span>{strCountry}</span></h3>
-                <h3 className="caro-text">Artist Website: <span>{strWebsite}</span></h3>
+                <h3 className="caro-text">Born: <span>{intBornYear || 'N/A'}</span></h3>
+                <h3 className="caro-text">Genre: <span>{strGenre || 'N/A'}</span></h3>
+                <h3 className="caro-text">Style: <span>{strStyle || 'N/A'}</span></h3>
+                <h3 className="caro-text">Origin: <span>{strCountry || 'N/A'}</span></h3>
+                <h3 className="caro-text">Artist Website: <span>{strWebsite || 'N/A'}</span></h3>
             </div>
           </div>
             <div className={this.state.isViewing === strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
@@ -107,10 +106,10 @@ export default class FavoriteDisplay extends React.Component {
                 </div>
                 <h3 className="caro-text">Album: <span>{strAlbum}</span></h3>
                 <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
-                <h3 className="caro-text">Genre: <span>{strGenre}</span></h3>
-                <h3 className="caro-text">Style: <span>{strStyle}</span></h3>
-                <h3 className="caro-text">First Release: <span>{intYearReleased}</span></h3>
-                <h3 className="caro-text">Album Score: <span>{intScore}</span></h3>
+                <h3 className="caro-text">Genre: <span>{strGenre || 'N/A'}</span></h3>
+                <h3 className="caro-text">Style: <span>{strStyle || 'N/A'}</span></h3>
+                <h3 className="caro-text">First Release: <span>{intYearReleased || 'N/A'}</span></h3>
+                <h3 className="caro-text">Album Score: <span>{intScore || 'N/A'}</span></h3>
               </div>
             </div>
             <div className={this.state.isViewing === strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>

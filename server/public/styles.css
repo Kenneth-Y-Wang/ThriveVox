@@ -568,6 +568,7 @@ button {
 
 .caro-info-col {
   padding: 1rem 0.75rem;
+  animation: fade-in 1s;
 }
 
 .caro-text {

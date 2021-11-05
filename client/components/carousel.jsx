@@ -4,7 +4,7 @@ export default class Carousel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 1,
+      index: 0,
       savedFavorites: []
     };
     this.rightClick = this.rightClick.bind(this);
@@ -60,7 +60,6 @@ export default class Carousel extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         this.setState({ savedFavorites: data });
       })
       .catch(error => {
@@ -105,16 +104,14 @@ export default class Carousel extends React.Component {
                 <div className="caro-pic-holder">
                   <img src={favorite.favoriteDetails.strAlbumThumb} />
                 </div>
-
               </div>
               <div className="col-two-fifth caro-info-col">
                 <div className="caro-detail-bt-row"><button className="caro-detail-button">Detail</button></div>
                 <h3 className="caro-text">Artist: <span>{favorite.favoriteDetails.strArtist}</span></h3>
-                <h3 className="caro-text">First Release: <span>{favorite.favoriteDetails.intYearReleased}</span></h3>
-                <h3 className="caro-text">Genre: <span>{favorite.favoriteDetails.strGenre}</span></h3>
-                <h3 className="caro-text">Style: <span>{favorite.favoriteDetails.strStyle}</span></h3>
-                <h3 className="caro-text">Album Score: <span>{favorite.favoriteDetails.intScore}</span></h3>
-
+                <h3 className="caro-text">First Release: <span>{favorite.favoriteDetails.intYearReleased || 'N/A'}</span></h3>
+                <h3 className="caro-text">Genre: <span>{favorite.favoriteDetails.strGenre || 'N/A'}</span></h3>
+                <h3 className="caro-text">Style: <span>{favorite.favoriteDetails.strStyle || 'N/A'}</span></h3>
+                <h3 className="caro-text">Album Score: <span>{favorite.favoriteDetails.intScore || 'N/A'}</span></h3>
               </div>
             </div>
           </div>
@@ -129,16 +126,14 @@ export default class Carousel extends React.Component {
                 <div className="caro-pic-holder">
                   <img src={favorite.favoriteDetails.strArtistThumb} />
                 </div>
-
               </div>
               <div className="col-two-fifth caro-info-col">
                 <div className="caro-detail-bt-row"><button className="caro-detail-button">Detail</button></div>
-                <h3 className="caro-text ">Alternate Name: <span>{favorite.favoriteDetails.strArtistAlternate}</span></h3>
-                <h3 className="caro-text">Born: <span>{favorite.favoriteDetails.intBornYear}</span></h3>
-                <h3 className="caro-text">Genre: <span>{favorite.favoriteDetails.strGenre}</span></h3>
-                <h3 className="caro-text">Style: <span>{favorite.favoriteDetails.strStyle}</span></h3>
-                <h3 className="caro-text artist-web">Artist Website: <span>{favorite.favoriteDetails.strWebsite}</span></h3>
-
+                <h3 className="caro-text ">Alternate Name: <span>{favorite.favoriteDetails.strArtistAlternate || 'N/A'}</span></h3>
+                <h3 className="caro-text">Born: <span>{favorite.favoriteDetails.intBornYear || 'N/A'}</span></h3>
+                <h3 className="caro-text">Genre: <span>{favorite.favoriteDetails.strGenre || 'N/A'}</span></h3>
+                <h3 className="caro-text">Style: <span>{favorite.favoriteDetails.strStyle || 'N/A'}</span></h3>
+                <h3 className="caro-text artist-web">Artist Website: <span>{favorite.favoriteDetails.strWebsite || 'N/A'}</span></h3>
               </div>
             </div>
           </div>
@@ -151,6 +146,7 @@ export default class Carousel extends React.Component {
     const listButtons = favorites.map((favorite, index) =>
       <button onClick={this.dotClick} className={index === this.state.index ? 'dot dot-select' : 'dot'} name={index} key={favorite.favoriteId}></button>
     );
+    const carouselDisplay = favorites ? favoriteLists : defaultDisplay;
     return (
       <div className="">
         <div className="carousel-container">
@@ -158,7 +154,7 @@ export default class Carousel extends React.Component {
             <i onClick={this.leftClick} className="far fa-caret-square-left font-style caro-transition"></i>
           </div>
           <div className=" col-four-fifth caro-content-column">
-            {favorites ? favoriteLists : defaultDisplay}
+            {carouselDisplay}
             <div className="dot-holder">
               {listButtons}
             </div>

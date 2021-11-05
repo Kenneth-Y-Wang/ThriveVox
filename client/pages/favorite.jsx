@@ -1,6 +1,8 @@
 import React from 'react';
 import Carousel from '../components/carousel';
 import FavoriteDisplay from '../components/favorite-display';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class FavoriteSearch extends React.Component {
   constructor(props) {
@@ -28,7 +30,6 @@ export default class FavoriteSearch extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.searchInput);
     const input = this.state.searchInput;
     const assistInput = this.state.assistInput;
     let fetchPath;
@@ -52,7 +53,6 @@ export default class FavoriteSearch extends React.Component {
       .then(response => response.json())
       .then(data => {
         const [result] = data[fileName];
-        console.log(result);
         this.setState({ searchResult: result });
       })
       .catch(err => {
@@ -62,6 +62,7 @@ export default class FavoriteSearch extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="sign-in" />;
     let placeHolder;
     if (this.state.searchType === 'Album') {
       placeHolder = 'Please Type in Album Name...';
@@ -104,3 +105,5 @@ export default class FavoriteSearch extends React.Component {
     );
   }
 }
+
+FavoriteSearch.contextType = AppContext;

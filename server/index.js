@@ -180,7 +180,6 @@ app.post('/api/favorite/savedFavorite', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const [favoriteSaved] = result.rows;
-      console.log(favoriteSaved);
       res.json(favoriteSaved);
     })
     .catch(err => next(err));
@@ -206,7 +205,6 @@ app.get('/api/favorite/savedFavorite', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const savedFavorite = result.rows;
-      console.log(savedFavorite);
       res.json(savedFavorite);
     })
     .catch(err => next(err));

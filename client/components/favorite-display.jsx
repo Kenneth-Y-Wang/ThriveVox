@@ -7,6 +7,7 @@ export default class FavoriteDisplay extends React.Component {
       isViewing: ''
     };
     this.detailView = this.detailView.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   detailView(event) {
@@ -15,6 +16,23 @@ export default class FavoriteDisplay extends React.Component {
     } else {
       this.setState({ isViewing: event.target.getAttribute('data-id') });
     }
+  }
+
+  handleSave() {
+    const token = window.localStorage.getItem('react-context-jwt');
+    fetch('/api/favorite/savedFavorite', {
+      method: 'POST',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.props.searchResult)
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => {
+        console.error('error', error);
+      });
   }
 
   render() {
@@ -42,8 +60,8 @@ export default class FavoriteDisplay extends React.Component {
             <div className="col-half search-info-col">
               <div className="result-button-row">
                   <button onClick={this.detailView} data-id={strArtist} type="button"
-                    className={this.state.isViewing === this.props.searchResult.strArtist ? 'detail-clicked' : 'detail-button'}>Detail</button>
-                <button className="add-button"><i className="fas fa-plus"></i></button>
+                    className={this.state.isViewing === strArtist ? 'detail-clicked' : 'detail-button'}>Detail</button>
+                <button onClick={this.handleSave} className="add-button"><i className="fas fa-plus"></i></button>
               </div>
                 <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
                 <h3 className="caro-text">Born: <span>{intBornYear}</span></h3>
@@ -53,7 +71,7 @@ export default class FavoriteDisplay extends React.Component {
                 <h3 className="caro-text">Artist Website: <span>{strWebsite}</span></h3>
             </div>
           </div>
-            <div className={this.state.isViewing === this.props.searchResult.strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
+            <div className={this.state.isViewing === strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
             <div className="banner-holder col-full">
                 <img src={strArtistBanner} />
             </div>
@@ -84,8 +102,8 @@ export default class FavoriteDisplay extends React.Component {
               <div className="col-half search-info-col">
                 <div className="result-button-row">
                   <button onClick={this.detailView} data-id={strArtist} type="button"
-                    className={this.state.isViewing === this.props.searchResult.strArtist ? 'detail-clicked' : 'detail-button'}>Detail</button>
-                  <button className="add-button"><i className="fas fa-plus"></i></button>
+                    className={this.state.isViewing === strArtist ? 'detail-clicked' : 'detail-button'}>Detail</button>
+                  <button onClick={this.handleSave} className="add-button"><i className="fas fa-plus"></i></button>
                 </div>
                 <h3 className="caro-text">Album: <span>{strAlbum}</span></h3>
                 <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
@@ -95,7 +113,7 @@ export default class FavoriteDisplay extends React.Component {
                 <h3 className="caro-text">Album Score: <span>{intScore}</span></h3>
               </div>
             </div>
-            <div className={this.state.isViewing === this.props.searchResult.strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
+            <div className={this.state.isViewing === strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
               <div className="banner-holder col-full">
                 <img src={strAlbum3DFlat} />
               </div>

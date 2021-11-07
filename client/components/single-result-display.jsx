@@ -19,7 +19,7 @@ export default function ResultDisplay({
             <div className="result-button-row">
               <button onClick={() => detailView(dataId)} data-id={dataId} type="button"
                 className={className}>Detail</button>
-              <button onClick={() => handleSave()} className={classNameFour}><i className="fas fa-plus"></i></button>
+              <a href="#"><button onClick={() => handleSave()} className={classNameFour}><i className="fas fa-plus"></i></button></a>
             </div>
             <h3 className="caro-text">{displayOne}: <span>{valueOne}</span></h3>
             <h3 className="caro-text">{displayTwo}: <span>{valueTwo || 'N/A'}</span></h3>

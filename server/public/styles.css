@@ -621,7 +621,6 @@ button {
 .caro-detail-button {
   color: black;
   border: none;
-  border-bottom: 2px black solid;
   transition-duration: 0.5s;
   font-family: Orbitron, sans-serif;
   background-color: white;
@@ -630,7 +629,6 @@ button {
 
 .caro-detail-button:hover {
   color: #8d99ae;
-  border-bottom: 2px solid #8d99ae;
 }
 
 .dot-holder {

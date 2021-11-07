@@ -14,7 +14,7 @@ export default function CarouselSlide({
           </div>
         </div>
         <div className="col-two-fifth caro-info-col">
-          <div className="caro-detail-bt-row"><button className="caro-detail-button">Detail</button></div>
+          <a href="#"className="caro-detail-bt-row"><button className="caro-detail-button">Detail</button></a>
           <h3 className="caro-text">{labelOne}: <span>{valueOne || 'N/A'}</span></h3>
           <h3 className="caro-text">{labelTwo}: <span>{valueTwo || 'N/A'}</span></h3>
           <h3 className="caro-text">Genre: <span>{genre || 'N/A'}</span></h3>

@@ -1,21 +1,20 @@
 import React from 'react';
+import ResultDisplay from './single-result-display';
 
 export default class FavoriteDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isViewing: ''
+      isViewing: false
     };
     this.detailView = this.detailView.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
 
   detailView(event) {
-    if (this.state.isViewing) {
-      this.setState({ isViewing: '' });
-    } else {
-      this.setState({ isViewing: event.target.getAttribute('data-id') });
-    }
+
+    this.setState({ isViewing: !this.state.isViewing });
+
   }
 
   handleSave() {
@@ -35,6 +34,8 @@ export default class FavoriteDisplay extends React.Component {
   }
 
   render() {
+    const classNameOne = this.state.isViewing ? 'detail-clicked' : 'detail-button';
+    const classNameTwo = this.state.isViewing ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden';
     if (!this.props.searchResult) {
       return (
         <div className="no-result-message-holder">
@@ -47,84 +48,38 @@ export default class FavoriteDisplay extends React.Component {
         strArtistThumb, strArtist, intBornYear, strGenre,
         strStyle, strCountry, strWebsite, strArtistBanner, strBiographyEN
       } = this.props.searchResult;
+
+      const displayOne = 'Artist';
+      const displayTwo = 'Born';
+      const displayThree = 'Origin';
+      const displayFour = 'Artist Website';
+      const displayFive = 'Artist Biography';
       return (
-      <>
-        <div className="single-search col-nine-tenth">
-          <div className="default-row col-full">
-            <div className="col-half">
-              <div className="search-pic-holder">
-                  <img src={strArtistThumb} />
-              </div>
-            </div>
-            <div className="col-half search-info-col">
-              <div className="result-button-row">
-                  <button onClick={this.detailView} data-id={strArtist} type="button"
-                    className={this.state.isViewing === strArtist ? 'detail-clicked' : 'detail-button'}>Detail</button>
-                <button onClick={this.handleSave} className="add-button"><i className="fas fa-plus"></i></button>
-              </div>
-                <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
-                <h3 className="caro-text">Born: <span>{intBornYear || 'N/A'}</span></h3>
-                <h3 className="caro-text">Genre: <span>{strGenre || 'N/A'}</span></h3>
-                <h3 className="caro-text">Style: <span>{strStyle || 'N/A'}</span></h3>
-                <h3 className="caro-text">Origin: <span>{strCountry || 'N/A'}</span></h3>
-                <h3 className="caro-text">Artist Website: <span>{strWebsite || 'N/A'}</span></h3>
-            </div>
-          </div>
-            <div className={this.state.isViewing === strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
-            <div className="banner-holder col-full">
-                <img src={strArtistBanner} />
-            </div>
-            <div className="search-note col-full">
-              <h3 className="caro-text">Artist Biography:</h3>
-              <p className="detail-note">
-                  {strBiographyEN}
-              </p>
-            </div>
-          </div>
-        </div>
-      </>
+
+        <ResultDisplay picUrl={strArtistThumb} detailView={this.detailView} dataId={strArtist}
+          className={classNameOne} handleSave={this.handleSave} displayOne={displayOne} valueOne={strArtist}
+          displayTwo={displayTwo} valueTwo={intBornYear} genre={strGenre} style={strStyle}
+          displayThree={displayThree} valueThree={strCountry} displayFour={displayFour} valueFour={strWebsite}
+          classNameTwo={classNameTwo} bannerUrl={strArtistBanner} displayFive={displayFive} note={strBiographyEN} />
+
       );
     } else if (this.props.searchResult.idAlbum) {
       const {
         strAlbumThumb, strArtist, intYearReleased, strGenre,
         strStyle, strAlbum, intScore, strAlbum3DFlat, strDescriptionEN
       } = this.props.searchResult;
+      const displayOne = 'Album';
+      const displayTwo = 'Artist';
+      const displayThree = 'First Release';
+      const displayFour = 'Album Score';
+      const displayFive = 'Album Description';
       return (
-        <>
-          <div className="single-search col-nine-tenth">
-            <div className="default-row col-full">
-              <div className="col-half">
-                <div className="search-pic-holder">
-                  <img src={strAlbumThumb} />
-                </div>
-              </div>
-              <div className="col-half search-info-col">
-                <div className="result-button-row">
-                  <button onClick={this.detailView} data-id={strArtist} type="button"
-                    className={this.state.isViewing === strArtist ? 'detail-clicked' : 'detail-button'}>Detail</button>
-                  <button onClick={this.handleSave} className="add-button"><i className="fas fa-plus"></i></button>
-                </div>
-                <h3 className="caro-text">Album: <span>{strAlbum}</span></h3>
-                <h3 className="caro-text">Artist: <span>{strArtist}</span></h3>
-                <h3 className="caro-text">Genre: <span>{strGenre || 'N/A'}</span></h3>
-                <h3 className="caro-text">Style: <span>{strStyle || 'N/A'}</span></h3>
-                <h3 className="caro-text">First Release: <span>{intYearReleased || 'N/A'}</span></h3>
-                <h3 className="caro-text">Album Score: <span>{intScore || 'N/A'}</span></h3>
-              </div>
-            </div>
-            <div className={this.state.isViewing === strArtist ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden'}>
-              <div className="banner-holder col-full">
-                <img src={strAlbum3DFlat} />
-              </div>
-              <div className="search-note col-full">
-                <h3 className="caro-text">Album Description:</h3>
-                <p className="detail-note">
-                  {strDescriptionEN}
-                </p>
-              </div>
-            </div>
-          </div>
-        </>
+        <ResultDisplay picUrl={strAlbumThumb} detailView={this.detailView} dataId={strArtist}
+          className={classNameOne} handleSave={this.handleSave} displayOne={displayOne} valueOne={strAlbum}
+          displayTwo={displayTwo} valueTwo={strArtist} genre={strGenre} style={strStyle}
+          displayThree={displayThree} valueThree={intYearReleased} displayFour={displayFour} valueFour={intScore}
+          classNameTwo={classNameTwo} bannerUrl={strAlbum3DFlat} displayFive={displayFive} note={strDescriptionEN} />
+
       );
     }
   }

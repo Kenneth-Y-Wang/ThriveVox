@@ -238,6 +238,34 @@ app.get('/api/favorite/allSavedFavorites', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+  const favoriteId = Number(req.params.favoriteId);
+
+  const sql = `
+    delete from "savedFavorite"
+     where "favoriteId" = $1
+     returning *
+    `;
+  const value = [favoriteId];
+
+  db.query(sql, value)
+    .then(result => {
+      const favorite = result.rows[0];
+      if (!favorite) {
+
+        throw new ClientError(400, `cannot find content with favoriteId ${favoriteId}`);
+      } else {
+
+        res.sendStatus(204);
+      }
+    })
+    .catch(err => next(err));
+
+});
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

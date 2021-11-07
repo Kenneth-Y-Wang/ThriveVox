@@ -35,6 +35,25 @@ export default class CustomAccordion extends React.Component {
 
   handleDelete(favoriteId) {
     console.log(favoriteId);
+    const token = window.localStorage.getItem('react-context-jwt');
+    fetch(`/api/favorite/allSavedFavorites/${favoriteId}`, {
+      method: 'DELETE',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      },
+      body: null
+    });
+
+    for (let i = 0; i < this.state.allSavedFavorites.length; i++) {
+      if (favoriteId === this.state.allSavedFavorites[i].favoriteId) {
+        const newState = this.state.allSavedFavorites.slice(0, i).concat(this.state.allSavedFavorites.slice(i + 1));
+        this.setState({ allSavedFavorites: newState });
+        break;
+      }
+
+    }
+
   }
 
   detailView(dataId) {

@@ -3,12 +3,12 @@ import React from 'react';
 export default function ResultDisplay({
   picUrl, detailView, dataId, className, handleSave, displayOne, valueOne,
   displayTwo, valueTwo, genre, style, displayThree, valueThree, displayFour, valueFour,
-  classNameTwo, bannerUrl, displayFive, note
+  classNameTwo, bannerUrl, displayFive, note, classNameThree, classNameFour, classNameFive
 }) {
 
   return (
     <>
-      <div className="single-search col-nine-tenth">
+      <div className={classNameThree}>
         <div className="default-row col-full">
           <div className="col-half">
             <div className="search-pic-holder">
@@ -17,16 +17,16 @@ export default function ResultDisplay({
           </div>
           <div className="col-half search-info-col">
             <div className="result-button-row">
-              <button onClick={() => detailView()} data-id={dataId} type="button"
+              <button onClick={() => detailView(dataId)} data-id={dataId} type="button"
                 className={className}>Detail</button>
-              <button onClick={() => handleSave()} className="add-button"><i className="fas fa-plus"></i></button>
+              <button onClick={() => handleSave()} className={classNameFour}><i className="fas fa-plus"></i></button>
             </div>
             <h3 className="caro-text">{displayOne}: <span>{valueOne}</span></h3>
             <h3 className="caro-text">{displayTwo}: <span>{valueTwo || 'N/A'}</span></h3>
             <h3 className="caro-text">Genre: <span>{genre || 'N/A'}</span></h3>
             <h3 className="caro-text">Style: <span>{style || 'N/A'}</span></h3>
             <h3 className="caro-text">{displayThree}: <span>{valueThree || 'N/A'}</span></h3>
-            <h3 className="caro-text">{displayFour}: <span>{valueFour || 'N/A'}</span></h3>
+            <h3 className={classNameFive}>{displayFour}: <span>{valueFour || 'N/A'}</span></h3>
           </div>
         </div>
         <div className={classNameTwo}>

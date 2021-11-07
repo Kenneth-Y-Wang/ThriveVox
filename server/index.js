@@ -185,6 +185,8 @@ app.post('/api/favorite/savedFavorite', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// carousel get data
+
 app.get('/api/favorite/savedFavorite', (req, res, next) => {
   const { userId } = req.user;
   if (!userId) {
@@ -199,6 +201,32 @@ app.get('/api/favorite/savedFavorite', (req, res, next) => {
     where "userId"=$1
     order by "favoriteId" desc
     limit 5
+  `;
+
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const savedFavorite = result.rows;
+      res.json(savedFavorite);
+    })
+    .catch(err => next(err));
+});
+
+// home get saved data
+
+app.get('/api/favorite/allSavedFavorites', (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+  const sql = `
+  select "userId",
+         "favoriteId",
+         "favoriteType",
+         "favoriteDetails"
+    from "savedFavorite"
+    where "userId"=$1
+    order by "favoriteId" desc
   `;
 
   const params = [userId];

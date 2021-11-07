@@ -80,6 +80,10 @@ export default class Carousel extends React.Component {
 
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timeID);
+  }
+
   render() {
     const favorites = this.state.savedFavorites;
 

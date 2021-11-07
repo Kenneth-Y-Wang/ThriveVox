@@ -1,6 +1,5 @@
 import React from 'react';
-import CarouselAlbumSlide from './carousel-album-slide';
-import CarouselArtistSlide from './carousel-artist-slide';
+import CarouselSlide from './carousel-slide';
 import DefaultDisplay from './carousel-default-slide';
 
 export default class Carousel extends React.Component {
@@ -87,20 +86,29 @@ export default class Carousel extends React.Component {
     const favoriteLists = favorites.map((favorite, index) => {
       if (favorite.favoriteType === 'album') {
         const { strAlbum, strAlbumThumb, strArtist, intYearReleased, strGenre, strStyle, intScore } = favorite.favoriteDetails;
-
+        const labelOne = 'Artist';
+        const labelTwo = 'First Release';
+        const labelThree = 'Album Score';
+        const className = 'caro-text';
         return (
           <div key={favorite.favoriteId} className={index === this.state.index ? '' : 'hidden'}>
-            <CarouselAlbumSlide title={strAlbum} picUrl={strAlbumThumb}artistName={strArtist} time={intYearReleased}
-              genre={strGenre} style={strStyle} site={intScore} />
+            <CarouselSlide title={strAlbum} picUrl={strAlbumThumb} labelOne={labelOne} valueOne={strArtist}
+             labelTwo={labelTwo} valueTwo={intYearReleased} genre={strGenre} style={strStyle} className={className}
+             labelThree={labelThree} valueThree={intScore} />
           </div>
         );
       }
       if (favorite.favoriteType === 'artist') {
         const { strArtist, strArtistThumb, strArtistAlternate, intBornYear, strGenre, strStyle, strWebsite } = favorite.favoriteDetails;
+        const labelOne = 'Alternate Name';
+        const labelTwo = 'Born';
+        const labelThree = 'Artist Website';
+        const className = 'caro-text artist-web';
         return (
           <div key={favorite.favoriteId} className={index === this.state.index ? '' : 'hidden'}>
-            <CarouselArtistSlide name={strArtist} picUrl={strArtistThumb} artistAltName={strArtistAlternate} time={intBornYear}
-              genre={strGenre} style={strStyle} site={strWebsite} />
+            <CarouselSlide title={strArtist} picUrl={strArtistThumb} labelOne={labelOne} valueOne={strArtistAlternate}
+              labelTwo={labelTwo} valueTwo={intBornYear} genre={strGenre} style={strStyle} className={className}
+              labelThree={labelThree} valueThree={strWebsite} />
           </div>
 
         );

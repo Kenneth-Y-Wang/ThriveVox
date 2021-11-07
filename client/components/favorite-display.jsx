@@ -38,6 +38,7 @@ export default class FavoriteDisplay extends React.Component {
     const classNameTwo = this.state.isViewing ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden';
     const classNameThree = 'single-search col-nine-tenth';
     const classNameFour = 'add-button';
+    const classNameSix = 'add-button hidden';
     if (!this.props.searchResult) {
       return (
         <div className="no-result-message-holder">
@@ -64,7 +65,7 @@ export default class FavoriteDisplay extends React.Component {
           displayTwo={displayTwo} valueTwo={intBornYear} genre={strGenre} style={strStyle}
           displayThree={displayThree} valueThree={strCountry} displayFour={displayFour} valueFour={strWebsite}
           classNameTwo={classNameTwo} bannerUrl={strArtistBanner} displayFive={displayFive} note={strBiographyEN}
-          classNameThree={classNameThree} classNameFour={classNameFour} classNameFive={classNameFive}/>
+          classNameThree={classNameThree} classNameFour={classNameFour} classNameFive={classNameFive} classNameSix={classNameSix}/>
 
       );
     } else if (this.props.searchResult.idAlbum) {

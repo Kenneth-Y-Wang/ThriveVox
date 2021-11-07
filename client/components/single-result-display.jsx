@@ -1,9 +1,9 @@
 import React from 'react';
 
 export default function ResultDisplay({
-  picUrl, detailView, dataId, className, handleSave, displayOne, valueOne,
+  picUrl, detailView, dataId, className, handleSave, displayOne, valueOne, handleDelete, favoriteId,
   displayTwo, valueTwo, genre, style, displayThree, valueThree, displayFour, valueFour,
-  classNameTwo, bannerUrl, displayFive, note, classNameThree, classNameFour, classNameFive
+  classNameTwo, bannerUrl, displayFive, note, classNameThree, classNameFour, classNameFive, classNameSix
 }) {
 
   return (
@@ -20,6 +20,7 @@ export default function ResultDisplay({
               <button onClick={() => detailView(dataId)} data-id={dataId} type="button"
                 className={className}>Detail</button>
               <a href="#"><button onClick={() => handleSave()} className={classNameFour}><i className="fas fa-plus"></i></button></a>
+              <button onClick={() => handleDelete(favoriteId)} className={classNameSix}><i className="far fa-trash-alt"></i></button>
             </div>
             <h3 className="caro-text">{displayOne}: <span>{valueOne}</span></h3>
             <h3 className="caro-text">{displayTwo}: <span>{valueTwo || 'N/A'}</span></h3>

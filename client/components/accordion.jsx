@@ -12,6 +12,7 @@ export default class CustomAccordion extends React.Component {
     };
     this.click = this.click.bind(this);
     this.detailView = this.detailView.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +31,10 @@ export default class CustomAccordion extends React.Component {
       .catch(error => {
         console.error('Error:', error);
       });
+  }
+
+  handleDelete(favoriteId) {
+    console.log(favoriteId);
   }
 
   detailView(dataId) {
@@ -57,12 +62,13 @@ export default class CustomAccordion extends React.Component {
       const classNameTwo = this.state.isViewing === index ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden';
       const classNameThree = 'single-search col-full';
       const classNameFour = 'add-button hidden';
+      const classNameSix = 'add-button';
       if (favorite.favoriteType === 'artist') {
         const {
           strArtistThumb, strArtist, intBornYear, strGenre,
           strStyle, strCountry, strWebsite, strArtistBanner, strBiographyEN
         } = favorite.favoriteDetails;
-
+        const favoriteId = favorite.favoriteId;
         const displayOne = 'Artist';
         const displayTwo = 'Born';
         const displayThree = 'Origin';
@@ -71,12 +77,12 @@ export default class CustomAccordion extends React.Component {
         const classNameFive = 'caro-text artist-web';
         return (
           <div className="section-content" key={index}>
-            <ResultDisplay picUrl={strArtistThumb} detailView={this.detailView} dataId={index}
-            className={classNameOne} handleSave={this.detailView} displayOne={displayOne} valueOne={strArtist}
+            <ResultDisplay picUrl={strArtistThumb} detailView={this.detailView} dataId={index} handleDelete={this.handleDelete}
+              favoriteId={favoriteId} className={classNameOne} displayOne={displayOne} valueOne={strArtist}
             displayTwo={displayTwo} valueTwo={intBornYear} genre={strGenre} style={strStyle}
             displayThree={displayThree} valueThree={strCountry} displayFour={displayFour} valueFour={strWebsite}
             classNameTwo={classNameTwo} bannerUrl={strArtistBanner} displayFive={displayFive} note={strBiographyEN}
-              classNameThree={classNameThree} classNameFour={classNameFour} classNameFive={classNameFive}/>
+              classNameThree={classNameThree} classNameFour={classNameFour} classNameFive={classNameFive} classNameSix={classNameSix}/>
           </div>
 
         );
@@ -85,6 +91,7 @@ export default class CustomAccordion extends React.Component {
           strAlbumThumb, strArtist, intYearReleased, strGenre,
           strStyle, strAlbum, intScore, strAlbum3DFlat, strDescriptionEN
         } = favorite.favoriteDetails;
+        const favoriteId = favorite.favoriteId;
         const displayOne = 'Album';
         const displayTwo = 'Artist';
         const displayThree = 'First Release';
@@ -93,12 +100,12 @@ export default class CustomAccordion extends React.Component {
         const classNameFive = 'caro-text';
         return (
           <div className="section-content" key={index} >
-          <ResultDisplay picUrl={strAlbumThumb} detailView={this.detailView} dataId={index}
-            className={classNameOne} handleSave={this.detailView} displayOne={displayOne} valueOne={strAlbum}
+            <ResultDisplay picUrl={strAlbumThumb} detailView={this.detailView} dataId={index} handleDelete={this.handleDelete}
+              favoriteId={favoriteId} className={classNameOne} displayOne={displayOne} valueOne={strAlbum}
             displayTwo={displayTwo} valueTwo={strArtist} genre={strGenre} style={strStyle}
             displayThree={displayThree} valueThree={intYearReleased} displayFour={displayFour} valueFour={intScore}
               classNameTwo={classNameTwo} bannerUrl={strAlbum3DFlat} displayFive={displayFive} note={strDescriptionEN}
-              classNameThree={classNameThree} classNameFour={classNameFour} classNameFive={classNameFive} />
+              classNameThree={classNameThree} classNameFour={classNameFour} classNameFive={classNameFive} classNameSix={classNameSix} />
           </div>
 
         );

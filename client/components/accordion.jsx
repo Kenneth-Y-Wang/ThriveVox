@@ -166,7 +166,9 @@ export default class CustomAccordion extends React.Component {
         <div >
           <div className="section-header" data-id="my-favorite">My Favorite</div>
           <div className="content-holder" >
-            {favoritesList}
+            {this.state.allSavedFavorites.length !== 0
+              ? favoritesList
+              : <h4 className="text-center">Sorry, You Do Not Have Any Favorite Saved...</h4>}
           </div>
         </div>
       </div>

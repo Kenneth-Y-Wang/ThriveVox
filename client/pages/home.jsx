@@ -56,8 +56,8 @@ export default class Home extends React.Component {
   }
 
   render() {
-    if (!this.state.userData) return null;
     if (!this.context.user) return <Redirect to="sign-in" />;
+    if (!this.state.userData) return null;
     const displayName = this.context.user.username;
     const displayLocation = this.context.user.userLocation;
     const displayEmail = this.context.user.email;

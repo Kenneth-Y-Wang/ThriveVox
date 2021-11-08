@@ -2,6 +2,7 @@ body {
   background-image: url("./images/150-1508074_black-and-white-music-headphones-life-hd-grayscale.jpg");
   background-position: center;
   background-size: cover;
+  max-height: 100vh;
 }
 
 .container {
@@ -45,6 +46,10 @@ body {
   text-align: center;
 }
 
+.align-center {
+  align-items: center;
+}
+
 .col-half,
 .col-one-third,
 .col-three-fifth,
@@ -55,8 +60,22 @@ body {
   padding: 0 0.75rem;
 }
 
+.col-nine-tenth {
+  width: 90%;
+  padding: 0 0.75rem;
+}
+
+.col-one-tenth {
+  width: 20%;
+  padding: 0 0.75rem;
+}
+
 .mg-b-1 {
   margin-bottom: 1rem;
+}
+
+.mg-t-75 {
+  margin-top: 0.75rem;
 }
 
 .no-dec {
@@ -72,11 +91,17 @@ body {
 
   .col-half,
   .col-one-third,
+  .col-one-tenth,
   .col-three-fifth,
   .col-four-fifth,
   .col-two-fifth,
+  .col-nine-tenth,
   .col-full {
     padding: 0 0.75rem;
+  }
+
+  .col-one-tenth {
+    width: 10%;
   }
 
   .col-one-third {
@@ -97,6 +122,10 @@ body {
 
   .col-two-fifth {
     width: 40%;
+  }
+
+  .col-nine-tenth {
+    width: 90%;
   }
 
   .col-full {
@@ -113,11 +142,17 @@ body {
 
   .col-half,
   .col-one-third,
+  .col-one-tenth,
   .col-three-fifth,
   .col-four-fifth,
   .col-two-fifth,
+  .col-nine-tenth,
   .col-full {
     padding: 0 0.75rem;
+  }
+
+  .col-one-tenth {
+    width: 10%;
   }
 
   .col-one-third {
@@ -138,6 +173,10 @@ body {
 
   .col-two-fifth {
     width: 40%;
+  }
+
+  .col-nine-tenth {
+    width: 90%;
   }
 
   .col-full {

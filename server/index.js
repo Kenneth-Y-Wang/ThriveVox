@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 require('dotenv/config');
 const pg = require('pg');
 const argon2 = require('argon2');
@@ -85,7 +86,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// for userinfo and image uploads
+// for userinfo and image getting when showing home
 
 app.get('/api/profile/users/:userId', (req, res, next) => {
   const userId = parseInt(req.params.userId, 10);
@@ -116,10 +117,33 @@ app.get('/api/profile/users/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// for favorite search
+app.get('/api/favorite/search', (req, res, next) => {
+
+  const { 'fetch-path': fetchPath, 'file-name': fileName } = req.headers;
+
+  fetch(fetchPath, {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-host': 'theaudiodb.p.rapidapi.com',
+      'x-rapidapi-key': process.env.API_KEY
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data[fileName]) {
+        const [result] = data[fileName];
+
+        res.json(result);
+      }
+    })
+    .catch(err => next(err));
+});
 // moving forward using token to verify userId
 
 app.use(authorizationMiddleware);
 
+// for updating userInfo
 app.patch('/api/profile/users', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
   if (!userId) {
@@ -155,6 +179,118 @@ app.patch('/api/profile/users', uploadsMiddleware, (req, res, next) => {
       res.json(userUpdatedInfo);
     })
     .catch(err => next(err));
+});
+
+// user save favorite
+
+app.post('/api/favorite/savedFavorite', (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+  let type;
+  if (req.body.idAlbum) {
+    type = 'album';
+  } else {
+    type = 'artist';
+  }
+  const favoriteDetail = req.body;
+  const sql = `
+    insert into "savedFavorite" ("userId","favoriteType","favoriteDetails")
+    values ($1, $2, $3)
+    returning*
+  `;
+  const params = [userId, type, favoriteDetail];
+  db.query(sql, params)
+    .then(result => {
+      const [favoriteSaved] = result.rows;
+      res.json(favoriteSaved);
+    })
+    .catch(err => next(err));
+});
+
+// carousel get data
+
+app.get('/api/favorite/savedFavorite', (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+  const sql = `
+  select "userId",
+         "favoriteId",
+         "favoriteType",
+         "favoriteDetails"
+    from "savedFavorite"
+    where "userId"=$1
+    order by "favoriteId" desc
+    limit 5
+  `;
+
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const savedFavorite = result.rows;
+      res.json(savedFavorite);
+    })
+    .catch(err => next(err));
+});
+
+// home get saved data
+
+app.get('/api/favorite/allSavedFavorites', (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+  const sql = `
+  select "userId",
+         "favoriteId",
+         "favoriteType",
+         "favoriteDetails"
+    from "savedFavorite"
+    where "userId"=$1
+    order by "favoriteId" desc
+  `;
+
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const savedFavorite = result.rows;
+      res.json(savedFavorite);
+    })
+    .catch(err => next(err));
+});
+
+// user delete favorite
+
+app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+  const favoriteId = Number(req.params.favoriteId);
+
+  const sql = `
+    delete from "savedFavorite"
+     where "favoriteId" = $1
+     returning *
+    `;
+  const value = [favoriteId];
+
+  db.query(sql, value)
+    .then(result => {
+      const favorite = result.rows[0];
+      if (!favorite) {
+
+        throw new ClientError(400, `cannot find content with favoriteId ${favoriteId}`);
+      } else {
+
+        res.sendStatus(204);
+      }
+    })
+    .catch(err => next(err));
+
 });
 
 app.use(errorMiddleware);

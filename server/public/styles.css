@@ -216,6 +216,7 @@ input {
   height: 250px;
   object-fit: cover;
   border-radius: 5px;
+  transition-duration: 0.5s;
 }
 
 .profile-caption {
@@ -279,7 +280,7 @@ input {
 }
 
 .section-content {
-  width: 85%;
+  width: 90%;
   font-size: 1rem;
   color: black;
   animation: fade-in linear 1s;
@@ -420,6 +421,368 @@ button {
   100% { opacity: 100%; }
 }
 
+/* favorite search */
+
+.search-holder {
+  border-radius: 10px;
+  background-image: url("./images/unnamed.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 250px;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: end;
+}
+
+.search-bar-section {
+  padding-left: 4rem;
+}
+
+.search-title {
+  color: white;
+  margin-top: 2rem;
+}
+
+.search-title > span {
+  font-size: 1.2rem;
+}
+
+.favorite-search-button,
+.favorite-search-input,
+.artist-input {
+  display: inline-block;
+}
+
+.favorite-search-holder {
+  height: 50px;
+}
+
+.favorite-search-button {
+  height: 25px;
+  font-size: 1rem;
+  color: white;
+  background-color: transparent;
+  border: none;
+  line-height: 25px;
+  transition-duration: 0.5s;
+}
+
+.favorite-search-input {
+  border: none;
+  border-left: 1px solid white;
+  border-bottom: 2px solid white;
+  background-color: transparent;
+  height: 25px;
+  width: 90%;
+  color: white;
+  font-family: Jura, sans-serif;
+}
+
+.artist-input {
+  background-color: black;
+  border: none;
+  border-bottom: 2px solid white;
+  padding: 0.15rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.artist-input:focus {
+  border: 1px solid white;
+  border-radius: 0;
+}
+
+::placeholder {
+  color: #e9ecef;
+  font-family: Jura, sans-serif;
+  font-style: italic;
+}
+
+.album-comment {
+  color: white;
+  font-size: 0.8rem;
+  margin-left: 0.75rem;
+}
+
+.search-button-holder {
+  margin-top: 2rem;
+}
+
+.search-button {
+  font-size: 1.2rem;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid white;
+  color: white;
+  border-radius: 5px;
+  transition-duration: 0.5s;
+  font-family: Orbitron, sans-serif;
+  background-color: black;
+  margin-right: 1rem;
+}
+
+.search-button:hover {
+  color: black;
+  background-color: white;
+}
+
+/* carosel */
+
+.favorite-caro {
+  margin: 2.5rem auto;
+}
+
+.carousel-container {
+  border: none;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2.5rem auto;
+  background-color: white;
+  box-shadow: 3px 5px 5px -2px rgb(81 81 81 / 70%);
+}
+
+.arrow-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.caro-content-column {
+  padding: 1.5rem 0.25rem;
+}
+
+.caro-content-holder {
+  width: 95%;
+  margin: 0.25rem auto;
+  border: 3px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  box-shadow: -10px 0 13px -7px #000, 10px 0 13px -7px #000, 5px 5px 15px -1px rgb(0 0 0 / 0%);
+}
+
+.caro-pic-col {
+  text-align: center;
+  padding: 1rem 0.75rem;
+}
+
+.caro-info-col {
+  padding: 1rem 0.75rem;
+  animation: fade-in 1s;
+}
+
+.caro-text {
+  color: #8d959d;
+  font-size: 1rem;
+}
+
+.caro-detail-bt-row {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.artist-web > span {
+  font-size: 0.8rem;
+}
+
+.caro-text > span {
+  color: black;
+}
+
+.caro-pic-holder {
+  width: 90%;
+  margin: 0.5rem auto;
+}
+
+.caro-pic-holder > img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 5px;
+  transition-duration: 0.5s;
+  animation: fade-in 1s;
+}
+
+.detail-button {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid black;
+  color: black;
+  border-radius: 2px;
+  transition-duration: 0.5s;
+  font-family: Orbitron, sans-serif;
+  background-color: white;
+}
+
+.caro-detail-button {
+  color: black;
+  border: none;
+  transition-duration: 0.5s;
+  font-family: Orbitron, sans-serif;
+  background-color: white;
+  font-size: 1.1rem;
+}
+
+.caro-detail-button:hover {
+  color: #8d99ae;
+}
+
+.dot-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.25rem;
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 2px solid #343a40;
+  margin: 0 0.25rem;
+  background-color: white;
+  transition-duration: 0.5s;
+}
+
+.font-style {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.far:hover {
+  color: #6c757d;
+  transform: scale(1.3);
+}
+
+.dot:hover {
+  transform: scale(1.3);
+}
+
+img:hover {
+  transform: scale(1.02);
+}
+
+.dot-select {
+  background-color: #343a40;
+}
+
+.caro-transition {
+  transition-duration: 0.5s;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0%; }
+  100% { opacity: 100%; }
+}
+
+/* favorite-search-result */
+.search-result-holder {
+  margin-top: 1.5rem;
+}
+
+.single-search {
+  background-color: white;
+  border-radius: 5px;
+  margin: 1.5rem  auto;
+  box-shadow: 3px 5px 5px -2px rgb(81 81 81 / 70%);
+}
+
+.default-row {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-pic-holder {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.search-pic-holder > img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 3px;
+  transition-duration: 0.5s;
+}
+
+.search-info-col {
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.result-button-row {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.add-button {
+  font-weight: bold;
+  font-size: 1.5rem;
+  background-color: white;
+  border: none;
+  margin-left: 0.75rem;
+}
+
+.detail-clicked {
+  color: white;
+  background-color: black;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid black;
+  border-radius: 2px;
+  transition-duration: 0.5s;
+  font-family: Orbitron, sans-serif;
+}
+
+.hidden-detail-row {
+  margin-top: 1rem;
+  padding: 1rem;
+  animation: fade-in linear 1s;
+}
+
+.banner-holder {
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.banner-holder > img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 3px;
+  transition-duration: 0.5s;
+}
+
+.search-note {
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+}
+
+.detail-note {
+  text-align: justify;
+  line-height: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+}
+
+.no-result-message-holder {
+  width: 100%;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.7rem;
+}
+
 @media screen and (min-width: 768px) {
   .edit-page {
     padding: 1.25rem 4.75rem;
@@ -429,5 +792,13 @@ button {
 @media screen and (min-width: 1280px) {
   .edit-page {
     padding: 1.25rem 5.75rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .arrow-holder {
+    justify-content: center;
+    align-items: center;
+    display: none;
   }
 }

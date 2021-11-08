@@ -88,12 +88,14 @@ export default class Carousel extends React.Component {
     const favorites = this.state.savedFavorites;
 
     const favoriteLists = favorites.map((favorite, index) => {
+      const labelOne = favorite.favoriteType === 'album' ? 'Artist' : 'Alternate Name';
+      const labelTwo = favorite.favoriteType === 'album' ? 'First Release' : 'Born';
+      const labelThree = favorite.favoriteType === 'album' ? 'Album Score' : 'Artist Website';
+      const className = favorite.favoriteType === 'album' ? 'caro-text' : 'caro-text artist-web';
+
       if (favorite.favoriteType === 'album') {
         const { strAlbum, strAlbumThumb, strArtist, intYearReleased, strGenre, strStyle, intScore } = favorite.favoriteDetails;
-        const labelOne = 'Artist';
-        const labelTwo = 'First Release';
-        const labelThree = 'Album Score';
-        const className = 'caro-text';
+
         return (
           <div key={favorite.favoriteId} className={index === this.state.index ? '' : 'hidden'}>
             <CarouselSlide title={strAlbum} picUrl={strAlbumThumb} labelOne={labelOne} valueOne={strArtist}
@@ -104,10 +106,7 @@ export default class Carousel extends React.Component {
       }
       if (favorite.favoriteType === 'artist') {
         const { strArtist, strArtistThumb, strArtistAlternate, intBornYear, strGenre, strStyle, strWebsite } = favorite.favoriteDetails;
-        const labelOne = 'Alternate Name';
-        const labelTwo = 'Born';
-        const labelThree = 'Artist Website';
-        const className = 'caro-text artist-web';
+
         return (
           <div key={favorite.favoriteId} className={index === this.state.index ? '' : 'hidden'}>
             <CarouselSlide title={strArtist} picUrl={strArtistThumb} labelOne={labelOne} valueOne={strArtistAlternate}

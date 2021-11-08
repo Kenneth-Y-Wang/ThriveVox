@@ -34,7 +34,7 @@ export default class CustomAccordion extends React.Component {
   }
 
   handleDelete(favoriteId) {
-    console.log(favoriteId);
+
     const token = window.localStorage.getItem('react-context-jwt');
     fetch(`/api/favorite/allSavedFavorites/${favoriteId}`, {
       method: 'DELETE',
@@ -82,18 +82,19 @@ export default class CustomAccordion extends React.Component {
       const classNameThree = 'single-search col-full';
       const classNameFour = 'add-button hidden';
       const classNameSix = 'add-button';
+      const displayOne = favorite.favoriteType === 'artist' ? 'Artist' : 'Album';
+      const displayTwo = favorite.favoriteType === 'artist' ? 'Born' : 'Artist';
+      const displayThree = favorite.favoriteType === 'artist' ? 'Origin' : 'First Release';
+      const displayFour = favorite.favoriteType === 'artist' ? 'Artist Website' : 'Album Score';
+      const displayFive = favorite.favoriteType === 'artist' ? 'Artist Biography' : 'Album Description';
+      const classNameFive = favorite.favoriteType === 'artist' ? 'caro-text artist-web' : 'caro-text';
+      const favoriteId = favorite.favoriteId;
       if (favorite.favoriteType === 'artist') {
         const {
           strArtistThumb, strArtist, intBornYear, strGenre,
           strStyle, strCountry, strWebsite, strArtistBanner, strBiographyEN
         } = favorite.favoriteDetails;
-        const favoriteId = favorite.favoriteId;
-        const displayOne = 'Artist';
-        const displayTwo = 'Born';
-        const displayThree = 'Origin';
-        const displayFour = 'Artist Website';
-        const displayFive = 'Artist Biography';
-        const classNameFive = 'caro-text artist-web';
+
         return (
           <div className="section-content" key={index}>
             <ResultDisplay picUrl={strArtistThumb} detailView={this.detailView} dataId={index} handleDelete={this.handleDelete}
@@ -110,13 +111,7 @@ export default class CustomAccordion extends React.Component {
           strAlbumThumb, strArtist, intYearReleased, strGenre,
           strStyle, strAlbum, intScore, strAlbum3DFlat, strDescriptionEN
         } = favorite.favoriteDetails;
-        const favoriteId = favorite.favoriteId;
-        const displayOne = 'Album';
-        const displayTwo = 'Artist';
-        const displayThree = 'First Release';
-        const displayFour = 'Album Score';
-        const displayFive = 'Album Description';
-        const classNameFive = 'caro-text';
+
         return (
           <div className="section-content" key={index} >
             <ResultDisplay picUrl={strAlbumThumb} detailView={this.detailView} dataId={index} handleDelete={this.handleDelete}

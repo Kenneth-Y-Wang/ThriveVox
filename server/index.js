@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 require('dotenv/config');
 const pg = require('pg');
 const argon2 = require('argon2');
@@ -85,7 +86,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// for userinfo and image uploads
+// for userinfo and image getting when showing home
 
 app.get('/api/profile/users/:userId', (req, res, next) => {
   const userId = parseInt(req.params.userId, 10);
@@ -116,10 +117,33 @@ app.get('/api/profile/users/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// for favorite search
+app.get('/api/favorite/search', (req, res, next) => {
+
+  const { 'fetch-path': fetchPath, 'file-name': fileName } = req.headers;
+
+  fetch(fetchPath, {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-host': 'theaudiodb.p.rapidapi.com',
+      'x-rapidapi-key': process.env.API_KEY
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data[fileName]) {
+        const [result] = data[fileName];
+
+        res.json(result);
+      }
+    })
+    .catch(err => next(err));
+});
 // moving forward using token to verify userId
 
 app.use(authorizationMiddleware);
 
+// for updating userInfo
 app.patch('/api/profile/users', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
   if (!userId) {
@@ -238,6 +262,8 @@ app.get('/api/favorite/allSavedFavorites', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// user delete favorite
+
 app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
   const { userId } = req.user;
   if (!userId) {
@@ -266,6 +292,7 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
     .catch(err => next(err));
 
 });
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

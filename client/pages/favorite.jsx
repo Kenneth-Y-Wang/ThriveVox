@@ -43,20 +43,23 @@ export default class FavoriteSearch extends React.Component {
       fileName = 'artists';
     }
 
-    fetch(fetchPath, {
+    fetch('/api/favorite/search', {
       method: 'GET',
       headers: {
-        'x-rapidapi-host': 'theaudiodb.p.rapidapi.com',
-        'x-rapidapi-key': '3ac221b76dmsh761303974d244fbp12a694jsna1c5bc30b528'
+
+        'Content-Type': 'application/json',
+        'fetch-path': fetchPath,
+        'file-name': fileName
       }
     })
       .then(response => response.json())
       .then(data => {
-        const [result] = data[fileName];
-        this.setState({ searchResult: result });
+        if (data) {
+          this.setState({ searchResult: data });
+        }
       })
-      .catch(err => {
-        console.error(err);
+      .catch(error => {
+        console.error('Error:', error);
       });
 
   }

@@ -8,6 +8,11 @@ export default class ChatMain extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // const socket = io();
+    // socket.on('connection');
+  }
+
   render() {
     return (
       <div className="chat-entrance-page">
@@ -27,7 +32,7 @@ export default class ChatMain extends React.Component {
             <form id="chat-form">
               <input className="chat-input" id="msg" name="msg" type="text" placeholder="Enter Message" required autoComplete="off" />
               <button className="btn chat-button">Send</button>
-              <a href="#chat"><button id="leave-btn" type="button" className="btn"><i className="fas fa-sign-out-alt"></i></button></a>
+              <a href="#chat"><button type="button" className="leave-button"><i className="fas fa-sign-out-alt"></i></button></a>
             </form>
             <div className="typing-status"></div>
           </div>

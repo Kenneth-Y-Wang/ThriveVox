@@ -79,7 +79,7 @@ export default class CustomAccordion extends React.Component {
     const favoritesList = allSavedFavorites.map((favorite, index) => {
       const classNameOne = this.state.isViewing === index ? 'detail-clicked' : 'detail-button';
       const classNameTwo = this.state.isViewing === index ? 'hidden-detail-row col-full' : 'hidden-detail-row col-full hidden';
-      const classNameThree = 'single-search col-full';
+      const classNameThree = 'single-search col-nine-tenth';
       const classNameFour = 'add-button hidden';
       const classNameSix = 'add-button';
       const displayOne = favorite.favoriteType === 'artist' ? 'Artist' : 'Album';
@@ -96,7 +96,7 @@ export default class CustomAccordion extends React.Component {
         } = favorite.favoriteDetails;
 
         return (
-          <div className="section-content" key={index}>
+          <div key={index}>
             <ResultDisplay picUrl={strArtistThumb} detailView={this.detailView} dataId={index} handleDelete={this.handleDelete}
               favoriteId={favoriteId} className={classNameOne} displayOne={displayOne} valueOne={strArtist}
             displayTwo={displayTwo} valueTwo={intBornYear} genre={strGenre} style={strStyle}
@@ -113,7 +113,7 @@ export default class CustomAccordion extends React.Component {
         } = favorite.favoriteDetails;
 
         return (
-          <div className="section-content" key={index} >
+          <div key={index} >
             <ResultDisplay picUrl={strAlbumThumb} detailView={this.detailView} dataId={index} handleDelete={this.handleDelete}
               favoriteId={favoriteId} className={classNameOne} displayOne={displayOne} valueOne={strAlbum}
             displayTwo={displayTwo} valueTwo={strArtist} genre={strGenre} style={strStyle}

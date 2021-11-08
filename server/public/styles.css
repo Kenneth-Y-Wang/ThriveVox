@@ -285,7 +285,7 @@ input {
   color: black;
   animation: fade-in linear 1s;
   margin: 1.75rem auto;
-  background-color: #dee2e6;
+  background-color: white;
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 3px 5px 5px -2px rgb(81 81 81 / 70%);

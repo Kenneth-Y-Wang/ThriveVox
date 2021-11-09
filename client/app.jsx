@@ -8,6 +8,8 @@ import NotFound from './pages/not-found';
 import CustomDropdown from './components/navbar';
 import PageContainer from './components/page-container';
 import FavoriteSearch from './pages/favorite';
+import ChatEntrance from './pages/chat-entrance';
+import ChatMain from './pages/chat-page';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -46,7 +48,7 @@ export default class App extends React.Component {
   }
 
   renderPage() {
-    const { path } = this.state.route;
+    const { path, params } = this.state.route;
     if (path === '') {
       return <Home />;
     }
@@ -56,17 +58,25 @@ export default class App extends React.Component {
     if (path === 'favorite') {
       return <FavoriteSearch />;
     }
+    if (path === 'chat') {
+      return <ChatEntrance />;
+    }
+    if (path === 'chatRoom') {
+      const roomName = params.get('roomName');
+      return <ChatMain roomName={roomName} />;
+    }
     return <NotFound />;
   }
 
   render() {
+    const { path } = this.state.route;
     if (this.state.isAuthorizing) return null;
     const { user, route, isOpen } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, isOpen, handleSignIn, handleSignOut };
-    const containerClass = user
-      ? 'container'
-      : 'container-sign-in';
+    const containerClass = !user || path === 'chat' || path === 'chatRoom'
+      ? 'container-sign-in'
+      : 'container';
 
     return (
       <AppContext.Provider value={contextValue}>

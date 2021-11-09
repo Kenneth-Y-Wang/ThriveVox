@@ -9,6 +9,8 @@ const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
 const authorizationMiddleware = require('./authorization-middleware');
+const http = require('http');
+const socketio = require('socket.io');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -24,6 +26,8 @@ app.use(staticMiddleware);
 const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
+const server = http.createServer(app);
+const io = socketio(server);
 
 // for sign-in and sign-up
 
@@ -293,9 +297,15 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
 
 });
 
+io.on('connection', socket => {
+  const room = socket.handshake.query.roomName;
+  socket.join(room);
+
+});
+
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
 });

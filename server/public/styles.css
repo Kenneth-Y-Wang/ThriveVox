@@ -926,6 +926,14 @@ img:hover {
   overflow-y: scroll;
 }
 
+.user-list-display {
+  list-style: none;
+}
+
+.user-list-display > li {
+  font-size: 0.8rem;
+}
+
 .chat-header span {
   font-size: 1.2rem;
 }

@@ -310,9 +310,21 @@ io.on('connection', socket => {
     const room = socket.handshake.query.roomName;
     socket.join(room);
     const user = userJoin(socket.id, username, room);
-    console.log(user);
+    // console.log(user);
     socket.emit('message', formatMessage('ThriveVox', 'Welcome to ThriveVox'));
+    socket.broadcast
+      .to(room)
+      .emit('message', formatMessage('ThriveVox', `${user.username} has joined the room`));
+    io.to(room).emit('roomUsers', getRoomUsers(room));
+  });
 
+  socket.on('disconnect', () => {
+    const user = userLeave(socket.id);
+    if (user) {
+      io.to(user.room)
+        .emit('message', formatMessage('ThriveVox', `${user.username} has left the room`));
+      io.to(user.room).emit('roomUsers', getRoomUsers(user.room));
+    }
   });
 
 });

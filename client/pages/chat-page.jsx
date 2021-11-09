@@ -7,7 +7,8 @@ export default class ChatMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chatMsg: []
+      chatMsg: [],
+      users: []
     };
   }
 
@@ -15,6 +16,9 @@ export default class ChatMain extends React.Component {
     const username = this.context.user.username;
     this.socket = io({ query: `roomName=${this.props.roomName}` });
     this.socket.emit('joinRoom', { username });
+    this.socket.on('roomUsers', data => {
+      this.setState({ users: data });
+    });
     this.socket.on('message', message => {
       console.log(message);
       this.setState({ chatMsg: this.state.chatMsg.concat(message) });
@@ -30,6 +34,16 @@ export default class ChatMain extends React.Component {
   }
 
   render() {
+    const users = this.state.users;
+    let userList;
+    if (users) {
+      userList = users.map(user => {
+
+        return (
+        <li key={user.username}>{user.username}</li>
+        );
+      });
+    }
     const chatMsgs = this.state.chatMsg;
     const chatmessages = chatMsgs.map((message, index) => {
       return (
@@ -48,7 +62,9 @@ export default class ChatMain extends React.Component {
           <main className="chat-main">
             <div className="chat-sidebar">
               <h3>Users</h3>
-              <ul id="users"></ul>
+              <ul className="user-list-display">
+                {userList}
+              </ul>
             </div>
             <div className="chat-messages">
               {chatmessages}

@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function ChatMessage(props) {
   return (
-    <div className="message" >
-      <p className="sub">{props.username}<span>{props.time}</span></p>
-      <p className="text">{props.text}</p>
+    <div className="message-group" >
+      <p className="sub-text">{props.username}<span> {props.time}</span></p>
+      <p className="main-text">{props.text}</p>
     </div>
   );
 }

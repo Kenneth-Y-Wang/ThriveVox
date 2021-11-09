@@ -985,24 +985,30 @@ img:hover {
   margin-left: 0.5rem;
 }
 
-.chat-messages .message {
-  padding: 10px;
-  margin-bottom: 15px;
+.message-group {
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
   background-color: #e2eafc;
   border-radius: 5px;
   overflow-wrap: break-word;
 }
 
-.chat-messages .message .sub {
-  font-size: 15px;
+.sub-text {
+  font-size: 1rem;
   font-weight: bold;
   color: #5674bd;
   opacity: 70%;
-  margin-bottom: 7px;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
-.chat-messages .message .sub span {
+.sub-text span {
   color: #6c757d;
+}
+
+.main-text {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
 }
 
 .typing-status {

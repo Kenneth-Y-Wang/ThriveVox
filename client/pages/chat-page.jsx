@@ -8,8 +8,28 @@ export default class ChatMain extends React.Component {
     super(props);
     this.state = {
       chatMsg: [],
-      users: []
+      users: [],
+      input: ''
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.textBox = React.createRef();
+  }
+
+  handleChange(event) {
+    this.setState({ input: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.state.input) {
+      const newMsg = this.state.input.trim();
+
+      this.socket.emit('messageChat', newMsg);
+      this.setState({ input: '' });
+    }
+
   }
 
   componentDidMount() {
@@ -23,10 +43,11 @@ export default class ChatMain extends React.Component {
       console.log(message);
       this.setState({ chatMsg: this.state.chatMsg.concat(message) });
     });
+
   }
 
   componentDidUpdate() {
-
+    this.textBox.current.scrollTop = this.textBox.current.scrollHeight;
   }
 
   componentWillUnmount() {
@@ -66,14 +87,14 @@ export default class ChatMain extends React.Component {
                 {userList}
               </ul>
             </div>
-            <div className="chat-messages">
+            <div ref={this.textBox} className="chat-messages">
               {chatmessages}
             </div>
           </main>
           <div className="chat-form-container">
-            <form id="chat-form">
-              <input className="chat-input" id="msg" name="msg" type="text" placeholder="Enter Message" required autoComplete="off" />
-              <button className="btn chat-button">Send</button>
+            <form onSubmit={this.handleSubmit}>
+              <input onChange={this.handleChange} className="chat-input" id="msg" name="msg" type="text" placeholder="Enter Message" required autoComplete="off" />
+              <button type="submit" className="chat-button">Send</button>
               <a href="#chat"><button type="button" className="leave-button"><i className="fas fa-sign-out-alt"></i></button></a>
             </form>
             <div className="typing-status"></div>

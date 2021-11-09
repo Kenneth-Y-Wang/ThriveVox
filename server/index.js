@@ -318,6 +318,11 @@ io.on('connection', socket => {
     io.to(room).emit('roomUsers', getRoomUsers(room));
   });
 
+  socket.on('messageChat', newMsg => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit('message', formatMessage(user.username, newMsg));
+  });
+
   socket.on('disconnect', () => {
     const user = userLeave(socket.id);
     if (user) {

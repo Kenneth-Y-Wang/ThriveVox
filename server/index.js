@@ -298,7 +298,9 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
 });
 
 io.on('connection', socket => {
-  // console.log(socket.id);
+  const room = socket.handshake.query.roomName;
+  socket.join(room);
+
 });
 
 app.use(errorMiddleware);

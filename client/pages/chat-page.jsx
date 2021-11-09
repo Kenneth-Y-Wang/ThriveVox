@@ -1,4 +1,5 @@
 import React from 'react';
+import { io } from 'socket.io-client';
 
 export default class ChatMain extends React.Component {
   constructor(props) {
@@ -9,8 +10,11 @@ export default class ChatMain extends React.Component {
   }
 
   componentDidMount() {
-    // const socket = io();
-    // socket.on('connection');
+    this.socket = io({ query: `roomName=${this.props.roomName}` });
+  }
+
+  componentWillUnmount() {
+    this.socket.disconnect();
   }
 
   render() {

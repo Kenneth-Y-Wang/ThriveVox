@@ -17,10 +17,13 @@ export default class ChatEntrance extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const roomName = this.state.room;
+
+    window.location.hash = `#chatRoom?roomName=${roomName}`;
   }
 
   render() {
-    const roomName = this.state.room;
+
     return (
       <div className="chat-entrance-page">
 
@@ -45,9 +48,8 @@ export default class ChatEntrance extends React.Component {
                   <option value="Do You Know?">Do You Know?</option>
                 </select>
               </div>
+              <button type="submit" className="join-button">Join Chat</button>
             </form>
-            <a href={`#chatRoom?roomName=${roomName}`}><button type="submit" className="join-button">Join Chat</button></a>
-
           </div>
 
         </div>

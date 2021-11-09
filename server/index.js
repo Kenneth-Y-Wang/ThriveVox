@@ -11,6 +11,13 @@ const uploadsMiddleware = require('./uploads-middleware');
 const authorizationMiddleware = require('./authorization-middleware');
 const http = require('http');
 const socketio = require('socket.io');
+const formatMessage = require('./messages');
+const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers
+} = require('./users');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -298,8 +305,15 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
 });
 
 io.on('connection', socket => {
-  const room = socket.handshake.query.roomName;
-  socket.join(room);
+
+  socket.on('joinRoom', ({ username }) => {
+    const room = socket.handshake.query.roomName;
+    socket.join(room);
+    const user = userJoin(socket.id, username, room);
+    console.log(user);
+    socket.emit('message', formatMessage('ThriveVox', 'Welcome to ThriveVox'));
+
+  });
 
 });
 

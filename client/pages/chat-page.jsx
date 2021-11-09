@@ -1,16 +1,28 @@
 import React from 'react';
 import { io } from 'socket.io-client';
+import AppContext from '../lib/app-context';
+import ChatMessage from '../components/chat-message';
 
 export default class ChatMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chatMsg: null
+      chatMsg: []
     };
   }
 
   componentDidMount() {
+    const username = this.context.user.username;
     this.socket = io({ query: `roomName=${this.props.roomName}` });
+    this.socket.emit('joinRoom', { username });
+    this.socket.on('message', message => {
+      console.log(message);
+      this.setState({ chatMsg: this.state.chatMsg.concat(message) });
+    });
+  }
+
+  componentDidUpdate() {
+
   }
 
   componentWillUnmount() {
@@ -18,6 +30,14 @@ export default class ChatMain extends React.Component {
   }
 
   render() {
+    const chatMsgs = this.state.chatMsg;
+    const chatmessages = chatMsgs.map((message, index) => {
+      return (
+        <div key={index}>
+          <ChatMessage username={message.username} time={message.time} text={message.text} />
+        </div>
+      );
+    });
     return (
       <div className="chat-entrance-page">
         <div className=" col-four-fifth chat-container">
@@ -30,7 +50,9 @@ export default class ChatMain extends React.Component {
               <h3>Users</h3>
               <ul id="users"></ul>
             </div>
-            <div className="chat-messages"></div>
+            <div className="chat-messages">
+              {chatmessages}
+            </div>
           </main>
           <div className="chat-form-container">
             <form id="chat-form">
@@ -45,3 +67,5 @@ export default class ChatMain extends React.Component {
     );
   }
 }
+
+ChatMain.contextType = AppContext;

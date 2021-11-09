@@ -1,4 +1,5 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
 
 export default class ChatEntrance extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ export default class ChatEntrance extends React.Component {
             <form onSubmit={this.handleSubmit}>
               <div className="form-section">
                 <label>Username</label>
-                <h4>KennethWang</h4>
+                <h4>{this.context.user.username}</h4>
               </div>
               <div className="form-section">
                 <label htmlFor="room">Topic Room</label>
@@ -57,3 +58,5 @@ export default class ChatEntrance extends React.Component {
     );
   }
 }
+
+ChatEntrance.contextType = AppContext;

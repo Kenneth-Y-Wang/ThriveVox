@@ -985,6 +985,33 @@ img:hover {
   margin-left: 0.5rem;
 }
 
+.chat-messages .message {
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #e2eafc;
+  border-radius: 5px;
+  overflow-wrap: break-word;
+}
+
+.chat-messages .message .sub {
+  font-size: 15px;
+  font-weight: bold;
+  color: #5674bd;
+  opacity: 70%;
+  margin-bottom: 7px;
+}
+
+.chat-messages .message .sub span {
+  color: #6c757d;
+}
+
+.typing-status {
+  color: #e9ecef;
+  font-style: italic;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
 @media (max-width: 700px) {
   .chat-main {
     display: block;

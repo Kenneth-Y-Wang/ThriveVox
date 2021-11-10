@@ -1,4 +1,6 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class ChatEntrance extends React.Component {
   constructor(props) {
@@ -23,7 +25,7 @@ export default class ChatEntrance extends React.Component {
   }
 
   render() {
-
+    if (!this.context.user) return <Redirect to="sign-in" />;
     return (
       <div className="chat-entrance-page">
 
@@ -35,12 +37,12 @@ export default class ChatEntrance extends React.Component {
             <form onSubmit={this.handleSubmit}>
               <div className="form-section">
                 <label>Username</label>
-                <h4>KennethWang</h4>
+                <h4>{this.context.user.username}</h4>
               </div>
               <div className="form-section">
                 <label htmlFor="room">Topic Room</label>
                 <select onChange={this.handleChange} name="room" id="room">
-                  <option>Please Choose One Topic Room to Start Chat..</option>
+                  <option>Please Choose One Topic Room to Start Chatting..</option>
                   <option value="Wanna Join?">Wanna Join?</option>
                   <option value="Tell me Your Favorite!">Tell me Your Favorite!</option>
                   <option value="What's Next?">What&apos;s Next?</option>
@@ -57,3 +59,5 @@ export default class ChatEntrance extends React.Component {
     );
   }
 }
+
+ChatEntrance.contextType = AppContext;

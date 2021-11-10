@@ -11,6 +11,13 @@ const uploadsMiddleware = require('./uploads-middleware');
 const authorizationMiddleware = require('./authorization-middleware');
 const http = require('http');
 const socketio = require('socket.io');
+const formatMessage = require('./messages');
+const {
+  userJoinRoom,
+  currentUsers,
+  userLeave,
+  getRoomUsers
+} = require('./users');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -297,9 +304,43 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
 
 });
 
+// chat starts
+
 io.on('connection', socket => {
-  const room = socket.handshake.query.roomName;
-  socket.join(room);
+
+  socket.on('joinRoom', ({ username }) => {
+    const room = socket.handshake.query.roomName;
+    socket.join(room);
+    const user = userJoinRoom(socket.id, username, room);
+
+    socket.emit('message', formatMessage('ThriveVox', 'Welcome to ThriveVox'));
+
+    socket.broadcast
+      .to(room)
+      .emit('message', formatMessage('ThriveVox', `${user.username} has joined the room`));
+
+    io.to(room).emit('roomUsers', getRoomUsers(room));
+  });
+
+  socket.on('messageChat', newMsg => {
+    const user = currentUsers(socket.id);
+    io.to(user.room).emit('message', formatMessage(user.username, newMsg));
+  });
+
+  socket.on('typing', () => {
+    const user = currentUsers(socket.id);
+    socket.broadcast.to(user.room)
+      .emit('typing', formatMessage(user.username, ' is typing a message...'));
+  });
+
+  socket.on('disconnect', () => {
+    const user = userLeave(socket.id);
+    if (user) {
+      io.to(user.room)
+        .emit('message', formatMessage('ThriveVox', `${user.username} has left the room`));
+      io.to(user.room).emit('roomUsers', getRoomUsers(user.room));
+    }
+  });
 
 });
 

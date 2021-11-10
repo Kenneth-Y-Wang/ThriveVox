@@ -16,6 +16,8 @@ export default class SearchUsers extends React.Component {
     this.searchBand = this.searchBand.bind(this);
     this.searchMusian = this.searchMusian.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.detailView = this.detailView.bind(this);
+    this.goBack = this.goBack.bind(this);
   }
 
   handleChange(event) {
@@ -24,21 +26,70 @@ export default class SearchUsers extends React.Component {
 
   searchBand() {
     this.setState({ searchType: 'band' });
-    console.log('band');
+
   }
 
   searchMusian() {
     this.setState({ searchType: 'musian' });
-    console.log('mu');
+
+  }
+
+  detailView(userId) {
+
+    this.setState({ detailView: userId });
+
+  }
+
+  goBack(userId) {
+    if (this.state.detailView === userId) {
+      this.setState({ detailView: '' });
+    }
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    const location = this.state.location;
+    const searchType = this.state.searchType;
 
+    const token = window.localStorage.getItem('react-context-jwt');
+    fetch('/api/users/search', {
+      method: 'GET',
+      headers: {
+        'react-context-jwt': token,
+        'location-info': location,
+        'search-type': searchType
+      }
+
+    })
+      .then(response => response.json())
+      .then(data => {
+
+        this.setState({ searchResult: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    this.setState({ searchType: '' });
   }
 
   render() {
     if (!this.context.user) return <Redirect to="sign-in" />;
+    const usersList = this.state.searchResult;
+    const userDisplayList = usersList.map(user => {
+
+      const {
+        userId, username, email, userLocation, avaterUrl, userStyle, userSkills,
+        userInstruments, userPrimaryInterest, userInterest, userBand, userBio
+      } = user;
+      return (
+          <div key={userId}>
+            < SingleUserResult avaterUrl={avaterUrl} username={username} userBand={userBand} userInterest={userInterest}
+              detailView={this.detailView} userId={userId} userLocation={userLocation} userPrimaryInterest={userPrimaryInterest} goBack={this.goBack}
+            detailShowing={this.state.detailView} userStyle={userStyle} userSkills={userSkills} email={email} userBio={userBio} userInstruments={userInstruments} />
+          </div>
+      );
+    });
+
     return (
     <>
       <form onSubmit={this.handleSubmit}>
@@ -66,7 +117,9 @@ export default class SearchUsers extends React.Component {
       </form>
         <div className="section-header">Search Result</div>
         <div className="search-result-holder">
-          <SingleUserResult />
+          {this.state.searchResult.length !== 0
+            ? userDisplayList
+            : <h4 className="text-center">Sorry, no search result available...</h4>}
         </div>
     </>
     );

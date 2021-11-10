@@ -304,6 +304,62 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
 
 });
 
+// search users
+
+app.get('/api/users/search', (req, res, next) => {
+  const { userId } = req.user;
+  if (!userId) {
+    return;
+  }
+  const { 'location-info': location, 'search-type': searchType } = req.headers;
+
+  let sql;
+  if (searchType === 'band') {
+    sql = `
+     select "userId",
+            "username",
+            "email",
+            "userLocation",
+            "avaterUrl",
+            "userStyle",
+            "userSkills",
+            "userInstruments",
+            "userPrimaryInterest",
+            "userInterest",
+            "userBand",
+            "userBio"
+      from  "users"
+      where "userLocation" =$1
+        and "userBand" IS NOT NULL
+     `;
+  } else {
+    sql = `
+    select "userId",
+            "username",
+            "email",
+            "userLocation",
+            "avaterUrl",
+            "userStyle",
+            "userSkills",
+            "userInstruments",
+            "userPrimaryInterest",
+            "userInterest",
+            "userBand",
+            "userBio"
+      from  "users"
+      where "userLocation" =$1
+    `;
+  }
+
+  const params = [location];
+  db.query(sql, params)
+    .then(result => {
+      const usersRow = result.rows;
+      res.json(usersRow);
+    })
+    .catch(err => next(err));
+
+});
 // chat starts
 
 io.on('connection', socket => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { io } from 'socket.io-client';
 import AppContext from '../lib/app-context';
 import ChatMessage from '../components/chat-message';
+import { format } from 'date-fns';
 
 export default class ChatMain extends React.Component {
   constructor(props) {
@@ -26,7 +27,6 @@ export default class ChatMain extends React.Component {
       this.setState({ users: data });
     });
     this.socket.on('message', message => {
-      console.log(message);
       this.setState({ chatMsg: this.state.chatMsg.concat(message), typingMsg: '' });
     });
 
@@ -77,9 +77,10 @@ export default class ChatMain extends React.Component {
 
     const chatMsgs = this.state.chatMsg;
     const chatmessages = chatMsgs.map((message, index) => {
+      const currentTime = format(new Date(), 'HH:mm a');
       return (
         <div key={index}>
-          <ChatMessage username={message.username} time={message.time} text={message.text} />
+          <ChatMessage username={message.username} time={currentTime} text={message.text} />
         </div>
       );
     });

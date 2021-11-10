@@ -13,8 +13,8 @@ const http = require('http');
 const socketio = require('socket.io');
 const formatMessage = require('./messages');
 const {
-  userJoin,
-  getCurrentUser,
+  userJoinRoom,
+  currentUsers,
   userLeave,
   getRoomUsers
 } = require('./users');
@@ -304,13 +304,15 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
 
 });
 
+// chat starts
+
 io.on('connection', socket => {
 
   socket.on('joinRoom', ({ username }) => {
     const room = socket.handshake.query.roomName;
     socket.join(room);
-    const user = userJoin(socket.id, username, room);
-    // console.log(user);
+    const user = userJoinRoom(socket.id, username, room);
+
     socket.emit('message', formatMessage('ThriveVox', 'Welcome to ThriveVox'));
 
     socket.broadcast
@@ -321,12 +323,12 @@ io.on('connection', socket => {
   });
 
   socket.on('messageChat', newMsg => {
-    const user = getCurrentUser(socket.id);
+    const user = currentUsers(socket.id);
     io.to(user.room).emit('message', formatMessage(user.username, newMsg));
   });
 
   socket.on('typing', () => {
-    const user = getCurrentUser(socket.id);
+    const user = currentUsers(socket.id);
     socket.broadcast.to(user.room)
       .emit('typing', formatMessage(user.username, ' is typing a message...'));
   });

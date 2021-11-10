@@ -1,5 +1,6 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class ChatEntrance extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class ChatEntrance extends React.Component {
   }
 
   render() {
-
+    if (!this.context.user) return <Redirect to="sign-in" />;
     return (
       <div className="chat-entrance-page">
 

@@ -3,6 +3,7 @@ import { io } from 'socket.io-client';
 import AppContext from '../lib/app-context';
 import ChatMessage from '../components/chat-message';
 import { format } from 'date-fns';
+import Redirect from '../components/redirect';
 
 export default class ChatMain extends React.Component {
   constructor(props) {
@@ -66,6 +67,7 @@ export default class ChatMain extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="sign-in" />;
     const users = this.state.users;
 
     const userList = users.map(user => {

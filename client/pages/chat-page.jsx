@@ -9,12 +9,31 @@ export default class ChatMain extends React.Component {
     this.state = {
       chatMsg: [],
       users: [],
-      input: ''
+      input: '',
+      typingMsg: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.handleType = this.handleType.bind(this);
     this.textBox = React.createRef();
+  }
+
+  componentDidMount() {
+    const username = this.context.user.username;
+    this.socket = io({ query: `roomName=${this.props.roomName}` });
+    this.socket.emit('joinRoom', { username });
+    this.socket.on('roomUsers', data => {
+      this.setState({ users: data });
+    });
+    this.socket.on('message', message => {
+      console.log(message);
+      this.setState({ chatMsg: this.state.chatMsg.concat(message), typingMsg: '' });
+    });
+
+    this.socket.on('typing', message => {
+      this.setState({ typingMsg: `${message.username}${message.text}` });
+    });
+
   }
 
   handleChange(event) {
@@ -32,22 +51,13 @@ export default class ChatMain extends React.Component {
 
   }
 
-  componentDidMount() {
-    const username = this.context.user.username;
-    this.socket = io({ query: `roomName=${this.props.roomName}` });
-    this.socket.emit('joinRoom', { username });
-    this.socket.on('roomUsers', data => {
-      this.setState({ users: data });
-    });
-    this.socket.on('message', message => {
-      console.log(message);
-      this.setState({ chatMsg: this.state.chatMsg.concat(message) });
-    });
-
+  handleType(event) {
+    this.socket.emit('typing');
   }
 
   componentDidUpdate() {
     this.textBox.current.scrollTop = this.textBox.current.scrollHeight;
+
   }
 
   componentWillUnmount() {
@@ -59,12 +69,12 @@ export default class ChatMain extends React.Component {
     let userList;
     if (users) {
       userList = users.map(user => {
-
         return (
         <li key={user.username}>{user.username}</li>
         );
       });
     }
+
     const chatMsgs = this.state.chatMsg;
     const chatmessages = chatMsgs.map((message, index) => {
       return (
@@ -73,6 +83,7 @@ export default class ChatMain extends React.Component {
         </div>
       );
     });
+
     return (
       <div className="chat-entrance-page">
         <div className=" col-four-fifth chat-container">
@@ -93,11 +104,12 @@ export default class ChatMain extends React.Component {
           </main>
           <div className="chat-form-container">
             <form onSubmit={this.handleSubmit}>
-              <input onChange={this.handleChange} className="chat-input" id="msg" name="msg" type="text" placeholder="Enter Message" required autoComplete="off" />
+              <input onChange={this.handleChange} onKeyPress={this.handleType} value={this.state.input}
+              className="chat-input" id="msg" name="msg" type="text" placeholder="Enter Message" required autoComplete="off" />
               <button type="submit" className="chat-button">Send</button>
               <a href="#chat"><button type="button" className="leave-button"><i className="fas fa-sign-out-alt"></i></button></a>
             </form>
-            <div className="typing-status"></div>
+            <div className="typing-status">{this.state.typingMsg}</div>
           </div>
         </div>
       </div>

@@ -312,15 +312,23 @@ io.on('connection', socket => {
     const user = userJoin(socket.id, username, room);
     // console.log(user);
     socket.emit('message', formatMessage('ThriveVox', 'Welcome to ThriveVox'));
+
     socket.broadcast
       .to(room)
       .emit('message', formatMessage('ThriveVox', `${user.username} has joined the room`));
+
     io.to(room).emit('roomUsers', getRoomUsers(room));
   });
 
   socket.on('messageChat', newMsg => {
     const user = getCurrentUser(socket.id);
     io.to(user.room).emit('message', formatMessage(user.username, newMsg));
+  });
+
+  socket.on('typing', () => {
+    const user = getCurrentUser(socket.id);
+    socket.broadcast.to(user.room)
+      .emit('typing', formatMessage(user.username, ' is typing a message...'));
   });
 
   socket.on('disconnect', () => {

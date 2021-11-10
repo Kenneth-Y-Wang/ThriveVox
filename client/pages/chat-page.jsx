@@ -55,9 +55,10 @@ export default class ChatMain extends React.Component {
     this.socket.emit('typing');
   }
 
-  componentDidUpdate() {
-    this.textBox.current.scrollTop = this.textBox.current.scrollHeight;
-
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.chatMsg !== this.state.chatMsg) {
+      this.textBox.current.scrollTop = this.textBox.current.scrollHeight;
+    }
   }
 
   componentWillUnmount() {
@@ -66,14 +67,12 @@ export default class ChatMain extends React.Component {
 
   render() {
     const users = this.state.users;
-    let userList;
-    if (users) {
-      userList = users.map(user => {
-        return (
+
+    const userList = users.map(user => {
+      return (
         <li key={user.username}>{user.username}</li>
-        );
-      });
-    }
+      );
+    });
 
     const chatMsgs = this.state.chatMsg;
     const chatmessages = chatMsgs.map((message, index) => {

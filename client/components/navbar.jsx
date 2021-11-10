@@ -36,6 +36,7 @@ export default class CustomDropdown extends React.Component {
           <a href="#" className="tab-anc">About Me</a>
           <a href="#favorite" className="tab-anc">My Favorite</a>
           <a href="#chat" className="tab-anc">Let&apos;s Chat</a>
+          <a href="#search" className="tab-anc">Whos&apos;s Around Me</a>
         </div>
       </nav>
     );

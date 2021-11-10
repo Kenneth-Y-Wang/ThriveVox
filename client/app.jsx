@@ -10,6 +10,7 @@ import PageContainer from './components/page-container';
 import FavoriteSearch from './pages/favorite';
 import ChatEntrance from './pages/chat-entrance';
 import ChatMain from './pages/chat-page';
+import SearchUsers from './pages/search-user';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -61,6 +62,9 @@ export default class App extends React.Component {
     if (path === 'chat') {
       return <ChatEntrance />;
     }
+    if (path === 'search') {
+      return < SearchUsers />;
+    }
     if (path === 'chatRoom') {
       const roomName = params.get('roomName');
       return <ChatMain roomName={roomName} />;
@@ -74,9 +78,9 @@ export default class App extends React.Component {
     const { user, route, isOpen } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, isOpen, handleSignIn, handleSignOut };
-    const containerClass = !user || path === 'chat' || path === 'chatRoom'
-      ? 'container-sign-in'
-      : 'container';
+    const containerClass = path === 'favorite' || path === '' || path === 'search'
+      ? 'container'
+      : 'container-sign-in';
 
     return (
       <AppContext.Provider value={contextValue}>

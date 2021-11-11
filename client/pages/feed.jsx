@@ -9,6 +9,7 @@ export default class LiveFeeds extends React.Component {
     super(props);
     this.state = {
       formOpen: false,
+      commentView: '',
       title: '',
       post: '',
       allPosts: []
@@ -17,6 +18,7 @@ export default class LiveFeeds extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleComment = this.handleComment.bind(this);
 
   }
 
@@ -38,6 +40,16 @@ export default class LiveFeeds extends React.Component {
       .catch(error => {
         console.error('Error:', error);
       });
+  }
+
+  handleComment(postId) {
+    if (this.state.commentView === '' || postId !== this.state.commentView) {
+      this.setState({ commentView: postId });
+    }
+    if (postId === this.state.commentView) {
+      this.setState({ commentView: '' });
+    }
+
   }
 
   formOpen() {
@@ -109,7 +121,7 @@ export default class LiveFeeds extends React.Component {
 
       return (
         <div key={postId}>
-          <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId}
+          <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId} handleComment={this.handleComment} checkId={this.state.commentView}
             userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} handleDelete={this.handleDelete} />
         </div>
       );

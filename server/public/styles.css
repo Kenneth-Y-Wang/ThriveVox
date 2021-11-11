@@ -1379,3 +1379,43 @@ img:hover {
   font-size: 0.5rem;
   color: black;
 }
+
+/* comment */
+
+.comment-col {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  animation: fade-in linear 2s;
+}
+
+.comment-col > input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+  font-family: Jura, sans-serif;
+  font-size: 0.8rem;
+}
+
+.comment-col > input::placeholder {
+  color: black;
+  font-style: italic;
+}
+
+.comment-col > h4 {
+  margin-bottom: 0.25rem;
+}
+
+.comment-col > ul {
+  height: 100px;
+  overflow-y: auto;
+  list-style: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #364156;
+}
+
+.comment-col > ul span {
+  color: black;
+  font-weight: 500;
+  font-family: Jura, sans-serif;
+}

@@ -308,11 +308,8 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
 // search users
 
 app.get('/api/users/search', (req, res, next) => {
-  const { userId } = req.user;
-  if (!userId) {
-    return;
-  }
-  const { 'location-info': location, 'search-type': searchType } = req.headers;
+
+  const { location, searchType } = req.query;
 
   let sql;
   if (searchType === 'band') {

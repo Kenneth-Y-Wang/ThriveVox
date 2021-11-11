@@ -52,12 +52,11 @@ export default class SearchUsers extends React.Component {
     const searchType = this.state.searchType;
 
     const token = window.localStorage.getItem('react-context-jwt');
-    fetch('/api/users/search', {
+    fetch('/api/users/search?searchType=' + searchType + '&location=' + location, {
       method: 'GET',
       headers: {
-        'react-context-jwt': token,
-        'location-info': location,
-        'search-type': searchType
+        'react-context-jwt': token
+
       }
 
     })

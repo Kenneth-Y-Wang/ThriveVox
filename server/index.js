@@ -385,6 +385,34 @@ returning "postId","title","content","userId"
 
 });
 
+// get all feeds
+
+app.get('/api/posts/allPosts', (req, res, next) => {
+  const sql = `
+  select "userId",
+         "username",
+         "email",
+         "avaterUrl",
+         "userBand",
+         "userLocation",
+         "title",
+         "content",
+         "posts"."createdAt" as "createdAt",
+         "postId"
+    from "posts"
+    join "users" using ("userId")
+    order by "postId" desc
+
+  `;
+
+  db.query(sql)
+    .then(result => {
+      const allPosts = result.rows;
+      res.json(allPosts);
+    })
+    .catch(err => next(err));
+});
+
 // chat starts
 
 io.on('connection', socket => {

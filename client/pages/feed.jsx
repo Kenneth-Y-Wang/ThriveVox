@@ -7,12 +7,33 @@ export default class LiveFeeds extends React.Component {
     this.state = {
       formOpen: false,
       title: '',
-      post: ''
+      post: '',
+      allPosts: []
     };
     this.formOpen = this.formOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+  }
+
+  componentDidMount() {
+    const token = window.localStorage.getItem('react-context-jwt');
+    fetch('/api/posts/allPosts', {
+      method: 'GET',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      }
+
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ allPosts: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }
 
   formOpen() {

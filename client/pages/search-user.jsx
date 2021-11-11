@@ -48,7 +48,7 @@ export default class SearchUsers extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const location = this.state.location;
+    const location = this.state.location.toLowerCase();
     const searchType = this.state.searchType;
 
     const token = window.localStorage.getItem('react-context-jwt');

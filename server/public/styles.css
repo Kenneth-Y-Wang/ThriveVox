@@ -383,6 +383,10 @@ input {
   height: 50px;
 }
 
+.edit-textarea::placeholder {
+  color: black;
+}
+
 .edit-button {
   margin: 0.75rem 1.5rem;
   font-size: 1.3rem;

@@ -43,6 +43,7 @@ app.post('/api/auth/sign-up', (req, res, next) => {
   if (!username || !password || !email || !location) {
     throw new ClientError(400, 'username, password, email and location are required fields');
   }
+  const modifyLocation = location.toLowerCase();
   argon2
     .hash(password)
     .then(hashedPassword => {
@@ -51,7 +52,7 @@ app.post('/api/auth/sign-up', (req, res, next) => {
         values ($1, $2, $3, $4)
         returning "userId", "username", "createdAt"
       `;
-      const params = [username, hashedPassword, email, location];
+      const params = [username, hashedPassword, email, modifyLocation];
       return db.query(sql, params);
     })
     .then(result => {
@@ -331,6 +332,7 @@ app.get('/api/users/search', (req, res, next) => {
       from  "users"
       where "userLocation" =$1
         and "userBand" IS NOT NULL
+        and "userBand" != 'null'
      `;
   } else {
     sql = `

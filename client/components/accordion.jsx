@@ -143,7 +143,7 @@ export default class CustomAccordion extends React.Component {
             <div className={this.state.isOpen === 'skill-style' ? 'skill-content' : 'skill-content hidden'}>
               <div className="col-one-third style-col">
                 <h4 className="display-info">My Band:</h4>
-                <h4>{userBand || 'I Don\'t Have One..'}</h4>
+                <h4>{!userBand || userBand === 'null' ? 'I Don\'t Have One..' : userBand}</h4>
                 <h4 className="display-info">My Instruments:</h4>
                 <h4>{userInstruments || 'N/A'}</h4>
               </div>

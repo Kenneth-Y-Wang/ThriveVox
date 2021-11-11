@@ -82,7 +82,7 @@ export default class Home extends React.Component {
               <button className="profile-edit-button"><i onClick={this.clickToEdit} className="fas fa-edit"></i></button>
             </div>
             <h4 className="display-info">Location:</h4>
-            <h4>{displayLocation}</h4>
+            <h4>{displayLocation.toUpperCase()}</h4>
             <h4 className="display-info">Email:</h4>
             <h4>{displayEmail}</h4>
             <h4 className="display-info">Primary Interest:</h4>

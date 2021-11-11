@@ -43,6 +43,7 @@ app.post('/api/auth/sign-up', (req, res, next) => {
   if (!username || !password || !email || !location) {
     throw new ClientError(400, 'username, password, email and location are required fields');
   }
+  const modifyLocation = location.toLowerCase();
   argon2
     .hash(password)
     .then(hashedPassword => {
@@ -51,7 +52,7 @@ app.post('/api/auth/sign-up', (req, res, next) => {
         values ($1, $2, $3, $4)
         returning "userId", "username", "createdAt"
       `;
-      const params = [username, hashedPassword, email, location];
+      const params = [username, hashedPassword, email, modifyLocation];
       return db.query(sql, params);
     })
     .then(result => {
@@ -304,6 +305,60 @@ app.delete('/api/favorite/allSavedFavorites/:favoriteId', (req, res, next) => {
 
 });
 
+// search users
+
+app.get('/api/users/search', (req, res, next) => {
+
+  const { location, searchType } = req.query;
+
+  let sql;
+  if (searchType === 'band') {
+    sql = `
+     select "userId",
+            "username",
+            "email",
+            "userLocation",
+            "avaterUrl",
+            "userStyle",
+            "userSkills",
+            "userInstruments",
+            "userPrimaryInterest",
+            "userInterest",
+            "userBand",
+            "userBio"
+      from  "users"
+      where "userLocation" =$1
+        and "userBand" IS NOT NULL
+        and "userBand" != 'null'
+     `;
+  } else {
+    sql = `
+    select "userId",
+            "username",
+            "email",
+            "userLocation",
+            "avaterUrl",
+            "userStyle",
+            "userSkills",
+            "userInstruments",
+            "userPrimaryInterest",
+            "userInterest",
+            "userBand",
+            "userBio"
+      from  "users"
+      where "userLocation" =$1
+    `;
+  }
+
+  const params = [location];
+  db.query(sql, params)
+    .then(result => {
+      const usersRow = result.rows;
+      res.json(usersRow);
+    })
+    .catch(err => next(err));
+
+});
 // chat starts
 
 io.on('connection', socket => {

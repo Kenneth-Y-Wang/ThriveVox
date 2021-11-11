@@ -14,7 +14,7 @@ export default class SearchUsers extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.searchBand = this.searchBand.bind(this);
-    this.searchMusian = this.searchMusian.bind(this);
+    this.searchMusician = this.searchMusician.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.detailView = this.detailView.bind(this);
     this.goBack = this.goBack.bind(this);
@@ -29,8 +29,8 @@ export default class SearchUsers extends React.Component {
 
   }
 
-  searchMusian() {
-    this.setState({ searchType: 'musian' });
+  searchMusician() {
+    this.setState({ searchType: 'musician' });
 
   }
 
@@ -102,10 +102,10 @@ export default class SearchUsers extends React.Component {
         </div>
         <div className="col-full option-search-holder">
           <div className="col-two-fifth option-col">
-            <div onClick={this.searchMusian} className={this.state.searchType === 'musian' ? 'button-pic-holder chosen' : 'button-pic-holder'} >
+            <div onClick={this.searchMusician} className={this.state.searchType === 'musician' ? 'button-pic-holder chosen' : 'button-pic-holder'} >
              <img src="/images/cover_image-1627388726.jpg" />
             </div>
-            <h1>Musian</h1>
+            <h1>Musician</h1>
           </div>
           <div className="col-two-fifth option-col">
             <div onClick={this.searchBand} className={this.state.searchType === 'band' ? 'button-pic-holder chosen' : 'button-pic-holder'}>

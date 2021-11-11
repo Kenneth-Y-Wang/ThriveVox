@@ -986,6 +986,7 @@ img:hover {
 
 .chat-form-container {
   padding: 1.5rem;
+  height: 100px;
   background-color: #343a40;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -1357,6 +1358,7 @@ img:hover {
 
 .comment-button {
   position: relative;
+  margin-right: 0.5rem;
 }
 
 .comment-block {
@@ -1371,4 +1373,9 @@ img:hover {
 
 #band-name {
   font-size: 0.8rem;
+}
+
+#post-date {
+  font-size: 0.5rem;
+  color: black;
 }

@@ -364,8 +364,8 @@ app.get('/api/users/search', (req, res, next) => {
 
 app.post('/api/posts/create', (req, res, next) => {
   const { userId } = req.user;
-  const { title, post } = req.body;
-  const time = new Date();
+  const { title, post, time } = req.body;
+
   if (!title || !post) {
     throw new ClientError(400, 'title and post content are required fields');
   }

@@ -1,5 +1,8 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
+import { format } from 'date-fns';
+import Redirect from '../components/redirect';
+import SingleFeed from '../components/single-feed-display';
 
 export default class LiveFeeds extends React.Component {
   constructor(props) {
@@ -38,6 +41,7 @@ export default class LiveFeeds extends React.Component {
 
   formOpen() {
     this.setState({ formOpen: !this.state.formOpen });
+
   }
 
   handleChange(event) {
@@ -48,10 +52,12 @@ export default class LiveFeeds extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const token = window.localStorage.getItem('react-context-jwt');
+    const newTime = format(new Date(), 'yyyy-MM-dd HH:mm');
 
     const newPost = {
       title: this.state.title,
-      post: this.state.post
+      post: this.state.post,
+      time: newTime
 
     };
     fetch('/api/posts/create', {
@@ -72,6 +78,20 @@ export default class LiveFeeds extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="sign-in" />;
+    const allPosts = this.state.allPosts;
+    const postLists = allPosts.map(post => {
+      const { postId, email, avaterUrl, username, userBand, userId, userLocation, title, content, createdAt } = post;
+      const userLoginId = this.context.user.userId;
+      const date = createdAt.slice(0, 10) + ' ' + createdAt.slice(11, 16);
+
+      return (
+        <div key={postId}>
+          <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId}
+            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} />
+        </div>
+      );
+    });
     return (
       <>
         <div className="col-nine-tenth leave-post-col">
@@ -91,24 +111,9 @@ export default class LiveFeeds extends React.Component {
         </div>
         <div className="section-header">Recent Post</div>
         <div className="search-result-holder">
-          <h4 className="text-center">Sorry, no recent post available...</h4>
-          <div className=" col-nine-tenth single-user-search-holder">
-            <div className="col-two-fifth search-profile-pic-col">
-              <div className="profile-pic-holder"><img src='/images/b50797c8a7420ba660b2b310f8698811.jpg' /></div>
-            </div>
-            <div className="col-three-fifth search-user-info-col">
-              <div className="name-detail-row">
-                <h3 className="post-user">KennethW<span id="band-name"> [ Band: LearningFuze ]</span></h3>
-                <button className=" user-detail-button comment-button" type='button'>Comment</button>
-              </div>
-              <h3 className="user-info-text">Location:<span> Irvine</span></h3>
-              <h3 className="user-info-text">Email:
-                <span> <a className="email-link" target="_blank" rel="noopener noreferrer" >YunfeiW@me.com</a></span>
-              </h3>
-              <h3 className="user-info-text">Post Title: <span>Looking for a drummer!</span></h3>
-              <p className="post-text">Looking for a drummer for our band, we gather twice a week for practice. looking for fun member! please contact me if you are interested</p>
-            </div>
-          </div>
+          {this.state.allPosts.length !== 0
+            ? postLists
+            : <h4 className="text-center">Sorry, no recent post available...</h4>}
         </div>
       </>
     );

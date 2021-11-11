@@ -359,6 +359,32 @@ app.get('/api/users/search', (req, res, next) => {
     .catch(err => next(err));
 
 });
+
+// post a feed
+
+app.post('/api/posts/create', (req, res, next) => {
+  const { userId } = req.user;
+  const { title, post } = req.body;
+  const time = new Date();
+  if (!title || !post) {
+    throw new ClientError(400, 'title and post content are required fields');
+  }
+  const sql = `
+insert into "posts" ("userId","title","createdAt","content")
+values ($1,$2,$3,$4)
+returning "postId","title","content","userId"
+`;
+
+  const params = [userId, title, time, post];
+  db.query(sql, params)
+    .then(result => {
+      const [newPost] = result.rows;
+      res.json(newPost);
+    })
+    .catch(err => next(err));
+
+});
+
 // chat starts
 
 io.on('connection', socket => {

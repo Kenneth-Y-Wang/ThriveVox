@@ -1,16 +1,53 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
 
 export default class LiveFeeds extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formOpen: false
+      formOpen: false,
+      title: '',
+      post: ''
     };
     this.formOpen = this.formOpen.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   formOpen() {
     this.setState({ formOpen: !this.state.formOpen });
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const token = window.localStorage.getItem('react-context-jwt');
+
+    const newPost = {
+      title: this.state.title,
+      post: this.state.post
+
+    };
+    fetch('/api/posts/create', {
+      method: 'POST',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newPost)
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => {
+        console.error('error', error);
+      });
+
+    this.setState({ title: '', post: '' });
   }
 
   render() {
@@ -21,10 +58,10 @@ export default class LiveFeeds extends React.Component {
           <button onClick={this.formOpen} type="button">Write a Post</button>
         </div>
         <div className={this.state.formOpen === true ? 'col-nine-tenth post-form-holder form-open' : 'col-nine-tenth post-form-holder'}>
-          <form className={this.state.formOpen === true ? 'col-four-fifth post-form' : 'col-four-fifth post-form hidden'}>
+          <form onSubmit={this.handleSubmit} className={this.state.formOpen === true ? 'col-four-fifth post-form' : 'col-four-fifth post-form hidden'}>
             <label htmlFor="title">Post Title</label>
-            <input required id="title" name="title" type="text" placeholder="Please enter your post title..."></input>
-            <textarea required id="post" name="post" placeholder="Please enter your post..."></textarea>
+            <input required onChange={this.handleChange} value={this.state.title} id="title" name="title" type="text" placeholder="Please enter your post title..."></input>
+            <textarea required onChange={this.handleChange} value={this.state.post} id="post" name="post" placeholder="Please enter your post..."></textarea>
             <div className="post-button-holder">
               <button onClick={this.formOpen} className="user-detail-button" type="button">BACK</button>
               <button className="user-detail-button" type="submit">POST</button>
@@ -56,3 +93,5 @@ export default class LiveFeeds extends React.Component {
     );
   }
 }
+
+LiveFeeds.contextType = AppContext;

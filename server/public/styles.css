@@ -1313,6 +1313,9 @@ img:hover {
   border: none;
   border-bottom: 2px solid black;
   margin-bottom: 1.25rem;
+  font-family: Jura, sans-serif;
+  padding-left: 0.5rem;
+  font-weight: 500;
 }
 
 .post-form > input::placeholder,

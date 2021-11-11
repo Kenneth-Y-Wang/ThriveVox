@@ -41,7 +41,7 @@
 
 .menu {
   width: 100%;
-  height: 280px;
+  height: 320px;
   text-align: center;
   background-color: #495057;
   padding-top: 3rem;
@@ -49,7 +49,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: -280px;
+  top: -320px;
   transition-duration: 0.5s;
   z-index: 5;
   border-bottom-left-radius: 5px;
@@ -57,7 +57,7 @@
 }
 
 .menu-on {
-  transform: translateY(330px);
+  transform: translateY(370px);
 }
 
 .menu-text {
@@ -1248,4 +1248,124 @@ img:hover {
   font-size: 0.9rem;
   text-align: center;
   font-family: Jura, sans-serif;
+}
+
+/* live feed page */
+
+.leave-post-col {
+  margin: 2rem auto;
+  height: 230px;
+  background-image: url("/images/1162662.jpeg");
+  background-position: center;
+  background-size: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  text-align: center;
+  padding-top: 2rem;
+  margin-bottom: 0;
+}
+
+.leave-post-col > h1 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.leave-post-col > button {
+  font-family: Orbitron, sans-serif;
+  color: white;
+  background-color: transparent;
+  font-size: 1.1rem;
+  border: none;
+  border-bottom: 2px solid white;
+}
+
+.post-form-holder {
+  margin: 0 auto;
+  height: 0;
+  border: none;
+  transition-duration: 0.3s;
+  background-color: white;
+  text-align: center;
+  border-bottom: 5px solid black;
+  box-shadow: 0 10px 13px -7px #000, 5px -43px 3px -24px rgb(0 0 0 / 0%);
+  margin-bottom: 2rem;
+}
+
+.form-open {
+  height: 260px;
+}
+
+.post-form {
+  padding: 1.2rem 0.75rem;
+  margin: 0 auto;
+  animation: fade-in linear 2s;
+}
+
+.post-form > label {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.post-form > input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+  margin-bottom: 1.25rem;
+}
+
+.post-form > input::placeholder,
+.post-form > textarea::placeholder {
+  color: black;
+}
+
+.post-form > textarea {
+  width: 100%;
+  height: 100px;
+  overflow-y: auto;
+  border-radius: 3px;
+  border: 2px solid black;
+  font-family: Jura, sans-serif;
+  padding: 0.5rem 0.75rem;
+}
+
+.post-button-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.post-button-holder > button {
+  margin-right: 0.75rem;
+}
+
+.post-text {
+  font-size: 0.8rem;
+  font-family: Jura, sans-serif;
+  margin-top: 0.15rem;
+}
+
+.post-user {
+  margin-top: 0.15rem;
+  margin-bottom: 0.15rem;
+}
+
+.comment-button {
+  position: relative;
+}
+
+.comment-block {
+  width: 300px;
+  height: 100px;
+  background-color: white;
+  border: 1px black solid;
+  position: absolute;
+  right: 0;
+  top: 1.5rem;
+}
+
+#band-name {
+  font-size: 0.8rem;
 }

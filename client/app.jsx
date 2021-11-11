@@ -11,6 +11,7 @@ import FavoriteSearch from './pages/favorite';
 import ChatEntrance from './pages/chat-entrance';
 import ChatMain from './pages/chat-page';
 import SearchUsers from './pages/search-user';
+import LiveFeeds from './pages/feed';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -65,6 +66,9 @@ export default class App extends React.Component {
     if (path === 'search') {
       return < SearchUsers />;
     }
+    if (path === 'feed') {
+      return < LiveFeeds />;
+    }
     if (path === 'chatRoom') {
       const roomName = params.get('roomName');
       return <ChatMain roomName={roomName} />;
@@ -78,7 +82,7 @@ export default class App extends React.Component {
     const { user, route, isOpen } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, isOpen, handleSignIn, handleSignOut };
-    const containerClass = path === 'favorite' || path === '' || path === 'search'
+    const containerClass = path === 'favorite' || path === '' || path === 'search' || path === 'feed'
       ? 'container'
       : 'container-sign-in';
 
@@ -88,7 +92,7 @@ export default class App extends React.Component {
           <CustomDropdown />
           <PageContainer containerClass={containerClass}>
             {this.renderPage()}
-            </PageContainer>
+          </PageContainer>
         </>
       </AppContext.Provider>
     );

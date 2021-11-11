@@ -12,7 +12,7 @@ export default function SingleFeed(props) {
           <h3 className="post-user">{props.username}<span id="band-name"> [ Band: {!props.userBand || props.userBand === 'null' ? 'N/A' : props.userBand} ]</span></h3>
           <div className="result-button-row">
            <button className=" user-detail-button comment-button" type='button'>Comment</button>
-           <button className={props.userId === props.userLoginId ? 'user-detail-button' : 'user-detail-button hidden'} type='button'><i className="far fa-trash-alt"></i></button>
+           <button onClick={() => props.handleDelete(props.postId)} className={props.userId === props.userLoginId ? 'user-detail-button' : 'user-detail-button hidden'} type='button'><i className="far fa-trash-alt"></i></button>
           </div>
         </div>
         <h3 className="user-info-text">Location:<span> {props.userLocation}</span></h3>

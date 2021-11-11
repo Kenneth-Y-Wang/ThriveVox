@@ -16,6 +16,7 @@ export default class LiveFeeds extends React.Component {
     this.formOpen = this.formOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
 
   }
 
@@ -47,6 +48,27 @@ export default class LiveFeeds extends React.Component {
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  }
+
+  handleDelete(postId) {
+    const token = window.localStorage.getItem('react-context-jwt');
+    fetch(`/api/posts/allPosts/${postId}`, {
+      method: 'DELETE',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      },
+      body: null
+    });
+
+    for (let i = 0; i < this.state.allPosts.length; i++) {
+      if (postId === this.state.allPosts[i].postId) {
+        const newState = this.state.allPosts.slice(0, i).concat(this.state.allPosts.slice(i + 1));
+        this.setState({ allPosts: newState });
+        break;
+      }
+
+    }
   }
 
   handleSubmit(event) {
@@ -88,7 +110,7 @@ export default class LiveFeeds extends React.Component {
       return (
         <div key={postId}>
           <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId}
-            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} />
+            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} handleDelete={this.handleDelete} />
         </div>
       );
     });

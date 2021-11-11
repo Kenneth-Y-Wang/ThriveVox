@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function SingleUserResult(props) {
-
+  const emailHref = `mailto:${props.email}`;
   return (
       <div className=" col-nine-tenth single-user-search-holder">
         <div className="col-two-fifth search-profile-pic-col">
@@ -16,7 +16,9 @@ export default function SingleUserResult(props) {
           <h3 className="user-info-text">Primary Interest:<span> {props.userPrimaryInterest || 'N/A'}</span></h3>
           <h3 className="user-info-text">Styles:<span> {props.userStyle || 'N/A'}</span></h3>
           <h3 className="user-info-text">Skills:<span> {props.userSkills || 'N/A'}</span></h3>
-          <h3 className="user-info-text">Email:<span> {props.email}</span></h3>
+          <h3 className="user-info-text">Email:
+           <span> <a className="email-link" target="_blank" rel="noopener noreferrer" href={emailHref}>{props.email}</a></span>
+          </h3>
         </div>
        <div className={props.detailShowing === props.userId ? 'detail-modal-holder' : 'detail-modal-holder hidden'}>
           <div className="col-three-fifth detail-block">
@@ -29,7 +31,7 @@ export default function SingleUserResult(props) {
             <h4>My Interests</h4>
             <h5>{props.userInterest || 'N/A'}</h5>
             <h4>Contact Me:</h4>
-            <a>{props.email}</a>
+            <a className="email-link" target="_blank" rel="noopener noreferrer" href={emailHref}>{props.email}</a>
             <button onClick={() => props.goBack(props.userId)}className="user-detail-button">Back</button>
           </div>
         </div>

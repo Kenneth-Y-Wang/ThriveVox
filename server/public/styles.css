@@ -1151,6 +1151,7 @@ img:hover {
   height: 150px;
   object-fit: cover;
   border-radius: 2px;
+  transition-duration: 0.5s;
 }
 
 .search-user-info-col {
@@ -1161,6 +1162,15 @@ img:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.email-link {
+  color: black;
+  transition-duration: 0.5s;
+}
+
+.email-link:hover {
+  color: #1780a1;
 }
 
 .user-info-text > span {

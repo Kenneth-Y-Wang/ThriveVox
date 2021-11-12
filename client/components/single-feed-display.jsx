@@ -20,8 +20,9 @@ export default function SingleFeed(props) {
         <h3 className="user-info-text">Email:
           <span> <a className="email-link" target="_blank" rel="noopener noreferrer" href={emailHref}>{props.email}</a></span>
         </h3>
-        <h3 className="user-info-text">Post Title: <span>{props.title}</span><span id="post-date"> Posted on: {props.date}</span></h3>
+        <h3 className="user-info-text">Post Title: <span>{props.title}</span></h3>
         <p className="post-text">{props.content}</p>
+        <p id="post-date">Posted on: {props.date}</p>
       </div>
       <div className={props.postId === props.checkId ? 'col-full comment-col' : 'col-full comment-col hidden'} >
         <Comment postId={props.postId} />

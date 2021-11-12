@@ -1349,6 +1349,7 @@ img:hover {
   font-size: 0.8rem;
   font-family: Jura, sans-serif;
   margin-top: 0.15rem;
+  font-weight: 600;
 }
 
 .post-user {
@@ -1414,8 +1415,14 @@ img:hover {
   color: #364156;
 }
 
-.comment-list span {
+.comment-detail {
   color: black;
-  font-weight: 500;
+  font-weight: 600;
   font-family: Jura, sans-serif;
+}
+
+.comment-date {
+  color: #93a8ac;
+  font-weight: bold;
+  font-size: 0.6rem;
 }

@@ -463,6 +463,28 @@ app.post('/api/comments/create', (req, res, next) => {
     })
     .catch(err => next(err));
 });
+// get comments
+app.get('/api/comments/allComments/:postId', (req, res, next) => {
+  const postId = Number(req.params.postId);
+  const sql = `
+  select "username",
+         "comments"."createdAt" as "createdAt",
+         "content",
+         "commentId"
+    from "comments"
+    join "users" using ("userId")
+    where "postId"=$1
+    order by "commentId"
+  `;
+  const params = [postId];
+  db.query(sql, params)
+    .then(result => {
+      const allComments = result.rows;
+      res.json(allComments);
+    })
+    .catch(err => next(err));
+});
+
 // chat starts
 
 io.on('connection', socket => {

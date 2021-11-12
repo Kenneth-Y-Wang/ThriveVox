@@ -1399,6 +1399,12 @@ img:hover {
   color: #0d3b66;
 }
 
+.refresh-feed {
+  display: inline-block;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
 /* comment */
 
 .comment-col {

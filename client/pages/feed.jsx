@@ -12,6 +12,7 @@ export default class LiveFeeds extends React.Component {
       commentView: '',
       title: '',
       post: '',
+      refresh: false,
       allPosts: []
     };
     this.formOpen = this.formOpen.bind(this);
@@ -19,6 +20,7 @@ export default class LiveFeeds extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleComment = this.handleComment.bind(this);
+    this.refresh = this.refresh.bind(this);
 
   }
 
@@ -41,6 +43,27 @@ export default class LiveFeeds extends React.Component {
       });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.refresh !== this.state.refresh) {
+      const token = window.localStorage.getItem('react-context-jwt');
+      fetch('/api/posts/allPosts', {
+        method: 'GET',
+        headers: {
+          'react-context-jwt': token,
+          'Content-Type': 'application/json'
+        }
+
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ allPosts: data });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  }
+
   handleComment(postId) {
     if (this.state.commentView === '' || postId !== this.state.commentView) {
       this.setState({ commentView: postId });
@@ -49,6 +72,10 @@ export default class LiveFeeds extends React.Component {
       this.setState({ commentView: '' });
     }
 
+  }
+
+  refresh() {
+    this.setState({ refresh: !this.state.refresh });
   }
 
   formOpen() {
@@ -141,7 +168,7 @@ export default class LiveFeeds extends React.Component {
             </div>
           </form>
         </div>
-        <div className="section-header">Recent Post</div>
+        <div className="section-header">Recent Post <div onClick={this.refresh} className="refresh-feed"><i className="fas fa-sync-alt"></i></div></div>
         <div className="search-result-holder">
           {this.state.allPosts.length !== 0
             ? postLists

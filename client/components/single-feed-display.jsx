@@ -16,11 +16,11 @@ export default function SingleFeed(props) {
            <button onClick={() => props.handleDelete(props.postId)} className={props.userId === props.userLoginId ? 'user-detail-button' : 'user-detail-button hidden'} type='button'><i className="far fa-trash-alt"></i></button>
           </div>
         </div>
+        <h3 className="user-info-text">Post Title: <span>{props.title}</span></h3>
         <h3 className="user-info-text">Location:<span> {props.userLocation}</span></h3>
         <h3 className="user-info-text">Email:
           <span> <a className="email-link" target="_blank" rel="noopener noreferrer" href={emailHref}>{props.email}</a></span>
         </h3>
-        <h3 className="user-info-text">Post Title: <span>{props.title}</span></h3>
         <p className="post-text">{props.content}</p>
         <p id="post-date">Posted on: {props.date}</p>
       </div>

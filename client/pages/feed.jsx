@@ -34,7 +34,6 @@ export default class LiveFeeds extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         this.setState({ allPosts: data });
       })
       .catch(error => {
@@ -103,7 +102,6 @@ export default class LiveFeeds extends React.Component {
       body: JSON.stringify(newPost)
     })
       .then(response => response.json())
-      .then(data => console.log(data))
       .catch(error => {
         console.error('error', error);
       });

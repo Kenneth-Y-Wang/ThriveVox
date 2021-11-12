@@ -1,4 +1,5 @@
 import React from 'react';
+import Comment from './comment';
 
 export default function SingleFeed(props) {
   const emailHref = `mailto:${props.email}`;
@@ -23,19 +24,7 @@ export default function SingleFeed(props) {
         <p className="post-text">{props.content}</p>
       </div>
       <div className={props.postId === props.checkId ? 'col-full comment-col' : 'col-full comment-col hidden'} >
-        <input type="text" placeholder="please enter your comment..."></input>
-        <h4>Recent Comments:</h4>
-        <ul>
-          <li >KennethWang: <span>I like this</span></li>
-          <li>Meet Patel: <span>Me too</span></li>
-          <li>Meet Patel: <span>Me too</span></li>
-          <li>Meet Patel: <span>Me too</span></li>
-          <li>Meet Patel: <span>Me too</span></li>
-          <li>Meet Patel: <span>Me too</span></li>
-          <li>Meet Patel: <span>Me too</span></li>
-          <li>Meet Patel: <span>Me too</span></li>
-          <li>Meet Patel: <span>Me too</span></li>
-        </ul>
+        <Comment />
       </div>
     </div>
   );

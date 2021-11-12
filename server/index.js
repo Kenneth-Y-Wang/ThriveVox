@@ -439,7 +439,30 @@ app.delete('/api/posts/allPosts/:postId', (req, res, next) => {
     .catch(err => next(err));
 
 });
+// leave comment
 
+app.post('/api/comments/create', (req, res, next) => {
+  const { userId } = req.user;
+  const { content, postId, time } = req.body;
+
+  if (!content) {
+    throw new ClientError(400, 'comment content is required fields');
+  }
+
+  const sql = `
+   insert into "comments" ("userId","content","postId", "createdAt")
+   values ($1,$2,$3,$4)
+   returning *
+  `;
+
+  const params = [userId, content, postId, time];
+  db.query(sql, params)
+    .then(result => {
+      const [newComment] = result.rows;
+      res.json(newComment);
+    })
+    .catch(err => next(err));
+});
 // chat starts
 
 io.on('connection', socket => {

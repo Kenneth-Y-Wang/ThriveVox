@@ -24,7 +24,7 @@ export default function SingleFeed(props) {
         <p className="post-text">{props.content}</p>
       </div>
       <div className={props.postId === props.checkId ? 'col-full comment-col' : 'col-full comment-col hidden'} >
-        <Comment />
+        <Comment postId={props.postId} />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
+import { format } from 'date-fns';
 
 export default class Comment extends React.Component {
   constructor(props) {
@@ -17,7 +18,27 @@ export default class Comment extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.input);
+    const token = window.localStorage.getItem('react-context-jwt');
+    const newTime = format(new Date(), 'yyyy-MM-dd HH:mm');
+
+    const newComment = {
+      content: this.state.input,
+      postId: this.props.postId,
+      time: newTime
+    };
+    fetch('/api/comments/create', {
+      method: 'POST',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newComment)
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => {
+        console.error('error', error);
+      });
     this.setState({ input: '' });
   }
 

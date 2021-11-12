@@ -147,7 +147,7 @@ export default class LiveFeeds extends React.Component {
       return (
         <div key={postId}>
           <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId} handleComment={this.handleComment} checkId={this.state.commentView}
-            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} handleDelete={this.handleDelete} />
+            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} handleDelete={this.handleDelete} refresh={this.state.refresh} />
         </div>
       );
     });

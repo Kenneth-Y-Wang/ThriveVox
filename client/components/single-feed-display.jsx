@@ -25,7 +25,7 @@ export default function SingleFeed(props) {
         <p id="post-date">Posted on: {props.date}</p>
       </div>
       <div className={props.postId === props.checkId ? 'col-full comment-col' : 'col-full comment-col hidden'} >
-        <Comment postId={props.postId} />
+        <Comment postId={props.postId} refresh={props.refresh} />
       </div>
     </div>
   );

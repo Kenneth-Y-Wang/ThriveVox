@@ -32,6 +32,27 @@ export default class Comment extends React.Component {
       });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.refresh !== this.props.refresh) {
+      const token = window.localStorage.getItem('react-context-jwt');
+      fetch(`/api/comments/allComments/${this.props.postId}`, {
+        method: 'GET',
+        headers: {
+          'react-context-jwt': token,
+          'Content-Type': 'application/json'
+        }
+
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ comments: data });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  }
+
   handleChange(event) {
     this.setState({ input: event.target.value });
   }

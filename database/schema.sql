@@ -34,13 +34,15 @@ CREATE TABLE "public"."users" (
 CREATE TABLE "public"."comments" (
 	"userId" integer NOT NULL,
 	"createdAt" timestamptz(6) not null default now(),
-	"content" TIME NOT NULL,
+	"content" TEXT NOT NULL,
 	"updatedAt" timestamptz(6) not null default now(),
 	"postId" integer NOT NULL,
-	"favoriteId" integer NOT NULL
+  "commentId" serial NOT NULL,
+	CONSTRAINT "comments_pk" PRIMARY KEY ("commentId")
 ) WITH (
   OIDS=FALSE
 );
+
 
 
 
@@ -55,12 +57,12 @@ CREATE TABLE "public"."likedFavorite" (
 
 CREATE TABLE "public"."posts" (
 	"postId" serial NOT NULL,
-	"imageUrl" TEXT NOT NULL,
-	"captain" TEXT,
-	"createdAt" timestamptz(6) not null default now(),
-	"location" TEXT NOT NULL,
+	"imageUrl" TEXT,
+	"title" TEXT,
+	"createdAt" timestamp with time zone NOT NULL,
+	"content" TEXT NOT NULL,
 	"userId" integer NOT NULL,
-	"audioUrl" TEXT NOT NULL,
+	"audioUrl" TEXT,
 	CONSTRAINT "posts_pk" PRIMARY KEY ("postId")
 ) WITH (
   OIDS=FALSE
@@ -93,7 +95,6 @@ CREATE TABLE "public"."savedFavorite" (
 
 ALTER TABLE "comments" ADD CONSTRAINT "comments_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 ALTER TABLE "comments" ADD CONSTRAINT "comments_fk1" FOREIGN KEY ("postId") REFERENCES "posts"("postId");
-ALTER TABLE "comments" ADD CONSTRAINT "comments_fk2" FOREIGN KEY ("favoriteId") REFERENCES "savedFavorite"("favoriteId");
 
 ALTER TABLE "likedFavorite" ADD CONSTRAINT "likedFavorite_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 ALTER TABLE "likedFavorite" ADD CONSTRAINT "likedFavorite_fk1" FOREIGN KEY ("favoriteId") REFERENCES "savedFavorite"("favoriteId");

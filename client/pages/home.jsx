@@ -82,11 +82,11 @@ export default class Home extends React.Component {
               <button className="profile-edit-button"><i onClick={this.clickToEdit} className="fas fa-edit"></i></button>
             </div>
             <h4 className="display-info">Location:</h4>
-            <h4>{displayLocation.toUpperCase()}</h4>
+            <h4 className="display-info-detail">{displayLocation.toUpperCase()}</h4>
             <h4 className="display-info">Email:</h4>
-            <h4>{displayEmail}</h4>
+            <h4 className="display-info-detail">{displayEmail}</h4>
             <h4 className="display-info">Primary Interest:</h4>
-            <h4>{userPrimaryInterest || 'N/A'}</h4>
+            <h4 className="display-info-detail">{userPrimaryInterest || 'N/A'}</h4>
           </div>
         </div>
         <CustomAccordion userStyle={userStyle} userSkills={userSkills} userInstruments={userInstruments} userInterest={userInterest} userBand={userBand} userBio={userBio} />

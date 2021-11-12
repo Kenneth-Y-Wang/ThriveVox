@@ -78,6 +78,10 @@ body {
   margin-top: 0.75rem;
 }
 
+.mg-t-150 {
+  margin-top: 2.5rem;
+}
+
 .no-dec {
   text-decoration: none;
 }

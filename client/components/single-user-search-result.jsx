@@ -9,7 +9,7 @@ export default function SingleUserResult(props) {
         </div>
         <div className="col-three-fifth search-user-info-col">
           <div className="name-detail-row">
-            <h3 >{props.username}<span> [ Band: {!props.userBand || props.userBand === 'null' ? 'N/A' : props.userBand} ]</span></h3>
+            <h3 >{props.username}<span id="user-band"> [ Band: {!props.userBand || props.userBand === 'null' ? 'N/A' : props.userBand} ]</span></h3>
             <button onClick={() => props.detailView(props.userId)} className=" user-detail-button" type='button'>Detail</button>
           </div>
           <h3 className="user-info-text">Location:<span> {props.userLocation}</span></h3>

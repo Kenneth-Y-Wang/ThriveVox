@@ -359,6 +359,132 @@ app.get('/api/users/search', (req, res, next) => {
     .catch(err => next(err));
 
 });
+
+// post a feed
+
+app.post('/api/posts/create', (req, res, next) => {
+  const { userId } = req.user;
+  const { title, post, time } = req.body;
+
+  if (!title || !post) {
+    throw new ClientError(400, 'title and post content are required fields');
+  }
+  const sql = `
+insert into "posts" ("userId","title","createdAt","content")
+values ($1,$2,$3,$4)
+returning "postId","title","content","userId"
+`;
+
+  const params = [userId, title, time, post];
+  db.query(sql, params)
+    .then(result => {
+      const [newPost] = result.rows;
+      res.json(newPost);
+    })
+    .catch(err => next(err));
+
+});
+
+// get all feeds
+
+app.get('/api/posts/allPosts', (req, res, next) => {
+  const sql = `
+  select "userId",
+         "username",
+         "email",
+         "avaterUrl",
+         "userBand",
+         "userLocation",
+         "title",
+         "content",
+         "posts"."createdAt" as "createdAt",
+         "postId"
+    from "posts"
+    join "users" using ("userId")
+    order by "postId" desc
+
+  `;
+
+  db.query(sql)
+    .then(result => {
+      const allPosts = result.rows;
+      res.json(allPosts);
+    })
+    .catch(err => next(err));
+});
+
+// delete a post
+
+app.delete('/api/posts/allPosts/:postId', (req, res, next) => {
+  const postId = Number(req.params.postId);
+
+  const sql = `
+  delete from "posts"
+  where "postId"=$1
+  returning *
+  `;
+  const params = [postId];
+
+  db.query(sql, params)
+    .then(result => {
+      const post = result.rows[0];
+      if (!post) {
+
+        throw new ClientError(400, `cannot find content with postId ${postId}`);
+      } else {
+
+        res.sendStatus(204);
+      }
+    })
+    .catch(err => next(err));
+
+});
+// leave comment
+
+app.post('/api/comments/create', (req, res, next) => {
+  const { userId } = req.user;
+  const { content, postId, time } = req.body;
+
+  if (!content) {
+    throw new ClientError(400, 'comment content is required fields');
+  }
+
+  const sql = `
+   insert into "comments" ("userId","content","postId", "createdAt")
+   values ($1,$2,$3,$4)
+   returning *
+  `;
+
+  const params = [userId, content, postId, time];
+  db.query(sql, params)
+    .then(result => {
+      const [newComment] = result.rows;
+      res.json(newComment);
+    })
+    .catch(err => next(err));
+});
+// get comments
+app.get('/api/comments/allComments/:postId', (req, res, next) => {
+  const postId = Number(req.params.postId);
+  const sql = `
+  select "username",
+         "comments"."createdAt" as "createdAt",
+         "content",
+         "commentId"
+    from "comments"
+    join "users" using ("userId")
+    where "postId"=$1
+    order by "commentId"
+  `;
+  const params = [postId];
+  db.query(sql, params)
+    .then(result => {
+      const allComments = result.rows;
+      res.json(allComments);
+    })
+    .catch(err => next(err));
+});
+
 // chat starts
 
 io.on('connection', socket => {

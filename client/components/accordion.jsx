@@ -143,17 +143,17 @@ export default class CustomAccordion extends React.Component {
             <div className={this.state.isOpen === 'skill-style' ? 'skill-content' : 'skill-content hidden'}>
               <div className="col-one-third style-col">
                 <h4 className="display-info">My Band:</h4>
-                <h4>{!userBand || userBand === 'null' ? 'I Don\'t Have One..' : userBand}</h4>
+                <h4 className="display-info-detail">{!userBand || userBand === 'null' ? 'I Don\'t Have One..' : userBand}</h4>
                 <h4 className="display-info">My Instruments:</h4>
-                <h4>{userInstruments || 'N/A'}</h4>
+                <h4 className="display-info-detail">{userInstruments || 'N/A'}</h4>
               </div>
               <div className="col-half skill-col">
                 <h4 className="display-info">My Music Styles:</h4>
-                <h4>{userStyle || 'N/A'}</h4>
+                <h4 className="display-info-detail">{userStyle || 'N/A'}</h4>
                 <h4 className="display-info">My Skills:</h4>
-                <h4>{userSkills || 'N/A'}</h4>
+                <h4 className="display-info-detail">{userSkills || 'N/A'}</h4>
                 <h4 className="display-info">My Interest:</h4>
-                <h4>{userInterest || 'N/A'}</h4>
+                <h4 className="display-info-detail">{userInterest || 'N/A'}</h4>
               </div>
             </div>
           </div>

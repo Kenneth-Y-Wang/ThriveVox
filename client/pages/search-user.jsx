@@ -81,46 +81,46 @@ export default class SearchUsers extends React.Component {
         userInstruments, userPrimaryInterest, userInterest, userBand, userBio
       } = user;
       return (
-          <div key={userId}>
-            < SingleUserResult avaterUrl={avaterUrl} username={username} userBand={userBand} userInterest={userInterest}
-              detailView={this.detailView} userId={userId} userLocation={userLocation} userPrimaryInterest={userPrimaryInterest} goBack={this.goBack}
+        <div key={userId}>
+          < SingleUserResult avaterUrl={avaterUrl} username={username} userBand={userBand} userInterest={userInterest}
+            detailView={this.detailView} userId={userId} userLocation={userLocation} userPrimaryInterest={userPrimaryInterest} goBack={this.goBack}
             detailShowing={this.state.detailView} userStyle={userStyle} userSkills={userSkills} email={email} userBio={userBio} userInstruments={userInstruments} />
-          </div>
+        </div>
       );
     });
 
     return (
-    <>
-      <form onSubmit={this.handleSubmit}>
-        <div className="col-nine-tenth user-search-holder">
-         <div className=" col-three-fifth location-search-bar">
-          <label htmlFor="location">Location:</label>
+      <>
+        <form onSubmit={this.handleSubmit}>
+          <div className="col-nine-tenth user-search-holder">
+            <div className=" col-three-fifth location-search-bar">
+              <label htmlFor="location">Location:</label>
               <input required onChange={this.handleChange} value={this.state.location}
-              className="favorite-search-input" id="location" name='location' type="text"></input>
-         </div>
-        </div>
-        <div className="col-full option-search-holder">
-          <div className="col-two-fifth option-col">
-            <div onClick={this.searchMusician} className={this.state.searchType === 'musician' ? 'button-pic-holder chosen' : 'button-pic-holder'} >
-             <img src="/images/cover_image-1627388726.jpg" />
+                className="favorite-search-input" id="location" name='location' type="text"></input>
             </div>
-            <h1>Musician</h1>
           </div>
-          <div className="col-two-fifth option-col">
-            <div onClick={this.searchBand} className={this.state.searchType === 'band' ? 'button-pic-holder chosen' : 'button-pic-holder'}>
-              <img src="/images/photo-1501612780327-45045538702b.jpeg" />
+          <div className="col-full option-search-holder">
+            <div className="col-two-fifth option-col">
+              <div onClick={this.searchMusician} className={this.state.searchType === 'musician' ? 'button-pic-holder chosen' : 'button-pic-holder'} >
+                <img src="/images/cover_image-1627388726.jpg" />
+              </div>
+              <h1>Musician</h1>
             </div>
-            <h1>Band</h1>
+            <div className="col-two-fifth option-col">
+              <div onClick={this.searchBand} className={this.state.searchType === 'band' ? 'button-pic-holder chosen' : 'button-pic-holder'}>
+                <img src="/images/photo-1501612780327-45045538702b.jpeg" />
+              </div>
+              <h1>Band</h1>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
         <div className="section-header">Search Result</div>
         <div className="search-result-holder">
           {this.state.searchResult.length !== 0
             ? userDisplayList
             : <h4 className="text-center">Sorry, no search result available...</h4>}
         </div>
-    </>
+      </>
     );
   }
 }

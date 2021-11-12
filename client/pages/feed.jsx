@@ -21,6 +21,7 @@ export default class LiveFeeds extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleComment = this.handleComment.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.fileInputRef = React.createRef();
 
   }
 
@@ -114,21 +115,28 @@ export default class LiveFeeds extends React.Component {
     const token = window.localStorage.getItem('react-context-jwt');
     const newTime = format(new Date(), 'yyyy-MM-dd HH:mm');
 
-    const newPost = {
-      title: this.state.title,
-      post: this.state.post,
-      time: newTime
+    const form = new FormData();
+    form.append('audio', this.fileInputRef.current.files[0]);
+    form.append('time', newTime);
+    form.append('title', this.state.title);
+    form.append('post', this.state.post);
 
-    };
+    // const newPost = {
+    //   title: this.state.title,
+    //   post: this.state.post,
+    //   time: newTime
+
+    // };
     fetch('/api/posts/create', {
       method: 'POST',
       headers: {
-        'react-context-jwt': token,
-        'Content-Type': 'application/json'
+        'react-context-jwt': token
+
       },
-      body: JSON.stringify(newPost)
+      body: form
     })
       .then(response => response.json())
+      .then(data => console.log(data))
       .catch(error => {
         console.error('error', error);
       });
@@ -162,6 +170,7 @@ export default class LiveFeeds extends React.Component {
             <label htmlFor="title">Post Title</label>
             <input required onChange={this.handleChange} value={this.state.title} id="title" name="title" type="text" placeholder="Please enter your post title..."></input>
             <textarea required onChange={this.handleChange} value={this.state.post} id="post" name="post" placeholder="Please enter your post..."></textarea>
+            <input className="audio-input" id="audio" type="file" name="audio" ref={this.fileInputRef} accept=".wav, .mp3, .m4v, .flac, .aiff, .wma" />
             <div className="post-button-holder">
               <button onClick={this.formOpen} className="user-detail-button" type="button">BACK</button>
               <button className="user-detail-button" type="submit">POST</button>

@@ -8,6 +8,7 @@ const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
+const audioUploadsMiddleware = require('./uploads-middleware-audio');
 const authorizationMiddleware = require('./authorization-middleware');
 const http = require('http');
 const socketio = require('socket.io');
@@ -362,20 +363,24 @@ app.get('/api/users/search', (req, res, next) => {
 
 // post a feed
 
-app.post('/api/posts/create', (req, res, next) => {
+app.post('/api/posts/create', audioUploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
   const { title, post, time } = req.body;
 
   if (!title || !post) {
     throw new ClientError(400, 'title and post content are required fields');
   }
+  let audioUrl;
+  if (req.file) {
+    audioUrl = `/audios/${req.file.filename}`;
+  }
   const sql = `
-insert into "posts" ("userId","title","createdAt","content")
-values ($1,$2,$3,$4)
-returning "postId","title","content","userId"
+insert into "posts" ("userId","title","createdAt","content","audioUrl")
+values ($1,$2,$3,$4,$5)
+returning "postId","title","content","userId","audioUrl"
 `;
 
-  const params = [userId, title, time, post];
+  const params = [userId, title, time, post, audioUrl];
   db.query(sql, params)
     .then(result => {
       const [newPost] = result.rows;

@@ -136,7 +136,6 @@ export default class LiveFeeds extends React.Component {
       body: form
     })
       .then(response => response.json())
-      .then(data => console.log(data))
       .catch(error => {
         console.error('error', error);
       });
@@ -148,14 +147,14 @@ export default class LiveFeeds extends React.Component {
     if (!this.context.user) return <Redirect to="sign-in" />;
     const allPosts = this.state.allPosts;
     const postLists = allPosts.map(post => {
-      const { postId, email, avaterUrl, username, userBand, userId, userLocation, title, content, createdAt } = post;
+      const { postId, email, avaterUrl, username, userBand, userId, userLocation, title, content, createdAt, audioUrl } = post;
       const userLoginId = this.context.user.userId;
       const date = createdAt.slice(0, 10) + ' ' + createdAt.slice(11, 16);
 
       return (
         <div key={postId}>
           <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId} handleComment={this.handleComment} checkId={this.state.commentView}
-            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} handleDelete={this.handleDelete} refresh={this.state.refresh} />
+            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} audioUrl={audioUrl} handleDelete={this.handleDelete} refresh={this.state.refresh} />
         </div>
       );
     });
@@ -170,6 +169,7 @@ export default class LiveFeeds extends React.Component {
             <label htmlFor="title">Post Title</label>
             <input required onChange={this.handleChange} value={this.state.title} id="title" name="title" type="text" placeholder="Please enter your post title..."></input>
             <textarea required onChange={this.handleChange} value={this.state.post} id="post" name="post" placeholder="Please enter your post..."></textarea>
+            <label htmlFor="audio">Post an Aduio File</label>
             <input className="audio-input" id="audio" type="file" name="audio" ref={this.fileInputRef} accept=".wav, .mp3, .m4v, .flac, .aiff, .wma" />
             <div className="post-button-holder">
               <button onClick={this.formOpen} className="user-detail-button" type="button">BACK</button>

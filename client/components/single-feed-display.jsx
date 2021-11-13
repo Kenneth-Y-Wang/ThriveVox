@@ -22,6 +22,9 @@ export default function SingleFeed(props) {
           <span> <a className="email-link" target="_blank" rel="noopener noreferrer" href={emailHref}>{props.email}</a></span>
         </h3>
         <p className="post-text">{props.content}</p>
+        <div>
+          {props.audioUrl ? <audio src={props.audioUrl} controls autoPlay /> : <div></div>}
+        </div>
         <p id="post-date">Posted on: {props.date}</p>
       </div>
       <div className={props.postId === props.checkId ? 'col-full comment-col' : 'col-full comment-col hidden'} >

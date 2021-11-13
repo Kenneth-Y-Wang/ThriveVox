@@ -1151,6 +1151,7 @@ img:hover {
   border-radius: 5px;
   margin: 1.5rem auto;
   flex-wrap: wrap;
+  padding: 0.75rem 0.5rem;
 }
 
 .search-profile-pic-col {
@@ -1307,7 +1308,7 @@ img:hover {
 }
 
 .form-open {
-  height: 300px;
+  height: 400px;
 }
 
 .post-form {
@@ -1319,7 +1320,8 @@ img:hover {
 .post-form > label {
   font-size: 1.3rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .post-form > input {
@@ -1331,6 +1333,12 @@ img:hover {
   padding-left: 0.5rem;
   font-weight: 500;
   font-size: 0.9rem;
+}
+
+#audio {
+  border: none;
+  width: 40%;
+  margin: 0.5rem auto;
 }
 
 .post-form > input::placeholder,
@@ -1354,7 +1362,7 @@ img:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 0.75rem;
+  margin-top: 2rem;
 }
 
 .post-button-holder > button {
@@ -1364,10 +1372,9 @@ img:hover {
 .post-text {
   font-size: 1rem;
   font-family: Jura, sans-serif;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
   font-weight: 700;
-  height: 50px;
-  overflow-y: auto;
+  text-align: justify;
   color: #0d3b66;
 }
 

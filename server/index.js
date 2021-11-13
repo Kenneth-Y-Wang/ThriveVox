@@ -403,6 +403,7 @@ app.get('/api/posts/allPosts', (req, res, next) => {
          "title",
          "content",
          "posts"."createdAt" as "createdAt",
+         "audioUrl",
          "postId"
     from "posts"
     join "users" using ("userId")

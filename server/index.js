@@ -418,7 +418,37 @@ app.get('/api/posts/allPosts', (req, res, next) => {
     })
     .catch(err => next(err));
 });
+// home page get all feed by user
 
+app.get('/api/posts/allMyPosts', (req, res, next) => {
+  const { userId } = req.user;
+
+  const sql = `
+  select "userId",
+         "username",
+         "email",
+         "avaterUrl",
+         "userBand",
+         "userLocation",
+         "title",
+         "content",
+         "posts"."createdAt" as "createdAt",
+         "audioUrl",
+         "postId"
+    from "posts"
+    join "users" using ("userId")
+    where "userId" =$1
+    order by "postId" desc
+
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const allPosts = result.rows;
+      res.json(allPosts);
+    })
+    .catch(err => next(err));
+});
 // delete a post
 
 app.delete('/api/posts/allPosts/:postId', (req, res, next) => {

@@ -238,6 +238,7 @@ input {
 
 .display-info {
   color: #6c757d;
+  font-weight: 500;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
 }
@@ -282,6 +283,11 @@ input {
 
 .skill-open {
   height: 330px;
+  overflow-y: auto;
+}
+
+.post-open {
+  height: 500px;
   overflow-y: auto;
 }
 
@@ -583,7 +589,7 @@ button {
 }
 
 .caro-text {
-  color: #8d959d;
+  color: #6c757d;
   font-size: 1rem;
   font-weight: 500;
   margin-bottom: 0.25rem;

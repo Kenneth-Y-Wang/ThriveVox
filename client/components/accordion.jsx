@@ -11,13 +11,15 @@ export default class CustomAccordion extends React.Component {
       isViewing: '',
       allSavedFavorites: [],
       allMyPosts: [],
-      commentView: ''
+      commentView: '',
+      isDeleting: ''
     };
     this.click = this.click.bind(this);
     this.detailView = this.detailView.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleComment = this.handleComment.bind(this);
     this.handleMyPostDelete = this.handleMyPostDelete.bind(this);
+    this.confirmPostDelete = this.confirmPostDelete.bind(this);
   }
 
   componentDidMount() {
@@ -94,6 +96,15 @@ export default class CustomAccordion extends React.Component {
       this.setState({ commentView: '' });
     }
 
+  }
+
+  confirmPostDelete(postId) {
+    if (this.state.isDeleting === '' || postId !== this.state.isDeleting) {
+      this.setState({ isDeleting: postId });
+    }
+    if (postId === this.state.isDeleting) {
+      this.setState({ isDeleting: '' });
+    }
   }
 
   handleMyPostDelete(postId) {
@@ -189,7 +200,8 @@ export default class CustomAccordion extends React.Component {
       return (
         <div key={postId}>
           <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId} handleComment={this.handleComment} checkId={this.state.commentView}
-            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} audioUrl={audioUrl} handleDelete={this.handleMyPostDelete} />
+            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} audioUrl={audioUrl} handleDelete={this.handleMyPostDelete}
+            isDeleting={this.state.isDeleting} confirmPostDelete={this.confirmPostDelete} />
         </div>
       );
     });

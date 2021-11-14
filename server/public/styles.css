@@ -1464,3 +1464,17 @@ img:hover {
   font-weight: bold;
   font-size: 0.6rem;
 }
+
+/* delete modal  */
+
+.delete-button-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2.25rem auto;
+}
+
+.delete-button-row > button {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}

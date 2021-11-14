@@ -13,7 +13,8 @@ export default class LiveFeeds extends React.Component {
       title: '',
       post: '',
       refresh: false,
-      allPosts: []
+      allPosts: [],
+      isDeleting: ''
     };
     this.formOpen = this.formOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -22,6 +23,7 @@ export default class LiveFeeds extends React.Component {
     this.handleComment = this.handleComment.bind(this);
     this.refresh = this.refresh.bind(this);
     this.fileInputRef = React.createRef();
+    this.confirmPostDelete = this.confirmPostDelete.bind(this);
 
   }
 
@@ -89,6 +91,15 @@ export default class LiveFeeds extends React.Component {
     this.setState({ [name]: value });
   }
 
+  confirmPostDelete(postId) {
+    if (this.state.isDeleting === '' || postId !== this.state.isDeleting) {
+      this.setState({ isDeleting: postId });
+    }
+    if (postId === this.state.isDeleting) {
+      this.setState({ isDeleting: '' });
+    }
+  }
+
   handleDelete(postId) {
     const token = window.localStorage.getItem('react-context-jwt');
     fetch(`/api/posts/allPosts/${postId}`, {
@@ -154,7 +165,8 @@ export default class LiveFeeds extends React.Component {
       return (
         <div key={postId}>
           <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId} handleComment={this.handleComment} checkId={this.state.commentView}
-            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} audioUrl={audioUrl} handleDelete={this.handleDelete} refresh={this.state.refresh} />
+            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} audioUrl={audioUrl} handleDelete={this.handleDelete} refresh={this.state.refresh}
+            isDeleting={this.state.isDeleting} confirmPostDelete={this.confirmPostDelete} />
         </div>
       );
     });

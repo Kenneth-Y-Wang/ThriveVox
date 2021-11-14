@@ -132,12 +132,6 @@ export default class LiveFeeds extends React.Component {
     form.append('title', this.state.title);
     form.append('post', this.state.post);
 
-    // const newPost = {
-    //   title: this.state.title,
-    //   post: this.state.post,
-    //   time: newTime
-
-    // };
     fetch('/api/posts/create', {
       method: 'POST',
       headers: {

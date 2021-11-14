@@ -1478,3 +1478,46 @@ img:hover {
   margin-left: 1.5rem;
   margin-right: 1.5rem;
 }
+
+/* user-search-detail-post */
+
+.user-post-holder {
+  margin: 1.5rem auto;
+  padding: 0.75rem 0.5rem;
+  background-color: white;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.user-post-span {
+  color: #6a6b83;
+  font-weight: bold;
+}
+
+.user-post-holder > p {
+  font-size: 0.9rem;
+  text-align: justify;
+  font-family: Jura, sans-serif;
+}
+
+.user-info-button-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2.75rem auto;
+}
+
+.user-info-button-holder > button {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.view-chosen {
+  color: white;
+  background-color: black;
+}
+
+.user-postview {
+  max-height: 400px;
+  overflow-y: auto;
+}

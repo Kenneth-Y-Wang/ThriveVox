@@ -520,7 +520,29 @@ app.get('/api/comments/allComments/:postId', (req, res, next) => {
     })
     .catch(err => next(err));
 });
+// get user feed in search section
 
+app.get('/api/posts/allUserPosts/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
+  const sql = `
+  select "title",
+         "content",
+         "createdAt",
+         "audioUrl",
+         "postId"
+    from "posts"
+    where "userId" =$1
+    order by "postId" desc
+
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const allPosts = result.rows;
+      res.json(allPosts);
+    })
+    .catch(err => next(err));
+});
 // chat starts
 
 io.on('connection', socket => {

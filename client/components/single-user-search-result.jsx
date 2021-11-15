@@ -49,7 +49,7 @@ export default class SingleUserResult extends React.Component {
           <h4>Post Date: <span className="user-post-span">{date}</span></h4>
           <p>{content}</p>
           <div>
-            {audioUrl ? <audio src={audioUrl} controls autoPlay /> : <div></div>}
+            {audioUrl ? <audio src={audioUrl} controls /> : <div></div>}
           </div>
         </div>
       );

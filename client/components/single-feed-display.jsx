@@ -23,7 +23,7 @@ export default function SingleFeed(props) {
         </h3>
         <p className="post-text">{props.content}</p>
         <div>
-          {props.audioUrl ? <audio src={props.audioUrl} controls autoPlay /> : <div></div>}
+          {props.audioUrl ? <audio src={props.audioUrl} controls /> : <div></div>}
         </div>
         <p id="post-date">Posted on: {props.date}</p>
       </div>

@@ -496,7 +496,7 @@ button {
 }
 
 .artist-input {
-  background-color: black;
+  background-color: transparent;
   border: none;
   border-bottom: 2px solid white;
   padding: 0.15rem;

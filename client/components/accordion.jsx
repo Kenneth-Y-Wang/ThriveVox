@@ -1,6 +1,7 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
 import ResultDisplay from './single-result-display';
+import SingleFeed from './single-feed-display';
 
 export default class CustomAccordion extends React.Component {
   constructor(props) {
@@ -8,11 +9,17 @@ export default class CustomAccordion extends React.Component {
     this.state = {
       isOpen: '',
       isViewing: '',
-      allSavedFavorites: []
+      allSavedFavorites: [],
+      allMyPosts: [],
+      commentView: '',
+      isDeleting: ''
     };
     this.click = this.click.bind(this);
     this.detailView = this.detailView.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleComment = this.handleComment.bind(this);
+    this.handleMyPostDelete = this.handleMyPostDelete.bind(this);
+    this.confirmPostDelete = this.confirmPostDelete.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +34,22 @@ export default class CustomAccordion extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ allSavedFavorites: data });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+    fetch('/api/posts/allMyPosts', {
+      method: 'GET',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      }
+
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ allMyPosts: data });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -62,6 +85,46 @@ export default class CustomAccordion extends React.Component {
     }
     if (this.state.isViewing === dataId) {
       this.setState({ isViewing: '' });
+    }
+  }
+
+  handleComment(postId) {
+    if (this.state.commentView === '' || postId !== this.state.commentView) {
+      this.setState({ commentView: postId });
+    }
+    if (postId === this.state.commentView) {
+      this.setState({ commentView: '' });
+    }
+
+  }
+
+  confirmPostDelete(postId) {
+    if (this.state.isDeleting === '' || postId !== this.state.isDeleting) {
+      this.setState({ isDeleting: postId });
+    }
+    if (postId === this.state.isDeleting) {
+      this.setState({ isDeleting: '' });
+    }
+  }
+
+  handleMyPostDelete(postId) {
+    const token = window.localStorage.getItem('react-context-jwt');
+    fetch(`/api/posts/allPosts/${postId}`, {
+      method: 'DELETE',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      },
+      body: null
+    });
+
+    for (let i = 0; i < this.state.allMyPosts.length; i++) {
+      if (postId === this.state.allMyPosts[i].postId) {
+        const newState = this.state.allMyPosts.slice(0, i).concat(this.state.allMyPosts.slice(i + 1));
+        this.setState({ allMyPosts: newState });
+        break;
+      }
+
     }
   }
 
@@ -128,6 +191,20 @@ export default class CustomAccordion extends React.Component {
       }
 
     });
+    const allPosts = this.state.allMyPosts;
+    const postLists = allPosts.map(post => {
+      const { postId, email, avaterUrl, username, userBand, userId, userLocation, title, content, createdAt, audioUrl } = post;
+      const userLoginId = this.context.user.userId;
+      const date = createdAt.slice(0, 10) + ' ' + createdAt.slice(11, 16);
+
+      return (
+        <div key={postId}>
+          <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId} handleComment={this.handleComment} checkId={this.state.commentView}
+            userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} audioUrl={audioUrl} handleDelete={this.handleMyPostDelete}
+            isDeleting={this.state.isDeleting} confirmPostDelete={this.confirmPostDelete} />
+        </div>
+      );
+    });
     const { userStyle, userSkills, userInstruments, userInterest, userBand, userBio } = this.props;
     return (
       <div className="">
@@ -155,6 +232,16 @@ export default class CustomAccordion extends React.Component {
                 <h4 className="display-info">My Interest:</h4>
                 <h4 className="display-info-detail">{userInterest || 'N/A'}</h4>
               </div>
+            </div>
+          </div>
+        </div>
+        <div >
+          <div className="section-header" onClick={this.click} data-id="my-post">My Post</div>
+          <div className={this.state.isOpen === 'my-post' ? 'content-holder post-open' : 'content-holder close'}>
+            <div className={this.state.isOpen === 'my-post' ? '' : ' hidden'}>
+              {this.state.allMyPosts.length !== 0
+                ? postLists
+                : <h4 className="text-center">Sorry, no recent post available...</h4>}
             </div>
           </div>
         </div>

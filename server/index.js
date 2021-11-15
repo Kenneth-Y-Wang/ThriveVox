@@ -8,6 +8,7 @@ const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
+const audioUploadsMiddleware = require('./uploads-middleware-audio');
 const authorizationMiddleware = require('./authorization-middleware');
 const http = require('http');
 const socketio = require('socket.io');
@@ -362,20 +363,24 @@ app.get('/api/users/search', (req, res, next) => {
 
 // post a feed
 
-app.post('/api/posts/create', (req, res, next) => {
+app.post('/api/posts/create', audioUploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
   const { title, post, time } = req.body;
 
   if (!title || !post) {
     throw new ClientError(400, 'title and post content are required fields');
   }
+  let audioUrl;
+  if (req.file) {
+    audioUrl = `/audios/${req.file.filename}`;
+  }
   const sql = `
-insert into "posts" ("userId","title","createdAt","content")
-values ($1,$2,$3,$4)
-returning "postId","title","content","userId"
+insert into "posts" ("userId","title","createdAt","content","audioUrl")
+values ($1,$2,$3,$4,$5)
+returning "postId","title","content","userId","audioUrl"
 `;
 
-  const params = [userId, title, time, post];
+  const params = [userId, title, time, post, audioUrl];
   db.query(sql, params)
     .then(result => {
       const [newPost] = result.rows;
@@ -398,6 +403,7 @@ app.get('/api/posts/allPosts', (req, res, next) => {
          "title",
          "content",
          "posts"."createdAt" as "createdAt",
+         "audioUrl",
          "postId"
     from "posts"
     join "users" using ("userId")
@@ -412,7 +418,37 @@ app.get('/api/posts/allPosts', (req, res, next) => {
     })
     .catch(err => next(err));
 });
+// home page get all feed by user
 
+app.get('/api/posts/allMyPosts', (req, res, next) => {
+  const { userId } = req.user;
+
+  const sql = `
+  select "userId",
+         "username",
+         "email",
+         "avaterUrl",
+         "userBand",
+         "userLocation",
+         "title",
+         "content",
+         "posts"."createdAt" as "createdAt",
+         "audioUrl",
+         "postId"
+    from "posts"
+    join "users" using ("userId")
+    where "userId" =$1
+    order by "postId" desc
+
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const allPosts = result.rows;
+      res.json(allPosts);
+    })
+    .catch(err => next(err));
+});
 // delete a post
 
 app.delete('/api/posts/allPosts/:postId', (req, res, next) => {
@@ -484,7 +520,29 @@ app.get('/api/comments/allComments/:postId', (req, res, next) => {
     })
     .catch(err => next(err));
 });
+// get user feed in search section
 
+app.get('/api/posts/allUserPosts/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
+  const sql = `
+  select "title",
+         "content",
+         "createdAt",
+         "audioUrl",
+         "postId"
+    from "posts"
+    where "userId" =$1
+    order by "postId" desc
+
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      const allPosts = result.rows;
+      res.json(allPosts);
+    })
+    .catch(err => next(err));
+});
 // chat starts
 
 io.on('connection', socket => {

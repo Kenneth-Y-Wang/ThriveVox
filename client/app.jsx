@@ -45,8 +45,11 @@ export default class App extends React.Component {
   }
 
   handleSignOut() {
-    window.localStorage.removeItem('react-context-jwt');
-    this.setState({ user: null });
+    const leaveApp = confirm('Are you sure you want to sign out?');
+    if (leaveApp) {
+      window.localStorage.removeItem('react-context-jwt');
+      this.setState({ user: null });
+    }
   }
 
   renderPage() {

@@ -238,6 +238,7 @@ input {
 
 .display-info {
   color: #6c757d;
+  font-weight: 500;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
 }
@@ -282,6 +283,11 @@ input {
 
 .skill-open {
   height: 330px;
+  overflow-y: auto;
+}
+
+.post-open {
+  height: 500px;
   overflow-y: auto;
 }
 
@@ -410,7 +416,8 @@ input {
   color: white;
 }
 
-.image-input {
+.image-input,
+.audio-input {
   margin-bottom: 0.5rem;
   font-family: Orbitron, sans-serif;
 }
@@ -489,7 +496,7 @@ button {
 }
 
 .artist-input {
-  background-color: black;
+  background-color: transparent;
   border: none;
   border-bottom: 2px solid white;
   padding: 0.15rem;
@@ -582,7 +589,7 @@ button {
 }
 
 .caro-text {
-  color: #8d959d;
+  color: #6c757d;
   font-size: 1rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
@@ -1150,6 +1157,7 @@ img:hover {
   border-radius: 5px;
   margin: 1.5rem auto;
   flex-wrap: wrap;
+  padding: 0.75rem 0.5rem;
 }
 
 .search-profile-pic-col {
@@ -1170,7 +1178,7 @@ img:hover {
 }
 
 .search-user-info-col {
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .name-detail-row {
@@ -1306,7 +1314,7 @@ img:hover {
 }
 
 .form-open {
-  height: 260px;
+  height: 400px;
 }
 
 .post-form {
@@ -1318,7 +1326,8 @@ img:hover {
 .post-form > label {
   font-size: 1.3rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .post-form > input {
@@ -1330,6 +1339,12 @@ img:hover {
   padding-left: 0.5rem;
   font-weight: 500;
   font-size: 0.9rem;
+}
+
+#audio {
+  border: none;
+  width: 40%;
+  margin: 0.5rem auto;
 }
 
 .post-form > input::placeholder,
@@ -1353,20 +1368,20 @@ img:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 0.75rem;
+  margin-top: 2rem;
 }
 
 .post-button-holder > button {
   margin-right: 0.75rem;
+  margin-left: 0.75rem;
 }
 
 .post-text {
   font-size: 1rem;
   font-family: Jura, sans-serif;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
   font-weight: 700;
-  height: 50px;
-  overflow-y: auto;
+  text-align: justify;
   color: #0d3b66;
 }
 
@@ -1397,6 +1412,12 @@ img:hover {
 #post-date {
   font-size: 0.6rem;
   color: #0d3b66;
+}
+
+.refresh-feed {
+  display: inline-block;
+  margin-left: 0.5rem;
+  cursor: pointer;
 }
 
 /* comment */
@@ -1443,4 +1464,61 @@ img:hover {
   color: #0d3b66;
   font-weight: bold;
   font-size: 0.6rem;
+}
+
+/* delete modal  */
+
+.delete-button-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2.25rem auto;
+}
+
+.delete-button-row > button {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+/* user-search-detail-post */
+
+.user-post-holder {
+  margin: 1.5rem auto;
+  padding: 0.75rem 0.5rem;
+  background-color: white;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.user-post-span {
+  color: #6a6b83;
+  font-weight: bold;
+}
+
+.user-post-holder > p {
+  font-size: 0.9rem;
+  text-align: justify;
+  font-family: Jura, sans-serif;
+}
+
+.user-info-button-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2.75rem auto;
+}
+
+.user-info-button-holder > button {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.view-chosen {
+  color: white;
+  background-color: black;
+}
+
+.user-postview {
+  max-height: 400px;
+  overflow-y: auto;
 }

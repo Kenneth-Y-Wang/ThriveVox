@@ -544,24 +544,26 @@ app.get('/api/posts/allUserPosts/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// delete chart
+// delete comments
 
 app.delete('/api/comments/allCommentsToDelete/:commentId', (req, res, next) => {
   const commentId = Number(req.params.commentId);
+  const { userId } = req.user;
 
   const sql = `
   delete from "comments"
   where "commentId"=$1
+  and "userId"=$2
   returning *
   `;
-  const params = [commentId];
+  const params = [commentId, userId];
 
   db.query(sql, params)
     .then(result => {
       const comment = result.rows[0];
       if (!comment) {
 
-        throw new ClientError(400, `cannot find content with commentId ${commentId}`);
+        throw new ClientError(404, `cannot find content with commentId ${commentId}`);
       } else {
 
         res.sendStatus(204);

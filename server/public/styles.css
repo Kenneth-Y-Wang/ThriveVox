@@ -1524,11 +1524,12 @@ img:hover {
 }
 
 .comment-delete-button {
-  color: red;
+  color: #9b2226;
   background-color: white;
   border: none;
-  font-family: Jura, sans-serif;
+  font-family: Orbitron, sans-serif;
   font-size: 0.5rem;
-  margin-left: 1.5rem;
-  text-decoration: underline;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  border-left: 1px solid #9b2226;
 }

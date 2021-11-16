@@ -543,6 +543,34 @@ app.get('/api/posts/allUserPosts/:userId', (req, res, next) => {
     })
     .catch(err => next(err));
 });
+
+// delete chart
+
+app.delete('/api/comments/allCommentsToDelete/:commentId', (req, res, next) => {
+  const commentId = Number(req.params.commentId);
+
+  const sql = `
+  delete from "comments"
+  where "commentId"=$1
+  returning *
+  `;
+  const params = [commentId];
+
+  db.query(sql, params)
+    .then(result => {
+      const comment = result.rows[0];
+      if (!comment) {
+
+        throw new ClientError(400, `cannot find content with commentId ${commentId}`);
+      } else {
+
+        res.sendStatus(204);
+      }
+    })
+    .catch(err => next(err));
+
+});
+
 // chat starts
 
 io.on('connection', socket => {

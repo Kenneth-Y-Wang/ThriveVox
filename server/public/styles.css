@@ -1522,3 +1522,13 @@ img:hover {
   max-height: 400px;
   overflow-y: auto;
 }
+
+.comment-delete-button {
+  color: red;
+  background-color: white;
+  border: none;
+  font-family: Jura, sans-serif;
+  font-size: 0.5rem;
+  margin-left: 1.5rem;
+  text-decoration: underline;
+}

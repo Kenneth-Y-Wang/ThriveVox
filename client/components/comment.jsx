@@ -11,6 +11,7 @@ export default class Comment extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -50,6 +51,27 @@ export default class Comment extends React.Component {
         .catch(error => {
           console.error('Error:', error);
         });
+    }
+  }
+
+  handleDelete(commentId) {
+    const token = window.localStorage.getItem('react-context-jwt');
+    fetch(`/api/comments/allCommentsToDelete/${commentId}`, {
+      method: 'DELETE',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      },
+      body: null
+    });
+
+    for (let i = 0; i < this.state.comments.length; i++) {
+      if (commentId === this.state.comments[i].commentId) {
+        const newState = this.state.comments.slice(0, i).concat(this.state.comments.slice(i + 1));
+        this.setState({ comments: newState });
+        break;
+      }
+
     }
   }
 
@@ -95,23 +117,28 @@ export default class Comment extends React.Component {
     const allComments = this.state.comments;
     const commentList = allComments.map(comment => {
       const { commentId, content, createdAt, username } = comment;
+      const checkedUser = this.context.user.username;
       const date = createdAt.slice(0, 10) + ' ' + createdAt.slice(11, 16);
 
       return (
-      <li key={commentId}>{username}<span className="comment-date"> {date}</span> : <span className="comment-detail">{content}</span></li>
+      <li key={commentId}>{username}<span className="comment-date"> {date}</span> : <span className="comment-detail">{content}</span>
+          <button onClick={() => this.handleDelete(commentId)} type="button" className={username === checkedUser ? 'comment-delete-button' : 'comment-delete-button hidden'}>DELETE</button>
+      </li>
       );
     });
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input className="comment-input" onChange={this.handleChange} type="text" id="comment" name="comment" value={this.state.input}
-        placeholder="please enter your comment..."></input>
+      <>
+        <form onSubmit={this.handleSubmit}>
+          <input className="comment-input" onChange={this.handleChange} type="text" id="comment" name="comment" value={this.state.input}
+          placeholder="please enter your comment..."></input>
+        </form>
         <h4 className="recent-comment">Recent Comments:</h4>
         <ul className="comment-list">
          {this.state.comments.length !== 0
            ? commentList
            : <li>No comment for this post...</li>}
         </ul>
-      </form>
+      </>
     );
   }
 }

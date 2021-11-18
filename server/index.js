@@ -167,7 +167,7 @@ app.patch('/api/profile/users', uploadsMiddleware, (req, res, next) => {
 
   let avaterUrl;
   if (req.file) {
-    avaterUrl = `/images/${req.file.filename}`;
+    avaterUrl = req.file.location;
   }
   const sql = `
   update "users"
@@ -372,7 +372,7 @@ app.post('/api/posts/create', audioUploadsMiddleware, (req, res, next) => {
   }
   let audioUrl;
   if (req.file) {
-    audioUrl = `/audios/${req.file.filename}`;
+    audioUrl = req.file.location;
   }
   const sql = `
 insert into "posts" ("userId","title","createdAt","content","audioUrl")

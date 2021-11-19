@@ -293,7 +293,7 @@ input {
 
 .section-content {
   width: 90%;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: black;
   animation: fade-in linear 1s;
   margin: 1.75rem auto;
@@ -607,7 +607,7 @@ button,
 
 .caro-text {
   color: #6c757d;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
   margin-top: 0.45rem;
@@ -792,19 +792,19 @@ img:hover {
 
 .banner-holder {
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 1rem;
 }
 
 .banner-holder > img {
   width: 100%;
-  height: 230px;
-  object-fit: cover;
-  border-radius: 3px;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 2px;
   transition-duration: 0.5s;
 }
 
 .search-note {
-  padding: 1rem 2rem;
+  padding: 1rem;
   margin-top: 1rem;
 }
 
@@ -813,7 +813,7 @@ img:hover {
   line-height: 1.2rem;
   font-weight: 500;
   margin-bottom: 0;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
 .no-result-message-holder {
@@ -821,26 +821,6 @@ img:hover {
   text-align: center;
   margin-top: 3rem;
   font-size: 0.7rem;
-}
-
-@media screen and (min-width: 768px) {
-  .edit-page {
-    padding: 1.25rem 4.75rem;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .edit-page {
-    padding: 1.25rem 5.75rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .arrow-holder {
-    justify-content: center;
-    align-items: center;
-    display: none;
-  }
 }
 
 /* chat join page */
@@ -1091,24 +1071,6 @@ img:hover {
   margin-top: 0.5rem;
 }
 
-@media (max-width: 700px) {
-  .chat-main {
-    display: block;
-  }
-
-  .chat-sidebar {
-    display: none;
-  }
-
-  .chat-header h1 {
-    font-size: 1.8rem;
-  }
-
-  .chat-header h2 {
-    font-size: 1rem;
-  }
-}
-
 /* user search */
 
 .user-search-holder {
@@ -1214,7 +1176,7 @@ img:hover {
 }
 
 .user-info-text > span {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: #6c757d;
 }
 
@@ -1241,7 +1203,7 @@ img:hover {
 }
 
 .user-info-text {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
   font-weight: 500;
@@ -1394,7 +1356,7 @@ img:hover {
 } */
 
 .post-text {
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-family: Jura, sans-serif;
   margin-top: 0.5rem;
   font-weight: 700;
@@ -1405,6 +1367,7 @@ img:hover {
 .post-user {
   margin-top: 0.15rem;
   margin-bottom: 0.15rem;
+  font-size: 1rem;
 }
 
 .comment-button {
@@ -1423,7 +1386,7 @@ img:hover {
 
 #band-name,
 #user-band {
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
 #post-date {
@@ -1466,9 +1429,10 @@ img:hover {
   height: 100px;
   overflow-y: auto;
   list-style: none;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: bold;
   color: #364156;
+  padding-left: 1rem;
 }
 
 .comment-detail {
@@ -1550,3 +1514,99 @@ img:hover {
   margin-left: 0.5rem;
   border-left: 1px solid #9b2226;
 }
+
+@media screen and (min-width: 768px) {
+  .edit-page {
+    padding: 1.25rem 4.75rem;
+  }
+
+  .post-user {
+    font-size: 1.3rem;
+  }
+
+  #band-name,
+  #user-band {
+    font-size: 0.8rem;
+  }
+
+  .user-info-text > span {
+    font-size: 0.9rem;
+  }
+
+  .user-info-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .post-text {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .comment-list {
+    font-size: 0.8rem;
+  }
+
+  .caro-text {
+    font-size: 1rem;
+  }
+
+  .search-note {
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+  }
+
+  .detail-note {
+    font-size: 0.8rem;
+  }
+
+  .banner-holder {
+    margin: 0 auto;
+    padding: 1rem 2rem;
+  }
+
+  .banner-holder > img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 3px;
+  }
+
+  .section-content {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .edit-page {
+    padding: 1.25rem 5.75rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .arrow-holder {
+    justify-content: center;
+    align-items: center;
+    display: none;
+  }
+
+  .chat-main {
+    display: block;
+  }
+
+  .chat-sidebar {
+    display: none;
+  }
+
+  .chat-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .chat-header h2 {
+    font-size: 1rem;
+  }
+}
+
+/* @media (max-width: 700px) {
+
+} */

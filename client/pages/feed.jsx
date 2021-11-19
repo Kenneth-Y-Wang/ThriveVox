@@ -8,6 +8,7 @@ export default class LiveFeeds extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       formOpen: false,
       commentView: '',
       title: '',
@@ -28,6 +29,7 @@ export default class LiveFeeds extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     const token = window.localStorage.getItem('react-context-jwt');
     fetch('/api/posts/allPosts', {
       method: 'GET',
@@ -39,7 +41,7 @@ export default class LiveFeeds extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ allPosts: data });
+        this.setState({ allPosts: data, loading: false });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -185,6 +187,9 @@ export default class LiveFeeds extends React.Component {
         </div>
         <div className="section-header">Recent Post <div onClick={this.refresh} className="refresh-feed"><i className="fas fa-sync-alt"></i></div></div>
         <div className="search-result-holder">
+          <div className="col-full spinner-holder">
+            <div className={this.state.loading ? 'lds-grid ' : 'lds-grid  hidden '}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          </div>
           {this.state.allPosts.length !== 0
             ? postLists
             : <h4 className="text-center">Sorry, no recent post available...</h4>}

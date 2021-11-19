@@ -1269,9 +1269,9 @@ img:hover {
   margin-right: 0.5rem;
 }
 
-.detail-block > button {
+.detail-block-button {
   display: block;
-  margin: 1.5rem auto;
+  margin: 1.5rem 1rem;
   font-size: 1.3rem;
 }
 
@@ -1309,7 +1309,7 @@ img:hover {
   color: white;
 }
 
-.leave-post-col > button {
+.leave-post-button {
   font-family: Orbitron, sans-serif;
   color: white;
   background-color: transparent;
@@ -1388,10 +1388,10 @@ img:hover {
   margin-top: 2rem;
 }
 
-.post-button-holder > button {
+/* .post-button-holder > button {
   margin-right: 0.75rem;
   margin-left: 0.75rem;
-}
+} */
 
 .post-text {
   font-size: 1rem;
@@ -1492,10 +1492,10 @@ img:hover {
   margin: 2.25rem auto;
 }
 
-.delete-button-row > button {
+/* .delete-button-row > button {
   margin-left: 1.5rem;
   margin-right: 1.5rem;
-}
+} */
 
 /* user-search-detail-post */
 
@@ -1525,10 +1525,10 @@ img:hover {
   margin: 2.75rem auto;
 }
 
-.user-info-button-holder > button {
+/* .user-info-button-holder > button {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-}
+} */
 
 .view-chosen {
   color: white;

@@ -168,7 +168,7 @@ export default class LiveFeeds extends React.Component {
       <>
         <div className="col-nine-tenth leave-post-col">
           <h1>Live Feed</h1>
-          <button onClick={this.formOpen} type="button">Write a Post</button>
+          <button onClick={this.formOpen} type="button" className="leave-post-button">Write a Post</button>
         </div>
         <div className={this.state.formOpen === true ? 'col-nine-tenth post-form-holder form-open' : 'col-nine-tenth post-form-holder'}>
           <form onSubmit={this.handleSubmit} className={this.state.formOpen === true ? 'col-four-fifth post-form' : 'col-four-fifth post-form hidden'}>
@@ -178,8 +178,8 @@ export default class LiveFeeds extends React.Component {
             <label htmlFor="audio">Post an Aduio File</label>
             <input className="audio-input" id="audio" type="file" name="audio" ref={this.fileInputRef} accept=".wav, .mp3, .m4v, .flac, .aiff, .wma" />
             <div className="post-button-holder">
-              <button onClick={this.formOpen} className="user-detail-button" type="button">BACK</button>
-              <button className="user-detail-button" type="submit">POST</button>
+              <button onClick={this.formOpen} className="user-detail-button mg-r-75 mg-l-75" type="button">BACK</button>
+              <button className="user-detail-button mg-r-75 mg-l-75" type="submit">POST</button>
             </div>
           </form>
         </div>

@@ -94,9 +94,9 @@ export default class SingleUserResult extends React.Component {
                   : <h4 className="text-center">Sorry, no recent post available...</h4>}
               </div>
               <div className="user-info-button-holder">
-                <button onClick={this.changePostView} className={this.state.pageView === 'userPost' ? 'user-detail-button view-chosen' : 'user-detail-button'}>User Posts</button>
-                <button onClick={() => this.props.goBack(this.props.userId)} className="user-detail-button">Back</button>
-                <button onClick={this.changeUserView} className={this.state.pageView === 'user' ? 'user-detail-button view-chosen' : 'user-detail-button'}>User Detail</button>
+              <button onClick={this.changePostView} className={this.state.pageView === 'userPost' ? 'user-detail-button detail-block-button view-chosen' : 'user-detail-button detail-block-button'}>User Posts</button>
+              <button onClick={() => this.props.goBack(this.props.userId)} className="user-detail-button detail-block-button">Back</button>
+              <button onClick={this.changeUserView} className={this.state.pageView === 'user' ? 'user-detail-button detail-block-button view-chosen' : 'user-detail-button detail-block-button'}>User Detail</button>
               </div>
             </div>
           </div>

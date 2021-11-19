@@ -7,6 +7,7 @@ export default class SearchUsers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       location: '',
       searchType: '',
       detailView: '',
@@ -48,6 +49,7 @@ export default class SearchUsers extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({ loading: true, searchResult: [] });
     const location = this.state.location.toLowerCase();
     const searchType = this.state.searchType;
 
@@ -63,7 +65,7 @@ export default class SearchUsers extends React.Component {
       .then(response => response.json())
       .then(data => {
 
-        this.setState({ searchResult: data });
+        this.setState({ searchResult: data, loading: false });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -116,6 +118,9 @@ export default class SearchUsers extends React.Component {
         </form>
         <div className="section-header">Search Result</div>
         <div className="search-result-holder">
+          <div className="col-full spinner-holder">
+            <div className={this.state.loading ? 'lds-grid ' : 'lds-grid  hidden '}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          </div>
           {this.state.searchResult.length !== 0
             ? userDisplayList
             : <h4 className="text-center">Sorry, no search result available...</h4>}

@@ -8,6 +8,7 @@ export default class FavoriteSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       searchResult: null,
       searchInput: '',
       assistInput: '',
@@ -30,6 +31,7 @@ export default class FavoriteSearch extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({ loading: true, searchResult: null });
     const input = this.state.searchInput;
     const assistInput = this.state.assistInput;
     let fetchPath;
@@ -55,7 +57,7 @@ export default class FavoriteSearch extends React.Component {
       .then(response => response.json())
       .then(data => {
         if (data) {
-          this.setState({ searchResult: data });
+          this.setState({ searchResult: data, loading: false });
         }
       })
       .catch(error => {
@@ -102,6 +104,9 @@ export default class FavoriteSearch extends React.Component {
         </div>
         <div className="section-header">Search Result</div>
         <div className="search-result-holder">
+          <div className="col-full spinner-holder">
+           <div className={this.state.loading ? 'lds-grid ' : 'lds-grid  hidden '}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          </div>
          <FavoriteDisplay searchResult={this.state.searchResult} />
         </div>
        </div>

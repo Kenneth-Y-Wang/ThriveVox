@@ -127,7 +127,7 @@ export default class Carousel extends React.Component {
       <div className="">
         <div className="carousel-container">
           <div className=" arrow-holder col-one-tenth">
-            <i onClick={this.leftClick} className="far fa-caret-square-left font-style caro-transition"></i>
+            <button><i onClick={this.leftClick} className="far fa-caret-square-left"></i></button>
           </div>
           <div className=" col-four-fifth caro-content-column">
             {carouselDisplay}
@@ -136,7 +136,7 @@ export default class Carousel extends React.Component {
             </div>
           </div>
           <div className=" arrow-holder col-one-tenth">
-            <i onClick={this.rightClick} className="far fa-caret-square-right font-style caro-transition"></i>
+            <button><i onClick={this.rightClick} className="far fa-caret-square-right"></i></button>
           </div>
         </div>
       </div>

@@ -427,9 +427,13 @@ input[type="file"]::-webkit-file-upload-button {
   font-family: Orbitron, sans-serif;
   padding: 0.25rem 0.5rem;
   border: 1px solid black;
+  cursor: pointer;
 }
 
-button {
+button,
+.info-header,
+#image,
+#audio {
   cursor: pointer;
 }
 
@@ -564,6 +568,19 @@ button {
   align-items: center;
 }
 
+.arrow-holder > button {
+  border: none;
+  background-color: transparent;
+  transition: 0.5s;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.arrow-holder > button:hover {
+  transform: scale(1.2);
+}
+
 .caro-content-column {
   padding: 1.5rem 0.25rem;
 }
@@ -669,11 +686,11 @@ button {
   transition-duration: 0.5s;
 }
 
-.font-style {
+/* .font-style {
   font-size: 2rem;
   font-weight: bold;
   color: #343a40;
-}
+} */
 
 .dot:hover {
   transform: scale(1.3);
@@ -687,9 +704,9 @@ img:hover {
   background-color: #343a40;
 }
 
-.caro-transition {
+/* .caro-transition {
   transition-duration: 0.5s;
-}
+} */
 
 @keyframes fade-in {
   0% { opacity: 0%; }

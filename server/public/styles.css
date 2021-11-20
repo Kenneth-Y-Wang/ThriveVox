@@ -130,6 +130,17 @@
   border-radius: 5px;
 }
 
+.sign-in-error-row {
+  height: 20px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #dc2f02;
+}
+
+.sign-in-error {
+  margin: 0;
+}
+
 /* sign-in/up form */
 
 label,
@@ -167,7 +178,7 @@ input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .button-main {
@@ -185,6 +196,16 @@ input {
   color: #495057;
   border: 1px solid #e9ecef;
   background-color: #e9ecef;
+}
+
+.demo-login {
+  font-size: 1rem;
+  padding: 0.25rem;
+  border: none;
+  border-bottom: 2px solid #ced4da;
+  color: #ced4da;
+  background-color: transparent;
+  font-family: Orbitron, sans-serif;
 }
 
 /* main page */

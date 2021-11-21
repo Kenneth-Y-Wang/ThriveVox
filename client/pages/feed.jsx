@@ -8,6 +8,7 @@ export default class LiveFeeds extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       formOpen: false,
       commentView: '',
       title: '',
@@ -28,6 +29,7 @@ export default class LiveFeeds extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     const token = window.localStorage.getItem('react-context-jwt');
     fetch('/api/posts/allPosts', {
       method: 'GET',
@@ -39,7 +41,7 @@ export default class LiveFeeds extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ allPosts: data });
+        this.setState({ allPosts: data, loading: false });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -168,7 +170,7 @@ export default class LiveFeeds extends React.Component {
       <>
         <div className="col-nine-tenth leave-post-col">
           <h1>Live Feed</h1>
-          <button onClick={this.formOpen} type="button">Write a Post</button>
+          <button onClick={this.formOpen} type="button" className="leave-post-button">Write a Post</button>
         </div>
         <div className={this.state.formOpen === true ? 'col-nine-tenth post-form-holder form-open' : 'col-nine-tenth post-form-holder'}>
           <form onSubmit={this.handleSubmit} className={this.state.formOpen === true ? 'col-four-fifth post-form' : 'col-four-fifth post-form hidden'}>
@@ -178,13 +180,16 @@ export default class LiveFeeds extends React.Component {
             <label htmlFor="audio">Post an Aduio File</label>
             <input className="audio-input" id="audio" type="file" name="audio" ref={this.fileInputRef} accept=".wav, .mp3, .m4v, .flac, .aiff, .wma" />
             <div className="post-button-holder">
-              <button onClick={this.formOpen} className="user-detail-button" type="button">BACK</button>
-              <button className="user-detail-button" type="submit">POST</button>
+              <button onClick={this.formOpen} className="user-detail-button mg-r-75 mg-l-75" type="button">BACK</button>
+              <button className="user-detail-button mg-r-75 mg-l-75" type="submit">POST</button>
             </div>
           </form>
         </div>
         <div className="section-header">Recent Post <div onClick={this.refresh} className="refresh-feed"><i className="fas fa-sync-alt"></i></div></div>
         <div className="search-result-holder">
+          <div className="col-full spinner-holder">
+            <div className={this.state.loading ? 'lds-grid ' : 'lds-grid  hidden '}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          </div>
           {this.state.allPosts.length !== 0
             ? postLists
             : <h4 className="text-center">Sorry, no recent post available...</h4>}

@@ -7,10 +7,16 @@ export default class AuthForm extends React.Component {
       username: '',
       password: '',
       email: '',
-      location: ''
+      location: '',
+      errorSignIn: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.demoLogin = this.demoLogin.bind(this);
+  }
+
+  demoLogin() {
+    this.setState({ username: 'demouser', password: '11111' });
   }
 
   handleChange(event) {
@@ -34,7 +40,10 @@ export default class AuthForm extends React.Component {
         if (action === 'sign-up') {
           window.location.hash = 'sign-in';
         } else if (result.user && result.token) {
+          this.setState({ errorSignIn: false });
           this.props.onSignIn(result);
+        } else {
+          this.setState({ errorSignIn: true });
         }
       });
   }
@@ -53,6 +62,9 @@ export default class AuthForm extends React.Component {
       : 'Log In';
     return (
       <form className="sign-in-form" onSubmit={handleSubmit}>
+        <div className="result-button-row">
+         <button onClick={this.demoLogin} className={action === 'sign-in' ? 'demo-login' : 'demo-login hidden'}>Demo Login</button>
+        </div>
         <div className="mg-b-1">
           <label htmlFor="username" className="form-label">
             Username
@@ -65,6 +77,7 @@ export default class AuthForm extends React.Component {
             name="username"
             onChange={handleChange}
             className="sign-in-input"
+            value={this.state.username}
           />
         </div>
         <div className="mg-b-1">
@@ -77,7 +90,8 @@ export default class AuthForm extends React.Component {
             type="password"
             name="password"
             onChange={handleChange}
-            className="sign-in-input" />
+            className="sign-in-input"
+            value={this.state.password} />
         </div>
         <div className={action === 'sign-up' ? 'mg-b-1' : 'mg-b-1 hidden'}>
           <label htmlFor="email" className="form-label">
@@ -88,7 +102,8 @@ export default class AuthForm extends React.Component {
             type="email"
             name="email"
             onChange={handleChange}
-            className="sign-in-input" />
+            className="sign-in-input"
+            value={this.state.email} />
         </div>
         <div className={action === 'sign-up' ? 'mg-b-1' : 'mg-b-1 hidden'}>
           <label htmlFor="Location" className="form-label">
@@ -99,7 +114,11 @@ export default class AuthForm extends React.Component {
             type="text"
             name="location"
             onChange={handleChange}
-            className="sign-in-input" />
+            className="sign-in-input"
+            value={this.state.location} />
+        </div>
+        <div className="sign-in-error-row">
+          <h5 className={this.state.errorSignIn ? 'sign-in-error' : 'sign-in-error hidden'} >Incorrect username or password, please try again</h5>
         </div>
         <div className="form-submit-row">
           <small>

@@ -209,13 +209,13 @@ export default class CustomAccordion extends React.Component {
     return (
       <div className="">
         <div >
-          <div className="section-header" onClick={this.click} data-id="about-me">About Me</div>
+          <div className="section-header info-header" onClick={this.click} data-id="about-me">About Me</div>
           <div className={this.state.isOpen === 'about-me' ? 'content-holder open' : 'content-holder close'}>
             <div className={this.state.isOpen === 'about-me' ? 'section-content' : 'section-content hidden'}>{userBio || 'Please tell us about your self!'}</div>
           </div>
         </div>
         <div >
-          <div className="section-header" onClick={this.click} data-id="skill-style">Skills & Styles</div>
+          <div className="section-header info-header" onClick={this.click} data-id="skill-style">Skills & Styles</div>
           <div className={this.state.isOpen === 'skill-style' ? 'content-holder skill-open' : 'content-holder close'}>
             <div className={this.state.isOpen === 'skill-style' ? 'skill-content' : 'skill-content hidden'}>
               <div className="col-one-third style-col">
@@ -236,7 +236,7 @@ export default class CustomAccordion extends React.Component {
           </div>
         </div>
         <div >
-          <div className="section-header" onClick={this.click} data-id="my-post">My Post</div>
+          <div className="section-header info-header" onClick={this.click} data-id="my-post">My Post</div>
           <div className={this.state.isOpen === 'my-post' ? 'content-holder post-open' : 'content-holder close'}>
             <div className={this.state.isOpen === 'my-post' ? '' : ' hidden'}>
               {this.state.allMyPosts.length !== 0

@@ -34,8 +34,8 @@ export default function SingleFeed(props) {
         <div className="col-two-fifth detail-block">
           <h3>Confirm to delete?</h3>
           <div className="delete-button-row">
-            <button onClick={() => props.confirmPostDelete(props.postId)} className="user-detail-button">BACK</button>
-            <button onClick={() => props.handleDelete(props.postId)} className="user-detail-button">CONFIRM</button>
+            <button onClick={() => props.confirmPostDelete(props.postId)} className="user-detail-button detail-block-button">BACK</button>
+            <button onClick={() => props.handleDelete(props.postId)} className="user-detail-button detail-block-button">CONFIRM</button>
           </div>
         </div>
       </div>

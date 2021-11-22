@@ -10,7 +10,7 @@
 
 .modal-on {
   background-color: rgb(0 0 0 / 40%);
-  z-index: 0;
+  z-index: 5;
 }
 
 .logo-container {
@@ -21,7 +21,6 @@
   align-items: center;
   background-color: #262b2f;
   border-bottom: 1px solid white;
-  z-index: 5;
 }
 
 .logo {
@@ -29,6 +28,7 @@
   margin: 0.25rem auto;
   text-decoration: none;
   font-size: 2rem;
+  z-index: 10;
 }
 
 .switch,
@@ -54,15 +54,16 @@
   z-index: 5;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  color: #ced4da;
 }
 
 .menu-on {
   transform: translateY(370px);
 }
 
-.menu-text {
+/* .menu-text {
   color: #ced4da;
-}
+} */
 
 .tab-anc {
   font-family: Jura, sans-serif;
@@ -1087,7 +1088,7 @@ img:hover {
 
 .user-search-holder {
   height: 230px;
-  background-image: url("./images/Screen\ Shot\ 2021-11-10\ at\ 12.58.56\ AM.png");
+  background-image: url("./images/search-bar-background.png");
   background-position: center;
   background-size: cover;
   margin: 2rem auto;
@@ -1267,7 +1268,7 @@ img:hover {
 .leave-post-col {
   margin: 2rem auto;
   height: 230px;
-  background-image: url("/images/1162662.jpeg");
+  background-image: url("/images/post-background.jpeg");
   background-position: center;
   background-size: cover;
   border-top-left-radius: 5px;

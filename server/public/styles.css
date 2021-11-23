@@ -61,10 +61,6 @@
   transform: translateY(370px);
 }
 
-/* .menu-text {
-  color: #ced4da;
-} */
-
 .tab-anc {
   font-family: Jura, sans-serif;
   display: block;
@@ -415,6 +411,8 @@ input {
   border: 2px solid black;
   border-radius: 5px;
   height: 50px;
+  padding: 0.5rem 0.75rem;
+  text-align: justify;
 }
 
 .edit-textarea::placeholder {

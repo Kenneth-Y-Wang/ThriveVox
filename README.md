@@ -3,49 +3,63 @@
 A full stack JavaScript solo project.
 
 
-# Puppy-Paradise
+# ThriveVox
 
-A front-end web application for puppy lovers who seek entertainment from pictures, games, and organize their own pets’ daily activities.
+A full stack web application for musicians and music lovers who want to find single/band members, share and discuess their musical interests and favorites
+
 
 # purpose
 
-This application is being designed and created to offer pet lovers to have pic saving, fun gaming, event organizing and reminders making experiences all in one place. It targets all age groups, for all types of pet lovers.
+This application is designed to create a social media platform for music lovers to meet friends, find their favorites, discuss their interests, and post their personal Information, news and performance. The app has five main sections:
+
+- About me - display user’s personal info, favorites and posts
+- My favorite - for users to search their favorite artist or album
+- Who is around - for users to search musician or band by city
+- Feed - for users to leave post, comment and personal audio performance for all users
+- Lets Chat -  5 topic chat room for all users to join and chat
 
 
 ## Technologies Used
 
-- JavaScript ES6
-- AJAX
-- Figma
+- React.js
+- Webpack
+- Socket IO
+- Node.js
+- Node Fetch
+- argon 2
+- AWS
 - HTML5
 - CSS3
-- JSON
+- Heroku
 
 ## Live Demo
 
-Try the application live at [https://kenneth-y-wang.github.io/puppy-paradise/]
+Try the application live at [https://thrive-vox.herokuapp.com/]
 
 ## Features
 
-- User can search fun dogs pictures, either by random, or by breed
-- User can view 1-3 pics in their search result
-- User can save any searched pictures they like
-- User can view a list of their saved pictures
-- User can change the hero image with the saved picture and change background color
-- User can enter a total of 5 reminders under different priorities
-- User can view reminders under dashboard or user notes section
-- User can edit the reminder content or priority level
-- User can enter personal note with pic and text content
-- User can display personal notes user user notes section
-- User can edit note
-- User can delete note
-- User can sort the note by note category
-- User can use personal note pic as note section profile pic
-- User can change profile pic holder background color
-- User can play a mini game: by given a random puppy pic, guessing the breed of the puppy
-- User can save the game result once the game result is correct
-- User can sort the game result by breed
-- User can delete the game result
+- User can sign up for a personal account
+- User can sign in with username and password
+- User can display personal information in user home page
+- User can edit personal information in user home page, upload profile picture
+- User can search favorite artist/album information
+- User can save and display saved artist/album information
+- User can view the last 5 saved artist/album information in the carousel section
+- User can delete saved favorites
+- User can search musician/band user by city
+- User can view result users' detail information
+- User can view result users' all posts/audio files
+- User can contact result user by email
+- User can leave a post for all users to view
+- User can upload an audio file for all users to view, download
+- User can leave comment for any post
+- User can delete a personal post/audio post
+- User can delete a personal comment
+- User can join a chatroom from 5 different topic
+- User can see what users are in the save chat room with you
+- User can leave live message with other users in the same chatroom
+- User can see who left the chatroom
+- User can see who is typing in the chatroom
 
 
 ## Preview
@@ -60,17 +74,20 @@ Use saved pic as hero image:
 
 
 ## Development
-It is..
-Executed responsive and intuitive front-end component design using HTML5, CSS3, and JavaScript ES6;
-Implemented AJAX to display query results with data requested from public API;
-Designed sitemap using Figma's wire-framing tools and utilized JSON to store and retrieve data.
+- Designed a full-stack web app that encourages an active lifestyle  and provide a live social media platform by allowing users to share news, thoughts, interests and favorites with other users
+- Built reusable React components to provide a uniform UI, implementing UX best practices
+- Initiated API requests to the AudioDB APIs to generate and disply artist/album information
+- Created Fetch API requests to a custom Express server's RESTful API endpoints using a multi-table PostgreSQL database
+- Tested and deployed both the front-end and back-end of the multi-page application, implementing GitHub version control
+- Applied Socket IO to create web socket connection , allowing using to join differnt chatroom and perform live message chating
 
 ## Future Development
 
-Make it a full-stack React web application with following stretch features:
 
-- User can create post related to pets
-- User can comment on other users' posts
+
+- User can live streaming music
+- User can create playlist for their favorite artist/album/band
+- User can perform video chatting
 - More features to come...
 
 
@@ -94,6 +111,8 @@ Make it a full-stack React web application with following stretch features:
 - JavaScript ES6
 - HTML5
 - CSS3
+- Node.js 10 or higher
+- NPM 6 or higher
 
 
 ### Getting Started
@@ -101,16 +120,42 @@ Make it a full-stack React web application with following stretch features:
 1. Clone the repository.
 
     ```shell
-    git clone git@github.com:Kenneth-Y-Wang/puppy-paradise.git
-    cd puppy-paradise
+    git clone git@github.com:Kenneth-Y-Wang/ThriveVox.git
+    cd sgt-react
     ```
 
-2. open the index.html located in the root folder
+2. Install all dependencies with NPM.
 
+    ```shell
+    npm install
+    ```
 
+3. Make a copy of the provided .env.example file. Name your copy .env.
 
+    switch all config varibals to your project's variblas ( API keys, AWS access keys, heroku database URL, etc.)
 
-3. Start the project. Once started you can view the application by opening the index.html file with live server
+    ```shell
+    cp .env.example .env
+    ```
+
+4. Create a new database for your personal project name
+
+    ```shell
+    createdb <yourprojectname>
+    ```
+
+5. Import the database schema and test data using the provided "db:import" script in package.json.
+
+    ```shell
+    npm run db:import
+    ```
+
+6. Start the project. Once started you can view the application by opening http://localhost:3000 in your browser.
+
+    ```shell
+    npm run dev
+    ```
+
 
 
 

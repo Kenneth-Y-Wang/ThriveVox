@@ -132,7 +132,7 @@ Use can join topic chatroom
 
     ```shell
     git clone git@github.com:Kenneth-Y-Wang/ThriveVox.git
-    cd sgt-react
+    cd ThriveVox
     ```
 
 2. Install all dependencies with NPM.

@@ -1,11 +1,6 @@
-# final-project
-
-A full stack JavaScript solo project.
-
-
 # ThriveVox
 
-A full stack web application for musicians and music lovers who want to find single/band members, share and discuess their musical interests and favorites
+A full stack web application for musicians and music lovers who want to find single/band members, share and discuss their musical interests and favorites
 
 
 # purpose
@@ -15,8 +10,8 @@ This application is designed to create a social media platform for music lovers 
 - About me - display user’s personal info, favorites and posts
 - My favorite - for users to search their favorite artist or album
 - Who is around - for users to search musician or band by city
-- Feed - for users to leave post, comment and personal audio performance for all users
-- Lets Chat -  5 topic chat room for all users to join and chat
+- Live Feed - for users to leave post, comment and personal audio performance for all users
+- Let's Chat -  5 topic chat room for all users to join and chat
 
 
 ## Technologies Used
@@ -64,22 +59,38 @@ Try the application live at [https://thrive-vox.herokuapp.com/]
 
 ## Preview
 
-User search puppy pics by random and save to personal gallery:
+User can login to personal account
 
-![pic search](images/puppy-search.gif)
+![User-login](server/public/images/user-login.gif)
 
-Use saved pic as hero image:
+User can display personal info
 
-![set heroimage](images/set-heroimage.gif)
+![User-display](server/public/images/user-display.gif)
+
+Use can search favorite by artist or album
+
+![favorite-search](server/public/images/favorite-search.gif)
+
+Use can search musician/band by location
+
+![user-search](server/public/images/user-search.gif)
+
+Use can post/view/comment a post
+
+![live-feed](server/public/images/live-feed.gif)
+
+Use can join topic chatroom
+
+![live-chat](server/public/images/live-chat.gif)
 
 
 ## Development
 - Designed a full-stack web app that encourages an active lifestyle  and provide a live social media platform by allowing users to share news, thoughts, interests and favorites with other users
 - Built reusable React components to provide a uniform UI, implementing UX best practices
-- Initiated API requests to the AudioDB APIs to generate and disply artist/album information
+- Initiated API requests to the AudioDB APIs to generate and display artist/album information
 - Created Fetch API requests to a custom Express server's RESTful API endpoints using a multi-table PostgreSQL database
 - Tested and deployed both the front-end and back-end of the multi-page application, implementing GitHub version control
-- Applied Socket IO to create web socket connection , allowing using to join differnt chatroom and perform live message chating
+- Applied Socket IO to create web socket connection , allowing using to join different chatroom and perform live message chatting
 
 ## Future Development
 
@@ -132,7 +143,7 @@ Use saved pic as hero image:
 
 3. Make a copy of the provided .env.example file. Name your copy .env.
 
-    switch all config varibals to your project's variblas ( API keys, AWS access keys, heroku database URL, etc.)
+    switch all config variables to your project's variables ( API keys, AWS access keys, heroku database URL, etc.)
 
     ```shell
     cp .env.example .env
@@ -151,82 +162,6 @@ Use saved pic as hero image:
     ```
 
 6. Start the project. Once started you can view the application by opening http://localhost:3000 in your browser.
-
-    ```shell
-    npm run dev
-    ```
-
-
-
-
-
-
-
-
-
-
-============================
-
-# student-grade-table
-
-A full stack JavaScript application for teachers who want to manage course records.
-
-## Technologies Used
-
-- React.js
-- Webpack
-- Bootstrap 5
-- Node.js
-- MongoDB
-- HTML5
-- CSS3
-- Heroku
-
-## Live Demo
-
-Try the application live at [https://student-grade-table.lfz.com](https://student-grade-table.lfz.com)
-
-## Features
-
-- Teachers can view a list of recorded grades.
-- Teachers can view the average grade.
-- Teachers can add a grade to the table.
-- Teachers can delete a grade from the table.
-
-## Preview
-
-![SGT React](assets/sgt-react.gif)
-
-## Development
-
-### System Requirements
-
-- Node.js 10 or higher
-- NPM 6 or higher
-- MongoDB 4 or higher
-
-### Getting Started
-
-1. Clone the repository.
-
-    ```shell
-    git clone https://github.com/Learning-Fuze/sgt-react
-    cd sgt-react
-    ```
-
-1. Install all dependencies with NPM.
-
-    ```shell
-    npm install
-    ```
-
-1. Import the example database to MongoDB.
-
-    ```shell
-    mongoimport --db sgt-react database/dump.json
-    ```
-
-1. Start the project. Once started you can view the application by opening http://localhost:3000 in your browser.
 
     ```shell
     npm run dev

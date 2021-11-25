@@ -104,13 +104,13 @@ export default class SearchUsers extends React.Component {
           <div className="col-full option-search-holder">
             <div className="col-two-fifth option-col">
               <div onClick={this.searchMusician} className={this.state.searchType === 'musician' ? 'button-pic-holder chosen' : 'button-pic-holder'} >
-                <img src="/images/cover_image-1627388726.jpg" />
+                <img src="/images/musician-button.jpg" />
               </div>
               <h1>Musician</h1>
             </div>
             <div className="col-two-fifth option-col">
               <div onClick={this.searchBand} className={this.state.searchType === 'band' ? 'button-pic-holder chosen' : 'button-pic-holder'}>
-                <img src="/images/photo-1501612780327-45045538702b.jpeg" />
+                <img src="/images/band-button.jpeg" />
               </div>
               <h1>Band</h1>
             </div>

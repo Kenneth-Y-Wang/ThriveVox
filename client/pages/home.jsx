@@ -58,9 +58,7 @@ export default class Home extends React.Component {
   render() {
     if (!this.context.user) return <Redirect to="sign-in" />;
     if (!this.state.userData) return null;
-    const displayName = this.context.user.username;
-    const displayLocation = this.context.user.userLocation;
-    const displayEmail = this.context.user.email;
+    const { username: displayName, userLocation: displayLocation, email: displayEmail } = this.context.user;
     const { avaterCaption, userStyle, userSkills, userInstruments, userPrimaryInterest, userInterest, userBand, userBio, avaterUrl } = this.state.userData;
     const { handleSubmit, clickToEdit } = this;
 

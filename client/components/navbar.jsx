@@ -32,7 +32,7 @@ export default class CustomDropdown extends React.Component {
           {userButton}
         </header>
         <div className={!isOpen ? 'menu' : ' menu menu-on'} onClick={this.switch}>
-          <h1 className="menu-text">Menu</h1>
+          <h1 >Menu</h1>
           <a href="#" className="tab-anc">About Me</a>
           <a href="#favorite" className="tab-anc">My Favorite</a>
           <a href="#chat" className="tab-anc">Let&apos;s Chat</a>

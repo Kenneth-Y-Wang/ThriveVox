@@ -3,6 +3,7 @@ import Carousel from '../components/carousel';
 import FavoriteDisplay from '../components/favorite-display';
 import AppContext from '../lib/app-context';
 import Redirect from '../components/redirect';
+import Spinner from '../components/spinner';
 
 export default class FavoriteSearch extends React.Component {
   constructor(props) {
@@ -104,9 +105,7 @@ export default class FavoriteSearch extends React.Component {
         </div>
         <div className="section-header">Search Result</div>
         <div className="search-result-holder">
-          <div className="col-full spinner-holder">
-           <div className={this.state.loading ? 'lds-grid ' : 'lds-grid  hidden '}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-          </div>
+         <Spinner loading={this.state.loading} />
          <FavoriteDisplay searchResult={this.state.searchResult} />
         </div>
        </div>

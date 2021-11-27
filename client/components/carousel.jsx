@@ -8,7 +8,6 @@ export default class Carousel extends React.Component {
     this.state = {
       index: 0,
       savedFavorites: []
-
     };
     this.rightClick = this.rightClick.bind(this);
     this.leftClick = this.leftClick.bind(this);

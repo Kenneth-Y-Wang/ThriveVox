@@ -2,6 +2,7 @@ import React from 'react';
 import AppContext from '../lib/app-context';
 import ResultDisplay from './single-result-display';
 import SingleFeed from './single-feed-display';
+import Spinner from './spinner';
 
 export default class CustomAccordion extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ export default class CustomAccordion extends React.Component {
       allSavedFavorites: [],
       allMyPosts: [],
       commentView: '',
-      isDeleting: ''
+      isDeleting: '',
+      loading: false
     };
     this.click = this.click.bind(this);
     this.detailView = this.detailView.bind(this);
@@ -23,6 +25,7 @@ export default class CustomAccordion extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     const token = window.localStorage.getItem('react-context-jwt');
     fetch('/api/favorite/allSavedFavorites', {
       method: 'GET',
@@ -33,7 +36,7 @@ export default class CustomAccordion extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ allSavedFavorites: data });
+        this.setState({ allSavedFavorites: data, loading: false });
       })
       .catch(error => {
         console.error('Error:', error);
@@ -248,6 +251,7 @@ export default class CustomAccordion extends React.Component {
         <div >
           <div className="section-header" data-id="my-favorite">My Favorite</div>
           <div className="content-holder" >
+            < Spinner loading={this.state.loading} />
             {this.state.allSavedFavorites.length !== 0
               ? favoritesList
               : <h4 className="text-center">Sorry, You Do Not Have Any Favorite Saved...</h4>}

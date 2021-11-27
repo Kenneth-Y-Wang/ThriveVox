@@ -2,6 +2,7 @@ import React from 'react';
 import Redirect from '../components/redirect';
 import AppContext from '../lib/app-context';
 import SingleUserResult from '../components/single-user-search-result';
+import Spinner from '../components/spinner';
 
 export default class SearchUsers extends React.Component {
   constructor(props) {
@@ -118,9 +119,7 @@ export default class SearchUsers extends React.Component {
         </form>
         <div className="section-header">Search Result</div>
         <div className="search-result-holder">
-          <div className="col-full spinner-holder">
-            <div className={this.state.loading ? 'lds-grid ' : 'lds-grid  hidden '}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-          </div>
+          <Spinner loading={this.state.loading} />
           {this.state.searchResult.length !== 0
             ? userDisplayList
             : <h4 className="text-center">Sorry, no search result available...</h4>}

@@ -109,6 +109,7 @@ export default class LiveFeeds extends React.Component {
   confirmPostEdit(postId) {
     if (this.state.isEditing === '' || postId !== this.state.isEditing) {
       this.setState({ isEditing: postId });
+      console.log(postId);
     }
     if (postId === this.state.isEditing) {
       this.setState({ isEditing: '' });
@@ -175,7 +176,7 @@ export default class LiveFeeds extends React.Component {
         <div key={postId}>
           <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId} handleComment={this.handleComment} checkId={this.state.commentView}
             userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} audioUrl={audioUrl} handleDelete={this.handleDelete} refresh={this.state.refresh}
-            isDeleting={this.state.isDeleting} confirmPostDelete={this.confirmPostDelete} />
+            isDeleting={this.state.isDeleting} confirmPostDelete={this.confirmPostDelete} confirmPostEdit={this.confirmPostEdit} isEditing={this.state.isEditing} />
         </div>
       );
     });

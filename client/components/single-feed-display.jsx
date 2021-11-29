@@ -1,5 +1,6 @@
 import React from 'react';
 import Comment from './comment';
+import EditPost from './post-edit';
 
 export default function SingleFeed(props) {
   const emailHref = `mailto:${props.email}`;
@@ -40,6 +41,7 @@ export default function SingleFeed(props) {
           </div>
         </div>
       </div>
+      < EditPost isEditing={props.isEditing} postId={props.postId} title={props.title} content={props.content} confirmPostEdit={props.confirmPostEdit}/>
     </div>
   );
 }

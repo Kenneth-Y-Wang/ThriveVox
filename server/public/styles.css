@@ -1230,6 +1230,7 @@ img:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 }
 
 .detail-block {

@@ -18,8 +18,24 @@ export default class EditPost extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.title);
-    console.log(this.state.post);
+    const token = window.localStorage.getItem('react-context-jwt');
+
+    fetch(`/api/posts/editPost/${this.props.postId}`, {
+      method: 'PATCH',
+      headers: {
+        'react-context-jwt': token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.props.editPost(data);
+      })
+      .catch(error => {
+        console.error('error', error);
+      });
+    this.props.confirmPostEdit(this.props.postId);
   }
 
   render() {

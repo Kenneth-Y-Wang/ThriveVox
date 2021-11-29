@@ -41,7 +41,7 @@ export default function SingleFeed(props) {
           </div>
         </div>
       </div>
-      < EditPost isEditing={props.isEditing} postId={props.postId} title={props.title} content={props.content} confirmPostEdit={props.confirmPostEdit}/>
+      < EditPost isEditing={props.isEditing} editPost={props.editPost} postId={props.postId} title={props.title} content={props.content} confirmPostEdit={props.confirmPostEdit}/>
     </div>
   );
 }

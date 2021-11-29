@@ -12,8 +12,9 @@ export default function SingleFeed(props) {
         <div className="name-detail-row">
           <h3 className="post-user">{props.username}<span id="band-name"> [ Band: {!props.userBand || props.userBand === 'null' ? 'N/A' : props.userBand} ]</span></h3>
           <div className="result-button-row">
-           <button onClick={() => props.handleComment(props.postId)} className=" user-detail-button comment-button" type='button'>Comment</button>
-            <button onClick={() => props.confirmPostDelete(props.postId)} className={props.userId === props.userLoginId ? 'user-detail-button' : 'user-detail-button hidden'} type='button'><i className="far fa-trash-alt"></i></button>
+            <button onClick={() => props.handleComment(props.postId)} className=" user-detail-button comment-button" type='button'>Comment</button>
+            <button onClick={() => props.confirmPostDelete(props.postId)} className={props.userId === props.userLoginId ? 'user-detail-button delete-button' : 'user-detail-button delete-button hidden'} type='button'><i className="far fa-trash-alt"></i></button>
+            <button onClick={() => props.confirmPostEdit(props.postId)} className={props.userId === props.userLoginId ? 'user-detail-button' : 'user-detail-button hidden'} type="button"><i className="far fa-edit"></i></button>
           </div>
         </div>
         <h3 className="user-info-text">Post Title: <span>{props.title}</span></h3>

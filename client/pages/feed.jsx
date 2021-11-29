@@ -16,7 +16,8 @@ export default class LiveFeeds extends React.Component {
       post: '',
       refresh: false,
       allPosts: [],
-      isDeleting: ''
+      isDeleting: '',
+      isEditing: ''
     };
     this.formOpen = this.formOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +27,7 @@ export default class LiveFeeds extends React.Component {
     this.refresh = this.refresh.bind(this);
     this.fileInputRef = React.createRef();
     this.confirmPostDelete = this.confirmPostDelete.bind(this);
+    this.confirmPostEdit = this.confirmPostEdit.bind(this);
 
   }
 
@@ -101,6 +103,15 @@ export default class LiveFeeds extends React.Component {
     }
     if (postId === this.state.isDeleting) {
       this.setState({ isDeleting: '' });
+    }
+  }
+
+  confirmPostEdit(postId) {
+    if (this.state.isEditing === '' || postId !== this.state.isEditing) {
+      this.setState({ isEditing: postId });
+    }
+    if (postId === this.state.isEditing) {
+      this.setState({ isEditing: '' });
     }
   }
 

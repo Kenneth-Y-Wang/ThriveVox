@@ -11,7 +11,9 @@ export default class EditPost extends React.Component {
 
   render() {
     return (
-      <div>hello</div>
+      <div className={this.props.isEditing === this.props.postId ? 'detail-modal-holder' : 'detail-modal-holder hidden'}>
+       <div>hello</div>
+      </div>
     );
   }
 }

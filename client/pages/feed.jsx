@@ -16,7 +16,8 @@ export default class LiveFeeds extends React.Component {
       post: '',
       refresh: false,
       allPosts: [],
-      isDeleting: ''
+      isDeleting: '',
+      isEditing: ''
     };
     this.formOpen = this.formOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +27,8 @@ export default class LiveFeeds extends React.Component {
     this.refresh = this.refresh.bind(this);
     this.fileInputRef = React.createRef();
     this.confirmPostDelete = this.confirmPostDelete.bind(this);
+    this.confirmPostEdit = this.confirmPostEdit.bind(this);
+    this.editPost = this.editPost.bind(this);
 
   }
 
@@ -104,6 +107,16 @@ export default class LiveFeeds extends React.Component {
     }
   }
 
+  confirmPostEdit(postId) {
+    if (this.state.isEditing === '' || postId !== this.state.isEditing) {
+      this.setState({ isEditing: postId });
+
+    }
+    if (postId === this.state.isEditing) {
+      this.setState({ isEditing: '' });
+    }
+  }
+
   handleDelete(postId) {
     const token = window.localStorage.getItem('react-context-jwt');
     fetch(`/api/posts/allPosts/${postId}`, {
@@ -122,6 +135,30 @@ export default class LiveFeeds extends React.Component {
         break;
       }
 
+    }
+  }
+
+  editPost(data) {
+    for (let i = 0; i < this.state.allPosts.length; i++) {
+      if (data.postId === this.state.allPosts[i].postId) {
+        const { userId, username, email, avaterUrl, userBand, userLocation, createdAt, audioUrl, postId } = this.state.allPosts[i];
+        const updatedPost = {
+          userId: userId,
+          username: username,
+          email: email,
+          avaterUrl: avaterUrl,
+          userBand: userBand,
+          userLocation: userLocation,
+          title: data.title,
+          content: data.content,
+          createdAt: createdAt,
+          audioUrl: audioUrl,
+          postId: postId
+        };
+        const newState = this.state.allPosts.slice(0, i).concat(updatedPost, this.state.allPosts.slice(i + 1));
+        this.setState({ allPosts: newState });
+        break;
+      }
     }
   }
 
@@ -164,7 +201,7 @@ export default class LiveFeeds extends React.Component {
         <div key={postId}>
           <SingleFeed email={email} avaterUrl={avaterUrl} username={username} userBand={userBand} userId={userId} handleComment={this.handleComment} checkId={this.state.commentView}
             userLocation={userLocation} title={title} content={content} userLoginId={userLoginId} date={date} postId={postId} audioUrl={audioUrl} handleDelete={this.handleDelete} refresh={this.state.refresh}
-            isDeleting={this.state.isDeleting} confirmPostDelete={this.confirmPostDelete} />
+            isDeleting={this.state.isDeleting} confirmPostDelete={this.confirmPostDelete} confirmPostEdit={this.confirmPostEdit} isEditing={this.state.isEditing} editPost={this.editPost} />
         </div>
       );
     });

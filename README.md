@@ -90,7 +90,7 @@ Use can join topic chatroom
 - Initiated API requests to the AudioDB APIs to generate and display artist/album information
 - Created Fetch API requests to a custom Express server's RESTful API endpoints using a multi-table PostgreSQL database
 - Tested and deployed both the front-end and back-end of the multi-page application, implementing GitHub version control
-- Applied Socket IO to create web socket connection , allowing using to join different chatroom and perform live message chatting
+- Applied Socket IO to create web socket connection , allowing users to join different chatroom and perform live message chatting
 
 ## Future Development
 

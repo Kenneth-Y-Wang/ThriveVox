@@ -390,6 +390,31 @@ returning "postId","title","content","userId","audioUrl"
 
 });
 
+// edit a feed
+
+app.patch('/api/posts/editPost/:postId', (req, res, next) => {
+  const postId = Number(req.params.postId);
+  const { title, post } = req.body;
+  if (!title || !post) {
+    throw new ClientError(400, 'title and post content are required fields');
+  }
+  const sql = `
+update "posts"
+   set "title"=$1,
+       "content"=$2
+where  "postId"=$3
+returning "postId","title","content"
+`;
+  const params = [title, post, postId];
+  db.query(sql, params)
+    .then(result => {
+      const [updatedPost] = result.rows;
+      res.json(updatedPost);
+    })
+    .catch(err => next(err));
+
+});
+
 // get all feeds
 
 app.get('/api/posts/allPosts', (req, res, next) => {

@@ -472,7 +472,7 @@ button,
   height: 250px;
   margin: 2rem auto;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .search-bar-section {
@@ -636,7 +636,7 @@ button,
 .caro-detail-bt-row {
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   margin-top: 0.75rem;
   margin-bottom: 1.75rem;
 }
@@ -763,7 +763,7 @@ img:hover {
 
 .result-button-row {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 

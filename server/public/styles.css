@@ -519,6 +519,12 @@ button,
   font-family: Jura, sans-serif;
 }
 
+.favorite-search-input::placeholder {
+  color: #e9ecef;
+  font-family: Jura, sans-serif;
+  font-style: italic;
+}
+
 .artist-input {
   background-color: transparent;
   border: none;

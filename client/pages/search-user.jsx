@@ -99,7 +99,7 @@ export default class SearchUsers extends React.Component {
             <div className=" col-three-fifth location-search-bar">
               <label htmlFor="location">Location:</label>
               <input required onChange={this.handleChange} value={this.state.location}
-                className="favorite-search-input" id="location" name='location' type="text"></input>
+                className="favorite-search-input" id="location" name='location' type="text" placeholder="Please enter a city..."></input>
             </div>
           </div>
           <div className="col-full option-search-holder">

@@ -214,7 +214,7 @@ export default class CustomAccordion extends React.Component {
         <div >
           <div className="section-header info-header" onClick={this.click} data-id="about-me">About Me</div>
           <div className={this.state.isOpen === 'about-me' ? 'content-holder open' : 'content-holder close'}>
-            <div className={this.state.isOpen === 'about-me' ? 'section-content' : 'section-content hidden'}>{userBio || 'Please tell us about your self!'}</div>
+            <div className={this.state.isOpen === 'about-me' ? 'section-content' : 'section-content hidden'}>{!userBio || userBio === 'null' ? 'Please tell us about your self!' : userBio}</div>
           </div>
         </div>
         <div >
@@ -225,15 +225,15 @@ export default class CustomAccordion extends React.Component {
                 <h4 className="display-info">My Band:</h4>
                 <h4 className="display-info-detail">{!userBand || userBand === 'null' ? 'I Don\'t Have One..' : userBand}</h4>
                 <h4 className="display-info">My Instruments:</h4>
-                <h4 className="display-info-detail">{userInstruments || 'N/A'}</h4>
+                <h4 className="display-info-detail">{!userInstruments || userInstruments === 'null' ? 'N/A' : userInstruments}</h4>
               </div>
               <div className="col-half skill-col">
                 <h4 className="display-info">My Music Styles:</h4>
-                <h4 className="display-info-detail">{userStyle || 'N/A'}</h4>
+                <h4 className="display-info-detail">{!userStyle || userStyle === 'null' ? 'N/A' : userStyle}</h4>
                 <h4 className="display-info">My Skills:</h4>
-                <h4 className="display-info-detail">{userSkills || 'N/A'}</h4>
+                <h4 className="display-info-detail">{!userSkills || userSkills === 'null' ? 'N/A' : userSkills }</h4>
                 <h4 className="display-info">My Interest:</h4>
-                <h4 className="display-info-detail">{userInterest || 'N/A'}</h4>
+                <h4 className="display-info-detail">{!userInterest || userInterest === 'null' ? 'N/A' : userInterest }</h4>
               </div>
             </div>
           </div>

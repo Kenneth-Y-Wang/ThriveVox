@@ -3,6 +3,7 @@ import Redirect from '../components/redirect';
 import AppContext from '../lib/app-context';
 import CustomAccordion from '../components/accordion';
 import EditForm from '../components/edit-form';
+import checkDisplay from '../lib/check-display';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -72,7 +73,7 @@ export default class Home extends React.Component {
             <div className="pic-holder">
               <img src={avaterUrl || '/images/b50797c8a7420ba660b2b310f8698811.jpg'} />
             </div>
-            <h4 className="profile-caption">{avaterCaption || 'Update Your Pic!'}</h4>
+            <h4 className="profile-caption">{!avaterCaption || avaterCaption === 'null' ? 'Please update your Pic!' : avaterCaption }</h4>
           </div>
           <div className="col-two-fifth info-column">
             <div className="profile-edit-row">
@@ -84,7 +85,7 @@ export default class Home extends React.Component {
             <h4 className="display-info">Email:</h4>
             <h4 className="display-info-detail">{displayEmail}</h4>
             <h4 className="display-info">Primary Interest:</h4>
-            <h4 className="display-info-detail">{userPrimaryInterest || 'N/A'}</h4>
+            <h4 className="display-info-detail">{checkDisplay(userPrimaryInterest)}</h4>
           </div>
         </div>
         <CustomAccordion userStyle={userStyle} userSkills={userSkills} userInstruments={userInstruments} userInterest={userInterest} userBand={userBand} userBio={userBio} />

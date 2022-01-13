@@ -1206,12 +1206,12 @@ img:hover {
   font-family: Orbitron, sans-serif;
   font-weight: bold;
   color: black;
-  border: 2px solid black;
-  border-radius: 2px;
+  border: 1px solid black;
+  border-radius: 1px;
   padding: 0.15rem 0.25rem;
   background-color: white;
   transition-duration: 0.5s;
-  font-size: 1rem;
+  font-size: 0.7rem;
 }
 
 .user-detail-button:hover {
@@ -1592,6 +1592,14 @@ img:hover {
   }
 
   .section-content {
+    font-size: 1rem;
+  }
+
+  .user-detail-button {
+    font-weight: bold;
+    border: 2px solid black;
+    border-radius: 2px;
+    padding: 0.15rem 0.25rem;
     font-size: 1rem;
   }
 }

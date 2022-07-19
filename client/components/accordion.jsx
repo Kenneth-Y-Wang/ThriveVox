@@ -1,3 +1,5 @@
+// start with this section
+
 import React from 'react';
 import AppContext from '../lib/app-context';
 import ResultDisplay from './single-result-display';

@@ -142,3 +142,8 @@ export default class Carousel extends React.Component {
     );
   }
 }
+
+// import * as React from 'react';
+// import { useState, useEffect} from 'react';
+// import CarouselSlide from './carousel-slide';
+// import DefaultDisplay from './carousel-default-slide';

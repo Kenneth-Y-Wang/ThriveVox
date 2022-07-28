@@ -147,3 +147,7 @@ export default class Carousel extends React.Component {
 // import { useState, useEffect} from 'react';
 // import CarouselSlide from './carousel-slide';
 // import DefaultDisplay from './carousel-default-slide';
+
+// const carousel = () => {
+
+// }

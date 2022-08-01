@@ -150,4 +150,32 @@ export default class Carousel extends React.Component {
 
 // const carousel = () => {
 
+//   const [index, setIndex]=useState(0);
+//   const [savedFavorites, setFavorites]=useState([]);
+
+//   const autoRun = () => {
+//     if ( savedFavorites.length === 0 ){
+//       return;
+//     }
+//     setIndex(index === (savedFavorites.length - 1)? 0: index+1);
+//   }
+
+//   const rightClick = () => {
+//     setIndex(index === (savedFavorites.length - 1) ? 0 : index + 1)
+
+//     clearInterval(timeID);
+//     const timeID = setInterval(
+//       ()=> autoRun(), 3000
+//     );
+//   }
+
+//   const leftClick = () => {
+//     setIndex(index === 0 ? savedFavorites.length - 1 : index-1 )
+
+//     clearInterval(timeID);
+//     const timeID = setInterval(
+//       () => autoRun(), 3000
+//     );
+//   }
+
 // }
